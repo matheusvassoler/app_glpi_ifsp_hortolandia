@@ -44,4 +44,12 @@ dependencies {
     // Koin for Kotlin apps
     implementation "org.koin:koin-core:$versions.koin"
     implementation "org.koin:koin-android-viewmodel:$versions.koin"
+
+    //Retrofit
+    implementation "com.squareup.retrofit2:retrofit:$versions.retrofit"
+    implementation "com.squareup.retrofit2:converter-gson:$versions.retrofit"
+
+    //Logging Interceptor
+    implementation "com.squareup.okhttp3:logging-interceptor:$versions.loggingInterceptor"
+
 }
