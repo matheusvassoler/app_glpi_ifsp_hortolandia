@@ -1,0 +1,12 @@
+ext.versions = [
+        koin : '2.2.2',
+        kotlin: '1.4.21',
+        espresso: '3.3.0',
+        junit: '4.13.1',
+        junitExt: '1.1.2',
+        appcompat: '1.2.0',
+        constraintLayout: '2.0.4',
+        material: '1.2.1',
+        ktx: '1.3.2',
+        buildGradle: '4.1.2'
+]

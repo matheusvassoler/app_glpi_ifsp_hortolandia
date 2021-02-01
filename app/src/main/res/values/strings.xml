@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">GLPI IFSP</string>
+
+    <!-- Login Screen -->
+    <string name="login_title">Olá!</string>
+    <string name="login_subtitle">Faça o login para continuar</string>
+    <string name="login_username_field_hint">Usuário</string>
+    <string name="login_password_field_hint">Senha</string>
+    <string name="login_button_name">Acessar</string>
 </resources>
