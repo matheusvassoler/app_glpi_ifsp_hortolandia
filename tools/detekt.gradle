@@ -1,0 +1,7 @@
+apply plugin: 'io.gitlab.arturbosch.detekt'
+
+detekt {
+    toolVersion = "1.15.0"
+    config = files("$rootDir/tools/detekt/detekt.yml")
+    buildUponDefaultConfig = true
+}
