@@ -30,6 +30,18 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
+
+    testOptions {
+        unitTests.returnDefaultValues = true
+    }
+
+    sourceSets {
+        main {
+            assets {
+                srcDirs 'src\\main\\assets', 'src\\main\\resources'
+            }
+        }
+    }
 }
 
 dependencies {
@@ -51,7 +63,13 @@ dependencies {
     implementation "com.squareup.retrofit2:retrofit:$versions.retrofit"
     implementation "com.squareup.retrofit2:converter-gson:$versions.retrofit"
 
-    //Logging Interceptor
-    implementation "com.squareup.okhttp3:logging-interceptor:$versions.loggingInterceptor"
+    //Okhttp3
+    implementation "com.squareup.okhttp3:logging-interceptor:$versions.okhttp3"
+    testImplementation "com.squareup.okhttp3:mockwebserver:$versions.okhttp3"
 
+    //Coroutines
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$versions.coroutines"
+
+    //MoccK
+    implementation "io.mockk:mockk:$versions.mockk"
 }

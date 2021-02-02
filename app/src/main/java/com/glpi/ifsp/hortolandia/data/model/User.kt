@@ -6,5 +6,5 @@ data class User(
     @SerializedName("glpiID") val id: String,
     @SerializedName("glpifirstname") val firstName: String,
     @SerializedName("glpirealname") val lastName: String,
-    @SerializedName("glpirealname") val username: String
+    @SerializedName("glpiname") val username: String
 )
