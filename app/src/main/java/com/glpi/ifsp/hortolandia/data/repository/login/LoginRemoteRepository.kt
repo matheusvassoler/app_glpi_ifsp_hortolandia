@@ -1,4 +1,4 @@
-package com.glpi.ifsp.hortolandia.data.repository.session
+package com.glpi.ifsp.hortolandia.data.repository.login
 
 import android.util.Base64
 import android.util.Base64.encodeToString
@@ -7,9 +7,9 @@ import com.glpi.ifsp.hortolandia.data.source.remote.ApiClient
 import com.glpi.ifsp.hortolandia.ui.LoginUI
 import retrofit2.Response
 
-class SessionRemoteRepository(
+class LoginRemoteRepository(
     private val apiClient: ApiClient
-) : SessionRepository {
+) : LoginRepository {
 
     override suspend fun makeLogin(login: LoginUI): Response<Login> {
         val usernameAndPassword = prepareUsernameAndPasswordForBase64(login)

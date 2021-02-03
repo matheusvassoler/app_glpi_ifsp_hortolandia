@@ -1,4 +1,4 @@
-package com.glpi.ifsp.hortolandia.data.repository.sessiontoken
+package com.glpi.ifsp.hortolandia.data.repository.session
 
 import com.glpi.ifsp.hortolandia.BaseUnitTest
 import com.glpi.ifsp.hortolandia.data.source.local.AppSharedPreferencesImpl
@@ -15,11 +15,11 @@ class SessionTokenLocalRepositoryTest : BaseUnitTest() {
     private lateinit var appSharedPreferencesImpl: AppSharedPreferencesImpl
 
     @InjectMockKs
-    private lateinit var sessionTokenRemoteRepository: SessionTokenRemoteRepository
+    private lateinit var sessionLocalRepository: SessionLocalRepository
 
     @Test
     fun `storeUserData - Check connection with SharedPreferences`() {
-        sessionTokenRemoteRepository.storeUserData(mockSessionUI())
+        sessionLocalRepository.storeUserData(mockSessionUI())
 
         verifyCallToSharedPreferences("session_token", "abcdefghij")
         verifyCallToSharedPreferences("id", 1)

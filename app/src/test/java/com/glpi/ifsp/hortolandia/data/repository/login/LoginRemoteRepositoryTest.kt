@@ -1,4 +1,4 @@
-package com.glpi.ifsp.hortolandia.data.repository.session
+package com.glpi.ifsp.hortolandia.data.repository.login
 
 import com.glpi.ifsp.hortolandia.BaseUnitTest
 import com.glpi.ifsp.hortolandia.data.model.Login
@@ -13,19 +13,19 @@ import kotlinx.coroutines.runBlocking
 import org.junit.Test
 import retrofit2.Response
 
-class SessionRemoteRepositoryTest : BaseUnitTest() {
+class LoginRemoteRepositoryTest : BaseUnitTest() {
 
     @MockK
     private lateinit var apiClient: ApiClient
 
     @InjectMockKs
-    private lateinit var sessionRemoteRepository: SessionRemoteRepository
+    private lateinit var loginRemoteRepository: LoginRemoteRepository
 
     @Test
     fun `makeLogin - Check Api call`() = runBlocking {
         coEvery { apiClient().callLoginResponse(any()) } returns mockResponse()
 
-        sessionRemoteRepository.makeLogin(mockLoginUI())
+        loginRemoteRepository.makeLogin(mockLoginUI())
 
         coVerify { apiClient().callLoginResponse(any()) }
     }

@@ -1,11 +1,11 @@
-package com.glpi.ifsp.hortolandia.data.repository.sessiontoken
+package com.glpi.ifsp.hortolandia.data.repository.session
 
 import com.glpi.ifsp.hortolandia.data.source.local.AppSharedPreferencesImpl
 import com.glpi.ifsp.hortolandia.ui.SessionUI
 
-class SessionTokenRemoteRepository(
+class SessionLocalRepository(
     private val appSharedPreferencesImpl: AppSharedPreferencesImpl
-) : SessionTokenRepository {
+) : SessionRepository {
 
     override fun storeUserData(sessionUI: SessionUI) {
         storeSessionToken(sessionUI.sessionToken)
