@@ -1,6 +1,7 @@
 package com.glpi.ifsp.hortolandia
 
 import android.app.Application
+import com.glpi.ifsp.hortolandia.infrastructure.di.domainModule
 import com.glpi.ifsp.hortolandia.infrastructure.di.repositoryModule
 import com.glpi.ifsp.hortolandia.infrastructure.di.sourceModule
 import org.koin.android.ext.koin.androidContext
@@ -15,7 +16,8 @@ class MyApplication : Application() {
             modules(
                 listOf(
                     sourceModule,
-                    repositoryModule
+                    repositoryModule,
+                    domainModule
                 )
             )
         }
