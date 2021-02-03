@@ -21,11 +21,20 @@ class AppSharedPreferencesImpl(context: Context) : AppSharedPreferences {
         }
     }
 
+    override fun save(keyName: String, value: Int) {
+        preferences.edit {
+            putInt(keyName, value)
+        }
+    }
+
     override fun getStringValue(keyName: String): String? =
         preferences.getString(keyName, null)
 
     override fun getBooleanValue(keyName: String): Boolean =
         preferences.getBoolean(keyName, false)
+
+    override fun getIntValue(keyName: String): Int =
+        preferences.getInt(keyName, 0)
 
     companion object {
         private const val PREFS_NAME = "user_data"
