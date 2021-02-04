@@ -35,7 +35,7 @@ class SessionUseCaseTest : BaseUnitTest() {
         return UserUI(
             id = 1,
             username = "matheus",
-            fistName = "Matheus",
+            firstName = "Matheus",
             lastName = "Vassoler"
         )
     }

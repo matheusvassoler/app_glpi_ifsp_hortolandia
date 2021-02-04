@@ -11,7 +11,7 @@ class SessionLocalRepository(
         storeSessionToken(sessionUI.sessionToken)
         storeUserId(sessionUI.userUI.id)
         storeUsername(sessionUI.userUI.username)
-        storeFirstName(sessionUI.userUI.fistName)
+        storeFirstName(sessionUI.userUI.firstName)
         storeLastName(sessionUI.userUI.lastName)
     }
 
