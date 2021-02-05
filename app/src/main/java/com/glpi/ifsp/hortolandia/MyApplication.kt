@@ -4,6 +4,7 @@ import android.app.Application
 import com.glpi.ifsp.hortolandia.infrastructure.di.domainModule
 import com.glpi.ifsp.hortolandia.infrastructure.di.repositoryModule
 import com.glpi.ifsp.hortolandia.infrastructure.di.sourceModule
+import com.glpi.ifsp.hortolandia.infrastructure.di.viewModelModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
 
@@ -17,7 +18,8 @@ class MyApplication : Application() {
                 listOf(
                     sourceModule,
                     repositoryModule,
-                    domainModule
+                    domainModule,
+                    viewModelModule
                 )
             )
         }

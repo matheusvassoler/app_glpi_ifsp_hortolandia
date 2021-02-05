@@ -13,5 +13,6 @@ ext.versions = [
         gson: '2.8.6',
         okhttp3: '4.9.0',
         coroutines: '1.3.9',
-        mockk: '1.10.5'
+        mockk: '1.10.5',
+        viewModelScope: '2.2.0'
 ]

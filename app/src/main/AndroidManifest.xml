@@ -14,7 +14,7 @@
         android:name=".MyApplication"
         android:fullBackupContent="true">
         <activity
-            android:name=".LoginActivity"
+            android:name=".ui.activity.LoginActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

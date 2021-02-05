@@ -7,4 +7,6 @@
     <string name="login_username_field_hint">Usuário</string>
     <string name="login_password_field_hint">Senha</string>
     <string name="login_button_name">Acessar</string>
+    <string name="empty_username_field_error_message">O campo usuário está vázio</string>
+    <string name="empty_password_field_error_message">O campo senha está vázio</string>
 </resources>
