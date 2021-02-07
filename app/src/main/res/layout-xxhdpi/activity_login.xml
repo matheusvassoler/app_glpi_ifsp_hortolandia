@@ -93,13 +93,45 @@
 
     </com.google.android.material.textfield.TextInputLayout>
 
-    <Button
+    <androidx.cardview.widget.CardView
+        android:id="@+id/activity_login_button"
         android:layout_width="@dimen/default_dimen_0dp"
-        android:layout_height="@dimen/default_dimen_60dp"
+        android:layout_height="@dimen/default_dimen_50dp"
         android:text="@string/login_button_name"
         android:textAllCaps="false"
+        android:backgroundTint="@color/green_dark"
         android:layout_marginTop="@dimen/default_dimen_50dp"
         app:layout_constraintTop_toBottomOf="@id/activity_login_password_input"
         app:layout_constraintStart_toStartOf="@id/activity_login_password_input"
-        app:layout_constraintEnd_toEndOf="@id/activity_login_password_input" />
+        app:layout_constraintEnd_toEndOf="@id/activity_login_password_input">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/activity_login_card_view_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/activity_login_button_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/login_button_name"
+                android:textColor="@color/white"
+                app:layout_constraintTop_toTopOf="@id/activity_login_card_view_layout"
+                app:layout_constraintEnd_toEndOf="@id/activity_login_card_view_layout"
+                app:layout_constraintBottom_toBottomOf="@id/activity_login_card_view_layout"
+                app:layout_constraintStart_toStartOf="@id/activity_login_card_view_layout" />
+
+            <ProgressBar
+                android:id="@+id/activity_login_progress_bar_button"
+                android:layout_width="@dimen/default_dimen_30dp"
+                android:layout_height="@dimen/default_dimen_30dp"
+                android:indeterminateTint="@color/white"
+                android:visibility="gone"
+                app:layout_constraintTop_toTopOf="@id/activity_login_card_view_layout"
+                app:layout_constraintEnd_toEndOf="@id/activity_login_card_view_layout"
+                app:layout_constraintBottom_toBottomOf="@id/activity_login_card_view_layout"
+                app:layout_constraintStart_toStartOf="@id/activity_login_card_view_layout" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
 </androidx.constraintlayout.widget.ConstraintLayout>

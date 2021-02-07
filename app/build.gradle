@@ -43,8 +43,8 @@ android {
         }
     }
 
-    viewBinding {
-        enabled = true
+    buildFeatures {
+        viewBinding true
     }
 }
 
@@ -60,7 +60,7 @@ dependencies {
     androidTestImplementation "androidx.test.espresso:espresso-core:$versions.espresso"
 
     // Koin for Kotlin apps
-    implementation "org.koin:koin-core:$versions.koin"
+    implementation "org.koin:koin-android:$versions.koin"
     implementation "org.koin:koin-android-viewmodel:$versions.koin"
 
     //Retrofit
@@ -77,6 +77,11 @@ dependencies {
     //MoccK
     implementation "io.mockk:mockk:$versions.mockk"
 
-    //ViewModelScope
-    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$versions.viewModelScope"
+    // ViewModel and LiveData
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$versions.lifecycle"
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:$versions.lifecycle"
+    testImplementation "androidx.arch.core:core-testing:$versions.coreTesting"
+
+    //Hamcrest
+    testImplementation "org.hamcrest:hamcrest:$versions.hamcrest"
 }

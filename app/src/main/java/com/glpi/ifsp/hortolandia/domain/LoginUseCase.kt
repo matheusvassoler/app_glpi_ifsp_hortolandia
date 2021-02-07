@@ -1,5 +1,6 @@
 package com.glpi.ifsp.hortolandia.domain
 
+import android.util.Log
 import com.glpi.ifsp.hortolandia.data.model.Login
 import com.glpi.ifsp.hortolandia.data.repository.login.LoginRepository
 import com.glpi.ifsp.hortolandia.infrastructure.Constant
@@ -57,6 +58,8 @@ class LoginUseCase(
 
     private fun convertResponseBodyToSessionUI(loginData: Login): SessionUI {
         val user = loginData.user
+        //TODO - Apagar isso no futuro, apenas para log
+        Log.i("APP_TOKEN_SESSION", loginData.sessionToken)
         return SessionUI(
             sessionToken = loginData.sessionToken,
             userUI = UserUI(

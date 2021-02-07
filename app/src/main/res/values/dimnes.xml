@@ -10,6 +10,7 @@
     <dimen name="default_dimen_28dp">28dp</dimen>
     <dimen name="default_dimen_30dp">30dp</dimen>
     <dimen name="default_dimen_40dp">40dp</dimen>
+    <dimen name="default_dimen_45dp">45dp</dimen>
     <dimen name="default_dimen_50dp">50dp</dimen>
     <dimen name="default_dimen_55dp">55dp</dimen>
     <dimen name="default_dimen_60dp">60dp</dimen>

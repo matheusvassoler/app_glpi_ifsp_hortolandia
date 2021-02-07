@@ -14,7 +14,6 @@ class LoginRemoteRepository(
     override suspend fun makeLogin(login: LoginUI): Response<Login> {
         val usernameAndPassword = prepareUsernameAndPasswordForBase64(login)
         val authHeader = createBase64StringForAuthHeader(usernameAndPassword)
-
         return apiClient().callLoginResponse(authHeader)
     }
 

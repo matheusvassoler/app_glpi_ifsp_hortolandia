@@ -16,10 +16,10 @@ class MyApplication : Application() {
             androidContext(this@MyApplication)
             modules(
                 listOf(
-                    sourceModule,
-                    repositoryModule,
+                    viewModelModule,
                     domainModule,
-                    viewModelModule
+                    repositoryModule,
+                    sourceModule
                 )
             )
         }

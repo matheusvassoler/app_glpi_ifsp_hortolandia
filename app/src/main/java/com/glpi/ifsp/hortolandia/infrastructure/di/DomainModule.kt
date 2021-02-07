@@ -5,6 +5,6 @@ import com.glpi.ifsp.hortolandia.domain.SessionUseCase
 import org.koin.dsl.module
 
 val domainModule = module {
-    single { SessionUseCase(get()) }
     single { LoginUseCase(get(), get()) }
+    single { SessionUseCase(get()) }
 }

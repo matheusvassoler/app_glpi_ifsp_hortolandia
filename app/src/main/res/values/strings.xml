@@ -9,4 +9,6 @@
     <string name="login_button_name">Acessar</string>
     <string name="empty_username_field_error_message">O campo usuário está vázio</string>
     <string name="empty_password_field_error_message">O campo senha está vázio</string>
+    <string name="login_bad_credentials_error_message">O usuário e/ou senha incorretos</string>
+    <string name="login_error_message">Houve um problema durante o login. Tente novamente</string>
 </resources>

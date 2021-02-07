@@ -1,10 +1,10 @@
 package com.glpi.ifsp.hortolandia.data.repository.session
 
-import com.glpi.ifsp.hortolandia.data.source.local.AppSharedPreferencesImpl
+import com.glpi.ifsp.hortolandia.data.source.local.AppSharedPreferences
 import com.glpi.ifsp.hortolandia.ui.SessionUI
 
 class SessionLocalRepository(
-    private val appSharedPreferencesImpl: AppSharedPreferencesImpl
+    private val appSharedPreferences: AppSharedPreferences
 ) : SessionRepository {
 
     override fun storeUserData(sessionUI: SessionUI) {
@@ -16,21 +16,21 @@ class SessionLocalRepository(
     }
 
     private fun storeLastName(lastName: String) {
-        appSharedPreferencesImpl.save("last_name", lastName)
+        appSharedPreferences.save("last_name", lastName)
     }
 
     private fun storeFirstName(firstName: String) {
-        appSharedPreferencesImpl.save("first_name", firstName)
+        appSharedPreferences.save("first_name", firstName)
     }
 
     private fun storeUsername(username: String) {
-        appSharedPreferencesImpl.save("username", username)
+        appSharedPreferences.save("username", username)
     }
 
     private fun storeUserId(id: Int) {
-        appSharedPreferencesImpl.save("id", id)
+        appSharedPreferences.save("id", id)
     }
 
     private fun storeSessionToken(sessionToken: String) =
-        appSharedPreferencesImpl.save("session_token", sessionToken)
+        appSharedPreferences.save("session_token", sessionToken)
 }
