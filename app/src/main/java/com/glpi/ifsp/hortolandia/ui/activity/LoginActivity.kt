@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
 import com.glpi.ifsp.hortolandia.R
 import com.glpi.ifsp.hortolandia.data.resource.Resource
 import com.glpi.ifsp.hortolandia.databinding.ActivityLoginBinding
@@ -43,7 +44,7 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun setupObserverForLoginRequest() {
-        loginViewModel.loginState.observe(this, {
+        loginViewModel.loginState.observe(this, Observer {
             it.getContentIfNotHandled()?.let { resource ->
                 checkIfShowErrorMessageOrMakeLogin(resource)
             }
@@ -51,13 +52,13 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun setupObserverForProgressBar() {
-        loginViewModel.showLoading.observe(this, {
+        loginViewModel.showLoading.observe(this, Observer {
             checkIfShowProgressBarInLoginButton(it)
         })
     }
 
     private fun setupObserverUsernameField() {
-        loginViewModel.isUsernameEmpty.observe(this, {
+        loginViewModel.isUsernameEmpty.observe(this, Observer {
             checkIfShowErrorMessageForField(
                 it,
                 binding.activityLoginUsernameInput,
@@ -67,7 +68,7 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun setupObserverForPasswordField() {
-        loginViewModel.isPasswordEmpty.observe(this, {
+        loginViewModel.isPasswordEmpty.observe(this, Observer {
             checkIfShowErrorMessageForField(
                 it,
                 binding.activityLoginPasswordInput,
