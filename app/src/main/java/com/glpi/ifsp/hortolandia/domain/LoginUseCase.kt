@@ -9,8 +9,8 @@ import com.glpi.ifsp.hortolandia.infrastructure.exceptions.UnauthorizedLoginExce
 import com.glpi.ifsp.hortolandia.ui.LoginUI
 import com.glpi.ifsp.hortolandia.ui.SessionUI
 import com.glpi.ifsp.hortolandia.ui.UserUI
-import retrofit2.Response
 import java.lang.Exception
+import retrofit2.Response
 
 class LoginUseCase(
     private val sessionUseCase: SessionUseCase,
@@ -58,7 +58,7 @@ class LoginUseCase(
 
     private fun convertResponseBodyToSessionUI(loginData: Login): SessionUI {
         val user = loginData.user
-        //TODO - Apagar isso no futuro, apenas para log
+        // TODO - Apagar isso no futuro, apenas para log
         Log.i("APP_TOKEN_SESSION", loginData.sessionToken)
         return SessionUI(
             sessionToken = loginData.sessionToken,

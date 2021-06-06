@@ -16,5 +16,6 @@ ext.versions = [
         mockk: '1.10.5',
         lifecycle: '2.2.0',
         coreTesting: '2.1.0',
-        hamcrest: '2.2'
+        hamcrest: '2.2',
+        googleTruth: '1.1.3'
 ]

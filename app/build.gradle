@@ -84,4 +84,7 @@ dependencies {
 
     //Hamcrest
     testImplementation "org.hamcrest:hamcrest:$versions.hamcrest"
+
+    //Google truth
+    testImplementation "com.google.truth:truth:$versions.googleTruth"
 }

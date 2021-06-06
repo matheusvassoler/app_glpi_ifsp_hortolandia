@@ -1,36 +1,33 @@
 package com.glpi.ifsp.hortolandia.ui.viewmodel
 
+import BaseLiveEvent
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.glpi.ifsp.hortolandia.data.resource.Resource
 import com.glpi.ifsp.hortolandia.domain.LoginUseCase
+import com.glpi.ifsp.hortolandia.infrastructure.exceptions.UnauthorizedLoginException
 import com.glpi.ifsp.hortolandia.ui.LoginUI
-import com.glpi.ifsp.hortolandia.ui.wrapper.Event
+import com.glpi.ifsp.hortolandia.ui.event.LoginEvent
+import com.glpi.ifsp.hortolandia.ui.state.LoginState
 import kotlinx.coroutines.launch
 
 class LoginViewModel(
     private val loginUseCase: LoginUseCase
 ) : ViewModel() {
 
-    private val _isUsernameEmpty = MutableLiveData<Boolean>()
-    val isUsernameEmpty: LiveData<Boolean>
-        get() = _isUsernameEmpty
+    private var isPasswordEmpty: Boolean = true
+    private var isUsernameEmpty: Boolean = true
 
-    private val _isPasswordEmpty = MutableLiveData<Boolean>()
-    val isPasswordEmpty: LiveData<Boolean>
-        get() = _isPasswordEmpty
+    private val _state = MutableLiveData<LoginState>()
+    val state: LiveData<LoginState>
+        get() = _state
 
-    private val _showLoading = MutableLiveData<Boolean>()
-    val showLoading: LiveData<Boolean>
-        get() = _showLoading
+    private var _event = BaseLiveEvent<LoginEvent>()
+    val event: LiveData<LoginEvent>
+        get() = _event
 
-    private val _loginState = MutableLiveData<Event<Resource<Unit>>>()
-    val loginState: LiveData<Event<Resource<Unit>>>
-        get() = _loginState
-
-    fun makeLogin(username: String, password: String) {
+    fun onLoginClick(username: String, password: String) {
         validateFields(username, password)
         makeLoginIfUsernameAndPasswordAreFilled(username, password)
     }
@@ -39,7 +36,7 @@ class LoginViewModel(
         username: String,
         password: String
     ) {
-        if (_isUsernameEmpty.value == false && _isPasswordEmpty.value == false) {
+        if (!isUsernameEmpty && !isPasswordEmpty) {
             val loginUI = LoginUI(username, password)
             viewModelScope.launch {
                 login(loginUI)
@@ -49,26 +46,29 @@ class LoginViewModel(
 
     private suspend fun login(loginUI: LoginUI) {
         try {
-            _showLoading.value = true
+            _state.value = LoginState.ShowLoading
             loginUseCase.makeLogin(loginUI)
-            _loginState.value = Event(Resource.Success())
-        }  catch (e: Exception) {
-            _loginState.value = Event(Resource.Error(e))
+            _event.value = LoginEvent.OpenHome
+        } catch (e: UnauthorizedLoginException) {
+            _event.value = LoginEvent.ShowBadCredentialError
+        } catch (e: Exception) {
+            _event.value = LoginEvent.ShowConnectionError
         } finally {
-            _showLoading.value = false
+            _state.value = LoginState.HideLoading
         }
     }
 
     private fun validateFields(username: String, password: String) {
         checkIfUsernameFieldIsEmpty(username)
         checkIfPasswordFieldIsEmpty(password)
+        _state.value = LoginState.ValidateField(isUsernameEmpty, isPasswordEmpty)
     }
 
     private fun checkIfUsernameFieldIsEmpty(username: String) {
-        _isUsernameEmpty.value = username == ""
+        isUsernameEmpty = username == ""
     }
 
     private fun checkIfPasswordFieldIsEmpty(password: String) {
-        _isPasswordEmpty.value = password == ""
+        isPasswordEmpty = password == ""
     }
 }

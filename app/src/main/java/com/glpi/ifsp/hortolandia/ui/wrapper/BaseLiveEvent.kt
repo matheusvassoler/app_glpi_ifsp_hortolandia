@@ -1,5 +1,3 @@
-package com.glpi.ifsp.hortolandia.ui.wrapper
-
 import androidx.annotation.MainThread
 import androidx.collection.ArraySet
 import androidx.lifecycle.LifecycleOwner
@@ -14,7 +12,7 @@ class BaseLiveEvent<T> : MediatorLiveData<T>() {
     override fun observe(owner: LifecycleOwner, observer: Observer<in T>) {
         val wrapper = ObserverWrapper(observer)
         observers.add(wrapper)
-        super.observe(owner, observer)
+        super.observe(owner, wrapper)
     }
 
     @MainThread
@@ -28,23 +26,23 @@ class BaseLiveEvent<T> : MediatorLiveData<T>() {
             val wrapper = iterator.next()
             if (wrapper.observer == observer) {
                 iterator.remove()
-                super.removeObserver(observer)
+                super.removeObserver(wrapper)
                 break
             }
         }
     }
 
     @MainThread
-    override fun setValue(value: T) {
+    override fun setValue(t: T?) {
         observers.forEach { it.newValue() }
-        super.setValue(value)
+        super.setValue(t)
     }
 
     private class ObserverWrapper<T>(val observer: Observer<T>) : Observer<T> {
 
         private var pending = false
 
-        override fun onChanged(t: T) {
+        override fun onChanged(t: T?) {
             if (pending) {
                 pending = false
                 observer.onChanged(t)
