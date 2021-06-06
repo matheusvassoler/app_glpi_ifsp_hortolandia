@@ -32,7 +32,6 @@ class LoginActivity : AppCompatActivity() {
         binding.activityLoginButton.setOnClickListener {
             val username = binding.activityLoginUsernameInput.editText?.text.toString()
             val password = binding.activityLoginPasswordInput.editText?.text.toString()
-            loginViewModel.usernameField = username
             loginViewModel.onLoginClick(username, password)
         }
     }
