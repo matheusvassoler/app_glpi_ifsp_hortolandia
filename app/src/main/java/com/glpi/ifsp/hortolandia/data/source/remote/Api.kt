@@ -17,4 +17,10 @@ interface Api {
         @Header("Authorization") authHeader: String,
         @Query("get_full_session") getFullSession: Boolean = true
     ): Response<Login>
+
+    @GET("killSession")
+    @Headers("App-Token: $APP_TOKEN")
+    suspend fun killSession(
+        @Header("Session-Token") sessionToken: String
+    )
 }
