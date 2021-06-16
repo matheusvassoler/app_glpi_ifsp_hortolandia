@@ -22,5 +22,5 @@ interface Api {
     @Headers("App-Token: $APP_TOKEN")
     suspend fun killSession(
         @Header("Session-Token") sessionToken: String
-    )
+    ): Response<Void>
 }
