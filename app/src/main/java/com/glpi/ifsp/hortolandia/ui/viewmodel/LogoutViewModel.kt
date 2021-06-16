@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.glpi.ifsp.hortolandia.domain.LogoutUseCase
+import com.glpi.ifsp.hortolandia.infrastructure.exceptions.InternalErrorException
 import com.glpi.ifsp.hortolandia.ui.event.LogoutEvent
 import com.glpi.ifsp.hortolandia.ui.state.LogoutState
 import java.lang.Exception
@@ -27,8 +28,10 @@ class LogoutViewModel(
         viewModelScope.launch() {
             try {
                 _state.value = LogoutState.ShowLoading
-                logoutUseCase("")
+                logoutUseCase()
                 _event.value = LogoutEvent.GoToLogin
+            } catch (e: InternalErrorException) {
+                _event.value = LogoutEvent.ShowInternalError
             } catch (e: Exception) {
                 _event.value = LogoutEvent.ShowLogoutError
             } finally {

@@ -19,6 +19,10 @@ class SessionLocalRepository(
         appSharedPreferences.clear()
     }
 
+    override fun getSessionToken(): String? {
+        return appSharedPreferences.getStringValue("session_token")
+    }
+
     private fun storeLastName(lastName: String) {
         appSharedPreferences.save("last_name", lastName)
     }

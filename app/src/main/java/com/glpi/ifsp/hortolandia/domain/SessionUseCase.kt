@@ -14,4 +14,8 @@ class SessionUseCase(
     fun clearSessionData() {
         sessionRepository.clearUserData()
     }
+
+    fun getSessionToken(): String? {
+        return sessionRepository.getSessionToken()
+    }
 }

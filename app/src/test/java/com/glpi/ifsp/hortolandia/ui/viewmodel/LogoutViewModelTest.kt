@@ -4,6 +4,7 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import com.glpi.ifsp.hortolandia.domain.LogoutUseCase
+import com.glpi.ifsp.hortolandia.infrastructure.exceptions.InternalErrorException
 import com.glpi.ifsp.hortolandia.ui.event.LogoutEvent
 import com.glpi.ifsp.hortolandia.ui.state.LogoutState
 import com.google.common.truth.Truth.assertThat
@@ -73,7 +74,7 @@ class LogoutViewModelTest {
     @Test
     fun `onLogoutClick SHOULD emit ShowLogoutError Event WHEN logout not is successful`() {
         // GIVEN
-        coEvery { logoutUseCase(any()) } throws Exception()
+        coEvery { logoutUseCase() } throws Exception()
 
         // WHEN
         viewModel.onLogoutClick()
@@ -81,6 +82,19 @@ class LogoutViewModelTest {
         // THEN
         assertThat(eventList.size).isEqualTo(1)
         assertThat(eventList[0]).isInstanceOf(LogoutEvent.ShowLogoutError::class.java)
+    }
+
+    @Test
+    fun `onLogoutClick SHOULD emit ShowInternalError Event WHEN an internal android error occurs`() {
+        // GIVEN
+        coEvery { logoutUseCase() } throws InternalErrorException()
+
+        // WHEN
+        viewModel.onLogoutClick()
+
+        // THEN
+        assertThat(eventList.size).isEqualTo(1)
+        assertThat(eventList[0]).isInstanceOf(LogoutEvent.ShowInternalError::class.java)
     }
 
     @Test

@@ -7,4 +7,6 @@ interface SessionRepository {
     fun storeUserData(sessionUI: SessionUI)
 
     fun clearUserData()
+
+    fun getSessionToken(): String?
 }
