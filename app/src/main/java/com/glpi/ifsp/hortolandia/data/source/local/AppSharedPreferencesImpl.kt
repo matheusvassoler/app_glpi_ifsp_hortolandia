@@ -36,6 +36,12 @@ class AppSharedPreferencesImpl(context: Context) : AppSharedPreferences {
     override fun getIntValue(keyName: String): Int =
         preferences.getInt(keyName, 0)
 
+    override fun clear() {
+        preferences.edit {
+            clear()
+        }
+    }
+
     companion object {
         private const val PREFS_NAME = "user_data"
     }
