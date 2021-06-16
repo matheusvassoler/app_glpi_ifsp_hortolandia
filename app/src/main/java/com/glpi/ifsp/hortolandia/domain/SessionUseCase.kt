@@ -10,4 +10,8 @@ class SessionUseCase(
     fun storeSessionData(sessionUI: SessionUI) {
         sessionRepository.storeUserData(sessionUI)
     }
+
+    fun clearSessionData() {
+        sessionRepository.clearUserData()
+    }
 }
