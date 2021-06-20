@@ -11,4 +11,11 @@
     <string name="empty_password_field_error_message">O campo senha está vázio</string>
     <string name="login_bad_credentials_error_message">O usuário e/ou senha incorretos</string>
     <string name="login_error_message">Houve um problema durante o login. Tente novamente</string>
+
+    <!-- Profile Screen -->
+    <string name="profile_exit_button_text">Sair</string>
+    <string name="profile_logout_error">Ocorreu um erro ao realizar o logout. Tente novamente</string>
+
+    <!-- Common errors -->
+    <string name="internal_error">Ocorreu um erro interno</string>
 </resources>

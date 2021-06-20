@@ -12,7 +12,7 @@ import com.glpi.ifsp.hortolandia.ui.state.LogoutState
 import java.lang.Exception
 import kotlinx.coroutines.launch
 
-class LogoutViewModel(
+class ProfileViewModel(
     private val logoutUseCase: LogoutUseCase
 ) : ViewModel() {
 

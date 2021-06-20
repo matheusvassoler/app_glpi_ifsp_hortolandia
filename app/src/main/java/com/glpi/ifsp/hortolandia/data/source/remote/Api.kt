@@ -7,7 +7,7 @@ import retrofit2.http.Header
 import retrofit2.http.Headers
 import retrofit2.http.Query
 
-private const val APP_TOKEN = "teFbYFpVnJ3XLXgzDMtqe3RLvnru34dEN9oyDkk1"
+private const val APP_TOKEN = "p9JcRUcF2P3WjiCCbhkUHbofLpA1bdbZMNxMvkVy"
 
 interface Api {
 

@@ -18,7 +18,7 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 
-class LogoutViewModelTest {
+class ProfileViewModelTest {
 
     @RelaxedMockK
     private lateinit var logoutUseCase: LogoutUseCase
@@ -38,7 +38,7 @@ class LogoutViewModelTest {
     private val eventList: ArrayList<LogoutEvent> = arrayListOf()
 
     @InjectMockKs
-    private lateinit var viewModel: LogoutViewModel
+    private lateinit var viewModel: ProfileViewModel
 
     @get: Rule
     val rule = InstantTaskExecutorRule()

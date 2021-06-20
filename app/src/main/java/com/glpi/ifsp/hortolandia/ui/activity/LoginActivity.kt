@@ -1,8 +1,8 @@
 package com.glpi.ifsp.hortolandia.ui.activity
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import com.glpi.ifsp.hortolandia.R
@@ -45,7 +45,7 @@ class LoginActivity : AppCompatActivity() {
         loginViewModel.event.observe(this, Observer {
             when (it) {
                 is LoginEvent.OpenHome -> {
-                    Toast.makeText(this, "Fez login", Toast.LENGTH_SHORT).show()
+                    startActivity(Intent(this, HomeActivity::class.java))
                 }
                 is LoginEvent.ShowBadCredentialError -> {
                     showSnackBar(getString(R.string.login_bad_credentials_error_message))
