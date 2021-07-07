@@ -23,4 +23,11 @@ interface Api {
     suspend fun killSession(
         @Header("Session-Token") sessionToken: String
     ): Response<Void>
+
+    @GET("ticket")
+    @Headers("App-Token: $APP_TOKEN")
+    suspend fun getTickets(
+        @Header("Session-Token") sessionToken: String,
+        @Query("range") searchRange: String
+    )
 }
