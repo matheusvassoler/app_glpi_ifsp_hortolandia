@@ -1,6 +1,7 @@
 package com.glpi.ifsp.hortolandia.data.source.remote
 
 import com.glpi.ifsp.hortolandia.data.model.Login
+import com.glpi.ifsp.hortolandia.data.model.Ticket
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Header
@@ -29,5 +30,5 @@ interface Api {
     suspend fun getTickets(
         @Header("Session-Token") sessionToken: String,
         @Query("range") searchRange: String
-    )
+    ): Response<List<Ticket>>
 }
