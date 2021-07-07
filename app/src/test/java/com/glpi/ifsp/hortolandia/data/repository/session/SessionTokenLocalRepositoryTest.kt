@@ -28,6 +28,13 @@ class SessionTokenLocalRepositoryTest : BaseUnitTest() {
         verifyCallToSharedPreferences("last_name", "Vassoler")
     }
 
+    @Test
+    fun `clear method SHOULD call clear to remove data inside SharedPreferences`() {
+        sessionLocalRepository.clearUserData()
+
+        verify { appSharedPreferencesImpl.clear() }
+    }
+
     private fun <T> verifyCallToSharedPreferences(keyName: String, value: T) {
         when (value) {
             is Int -> verify { appSharedPreferencesImpl.save(keyName, value) }

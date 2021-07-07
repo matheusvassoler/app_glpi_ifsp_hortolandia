@@ -13,4 +13,6 @@ interface AppSharedPreferences {
     fun getBooleanValue(keyName: String): Boolean
 
     fun getIntValue(keyName: String): Int
+
+    fun clear()
 }

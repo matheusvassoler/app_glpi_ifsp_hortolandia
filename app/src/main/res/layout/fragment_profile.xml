@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".ui.fragment.ProfileFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/fragment_profile_logout_button"
+            android:layout_width="@dimen/default_dimen_0dp"
+            android:layout_height="@dimen/default_dimen_40dp"
+            android:layout_marginStart="@dimen/default_dimen_20dp"
+            android:layout_marginEnd="@dimen/default_dimen_20dp"
+            android:layout_marginBottom="@dimen/default_dimen_20dp"
+            android:backgroundTint="@color/green_dark"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/fragment_profile_logout_card_view_layout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/fragment_profile_logout_button_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/profile_exit_button_text"
+                    android:textColor="@color/white"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"/>
+
+                <ProgressBar
+                    android:id="@+id/fragment_logout_progress_bar_button"
+                    android:layout_width="@dimen/default_dimen_30dp"
+                    android:layout_height="@dimen/default_dimen_30dp"
+                    android:indeterminateTint="@color/white"
+                    android:visibility="gone"
+                    app:layout_constraintTop_toTopOf="@id/fragment_profile_logout_card_view_layout"
+                    app:layout_constraintEnd_toEndOf="@id/fragment_profile_logout_card_view_layout"
+                    app:layout_constraintBottom_toBottomOf="@id/fragment_profile_logout_card_view_layout"
+                    app:layout_constraintStart_toStartOf="@id/fragment_profile_logout_card_view_layout" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.cardview.widget.CardView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</FrameLayout>

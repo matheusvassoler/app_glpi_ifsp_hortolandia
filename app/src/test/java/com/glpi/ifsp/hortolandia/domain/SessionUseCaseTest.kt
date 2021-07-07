@@ -24,6 +24,13 @@ class SessionUseCaseTest : BaseUnitTest() {
         verify { sessionRepository.storeUserData(mockSessionUI()) }
     }
 
+    @Test
+    fun `clearSessionData SHOULD call method inside SessionRepository to clear SharedPreferences`() {
+        sessionUseCase.clearSessionData()
+
+        verify { sessionRepository.clearUserData() }
+    }
+
     private fun mockSessionUI(): SessionUI {
         return SessionUI(
             sessionToken = "abcdefghij",
