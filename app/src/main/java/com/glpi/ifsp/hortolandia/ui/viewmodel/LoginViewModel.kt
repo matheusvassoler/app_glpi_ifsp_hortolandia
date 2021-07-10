@@ -1,6 +1,5 @@
 package com.glpi.ifsp.hortolandia.ui.viewmodel
 
-import BaseLiveEvent
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -10,6 +9,7 @@ import com.glpi.ifsp.hortolandia.infrastructure.exceptions.UnauthorizedLoginExce
 import com.glpi.ifsp.hortolandia.ui.LoginUI
 import com.glpi.ifsp.hortolandia.ui.event.LoginEvent
 import com.glpi.ifsp.hortolandia.ui.state.LoginState
+import com.hadilq.liveevent.LiveEvent
 import kotlinx.coroutines.launch
 
 class LoginViewModel(
@@ -23,7 +23,7 @@ class LoginViewModel(
     val state: LiveData<LoginState>
         get() = _state
 
-    private var _event = BaseLiveEvent<LoginEvent>()
+    private var _event = LiveEvent<LoginEvent>()
     val event: LiveData<LoginEvent>
         get() = _event
 
