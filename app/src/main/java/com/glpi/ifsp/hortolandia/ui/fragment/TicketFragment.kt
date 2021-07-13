@@ -4,8 +4,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
+import androidx.paging.CombinedLoadStates
+import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.glpi.ifsp.hortolandia.databinding.FragmentTicketBinding
 import com.glpi.ifsp.hortolandia.ui.adapter.TicketAdapter
@@ -39,15 +42,34 @@ class TicketFragment : Fragment() {
 
         setRecyclerView()
         setPagingDataToAdapter()
-        setListenerToSwipeRefresh()
+        setListeners()
     }
 
     private fun setRecyclerView() {
         binding.fragmentTicketList.apply {
             layoutManager = LinearLayoutManager(requireContext())
             adapter = with(ticketAdapter) {
+                setAddLoadStateListener()
                 withLoadStateFooter(TicketLoadStateAdapter(::onRetryLoadTicketList))
             }
+        }
+    }
+
+    private fun TicketAdapter.setAddLoadStateListener() {
+        addLoadStateListener { loadState ->
+            binding.fragmentTicketSwipeRefresh.isVisible = loadState.refresh is LoadState.NotLoading
+            binding.fragmentTicketErrorState.isVisible = loadState.refresh is LoadState.Error
+            binding.fragmentTicketInitialLoading.isVisible = loadState.refresh is LoadState.Loading
+            checkIfShowEmptyStateOrTicketList(loadState)
+        }
+    }
+
+    private fun checkIfShowEmptyStateOrTicketList(loadState: CombinedLoadStates) {
+        if (loadState.refresh is LoadState.NotLoading && ticketAdapter.itemCount < 1) {
+            binding.fragmentTicketSwipeRefresh.isVisible = false
+            binding.fragmentTicketEmptyState.isVisible = true
+        } else {
+            binding.fragmentTicketEmptyState.isVisible = false
         }
     }
 
@@ -59,10 +81,22 @@ class TicketFragment : Fragment() {
         }
     }
 
+    private fun setListeners() {
+        setListenerToSwipeRefresh()
+        setListenerToRetryButton()
+    }
+
     private fun setListenerToSwipeRefresh() {
         binding.fragmentTicketSwipeRefresh.setOnRefreshListener {
             ticketAdapter.refresh()
             binding.fragmentTicketSwipeRefresh.isRefreshing = false
+            binding.fragmentTicketSwipeRefresh.isVisible = false
+        }
+    }
+
+    private fun setListenerToRetryButton() {
+        binding.fragmentTicketErrorTryAgainButton.setOnClickListener {
+            ticketAdapter.refresh()
         }
     }
 
