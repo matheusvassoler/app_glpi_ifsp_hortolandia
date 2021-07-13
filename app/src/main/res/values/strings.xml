@@ -22,6 +22,8 @@
     <string name="ticket_error_result_title">Ocorreu um erro</string>
     <string name="ticket_error_result_description">Não foi possível carregar as informações</string>
     <string name="ticket_error_result_button_text">Tentar novamente</string>
+    <string name="ticket_update_date_label">Atualizado em</string>
+    <string name="ticket_update_status_label">Status</string>
 
     <!-- Common errors -->
     <string name="internal_error">Ocorreu um erro interno</string>
