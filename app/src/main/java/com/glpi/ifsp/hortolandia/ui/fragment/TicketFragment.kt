@@ -9,6 +9,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.glpi.ifsp.hortolandia.databinding.FragmentTicketBinding
 import com.glpi.ifsp.hortolandia.ui.adapter.TicketAdapter
+import com.glpi.ifsp.hortolandia.ui.adapter.TicketLoadStateAdapter
 import com.glpi.ifsp.hortolandia.ui.viewmodel.TicketViewModel
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -44,7 +45,9 @@ class TicketFragment : Fragment() {
     private fun setRecyclerView() {
         binding.fragmentTicketList.apply {
             layoutManager = LinearLayoutManager(requireContext())
-            adapter = ticketAdapter
+            adapter = with(ticketAdapter) {
+                withLoadStateFooter(TicketLoadStateAdapter(::onRetryLoadTicketList))
+            }
         }
     }
 
@@ -61,6 +64,10 @@ class TicketFragment : Fragment() {
             ticketAdapter.refresh()
             binding.fragmentTicketSwipeRefresh.isRefreshing = false
         }
+    }
+
+    private fun onRetryLoadTicketList() {
+        ticketAdapter.retry()
     }
 
     override fun onDestroyView() {
