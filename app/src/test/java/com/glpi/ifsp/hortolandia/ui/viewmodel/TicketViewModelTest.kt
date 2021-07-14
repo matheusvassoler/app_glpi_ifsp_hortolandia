@@ -74,7 +74,7 @@ class TicketViewModelTest : BaseUnitTest() {
     @Test
     fun `onStart SHOULD call UseCase and get ticket list`() = runBlocking {
         // GIVEN
-        val expectedResult = listOf(Ticket("Ticket1", "teste", "13/09/2020", 0))
+        val expectedResult = listOf(Ticket("1", "Ticket1", "teste", "13/09/2020", 0))
         val pagingData = PagingData.from(expectedResult)
         val ticketFlow = flow {
             emit(pagingData)

@@ -13,7 +13,7 @@ open class BaseUnitTest {
 
     class MyDiffCallback : DiffUtil.ItemCallback<Ticket>() {
         override fun areItemsTheSame(oldItem: Ticket, newItem: Ticket): Boolean {
-            return oldItem.name == newItem.name
+            return oldItem.id == newItem.id
         }
 
         override fun areContentsTheSame(oldItem: Ticket, newItem: Ticket): Boolean {

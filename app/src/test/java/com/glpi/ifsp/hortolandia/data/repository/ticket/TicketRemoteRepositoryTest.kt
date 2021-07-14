@@ -48,7 +48,7 @@ class TicketRemoteRepositoryTest : BaseUnitTest() {
     @Test
     fun `getTickets SHOULD call method from API and return a list WITH tickets`() {
         // GIVEN
-        val expectedResult = listOf(Ticket("Ticket1", "teste", "13/09/2020", 0))
+        val expectedResult = listOf(Ticket("1", "Ticket1", "teste", "13/09/2020", 0))
         coEvery { api().getTickets("12345", "0-15") } returns mockResponse()
         val list = AsyncPagingDataDiffer(
             diffCallback = MyDiffCallback(),
@@ -65,6 +65,6 @@ class TicketRemoteRepositoryTest : BaseUnitTest() {
     }
 
     private fun mockResponse(): Response<List<Ticket>> {
-        return Response.success(listOf(Ticket("Ticket1", "teste", "13/09/2020", 0)))
+        return Response.success(listOf(Ticket("1", "Ticket1", "teste", "13/09/2020", 0)))
     }
 }
