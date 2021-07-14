@@ -11,12 +11,14 @@ import com.glpi.ifsp.hortolandia.ui.fragment.TicketFragment
 class HomeActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityHomeBinding
+    private lateinit var mapToolbarTitle: Map<String, String>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        setMapToolbarTitle()
         setInitialFragment()
         setListenersToBottomNavigationView()
     }
@@ -26,6 +28,7 @@ class HomeActivity : AppCompatActivity() {
     }
 
     private fun setCurrentFragment(fragment: Fragment, fragmentTag: String) {
+        binding.activityHomeToolbar.toolbarTitle.text = getToolbarTittle(fragmentTag)
         supportFragmentManager.beginTransaction().apply {
             replace(R.id.fragment_container_view, fragment, fragmentTag)
         }.commit()
@@ -53,6 +56,17 @@ class HomeActivity : AppCompatActivity() {
         binding.activityHomeBottomNavigationView.setOnNavigationItemReselectedListener {
             // Nothing here to disable reselect
         }
+    }
+
+    private fun setMapToolbarTitle() {
+        mapToolbarTitle = mapOf(
+            HOME_FRAGMENT_TAG to getString(R.string.ticket_toolbar_title),
+            PROFILE_FRAGMENT_TAG to getString(R.string.profile_toolbar_title)
+        )
+    }
+
+    private fun getToolbarTittle(fragmentTag: String): String {
+        return mapToolbarTitle[fragmentTag] ?: ""
     }
 
     companion object {
