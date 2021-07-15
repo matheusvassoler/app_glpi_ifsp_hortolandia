@@ -11,27 +11,18 @@ import com.glpi.ifsp.hortolandia.ui.fragment.TicketFragment
 class HomeActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityHomeBinding
-    private lateinit var mapToolbarTitle: Map<String, String>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        setMapToolbarTitle()
         setInitialFragment()
         setListenersToBottomNavigationView()
     }
 
     private fun setInitialFragment() {
-        setCurrentFragment(TicketFragment(), HOME_FRAGMENT_TAG)
-    }
-
-    private fun setCurrentFragment(fragment: Fragment, fragmentTag: String) {
-        binding.activityHomeToolbar.toolbarTitle.text = getToolbarTittle(fragmentTag)
-        supportFragmentManager.beginTransaction().apply {
-            replace(R.id.fragment_container_view, fragment, fragmentTag)
-        }.commit()
+        initHomeFragment()
     }
 
     private fun setListenersToBottomNavigationView() {
@@ -42,11 +33,8 @@ class HomeActivity : AppCompatActivity() {
     private fun setOnNavigationItemSelectedListener() {
         binding.activityHomeBottomNavigationView.setOnNavigationItemSelectedListener {
             when (it.itemId) {
-                R.id.bottom_nav_menu_home -> setCurrentFragment(TicketFragment(), HOME_FRAGMENT_TAG)
-                R.id.bottom_nav_menu_profile -> setCurrentFragment(
-                    ProfileFragment(),
-                    PROFILE_FRAGMENT_TAG
-                )
+                R.id.bottom_nav_menu_home -> initHomeFragment()
+                R.id.bottom_nav_menu_profile -> initProfileFragment()
             }
             true
         }
@@ -58,15 +46,24 @@ class HomeActivity : AppCompatActivity() {
         }
     }
 
-    private fun setMapToolbarTitle() {
-        mapToolbarTitle = mapOf(
-            HOME_FRAGMENT_TAG to getString(R.string.ticket_toolbar_title),
-            PROFILE_FRAGMENT_TAG to getString(R.string.profile_toolbar_title)
-        )
+    private fun initHomeFragment() {
+        setToolbarTitle(getString(R.string.ticket_toolbar_title))
+        replaceFragment(TicketFragment(), HOME_FRAGMENT_TAG)
     }
 
-    private fun getToolbarTittle(fragmentTag: String): String {
-        return mapToolbarTitle[fragmentTag] ?: ""
+    private fun initProfileFragment() {
+        setToolbarTitle(getString(R.string.profile_toolbar_title))
+        replaceFragment(ProfileFragment(), PROFILE_FRAGMENT_TAG)
+    }
+
+    private fun replaceFragment(fragment: Fragment, fragmentTag: String) {
+        supportFragmentManager.beginTransaction().apply {
+            replace(R.id.fragment_container_view, fragment, fragmentTag)
+        }.commit()
+    }
+
+    private fun setToolbarTitle(title: String) {
+        binding.activityHomeToolbar.toolbarTitle.text = title
     }
 
     companion object {

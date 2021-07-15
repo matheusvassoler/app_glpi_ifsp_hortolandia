@@ -10,6 +10,8 @@
         android:layout_width="@dimen/default_dimen_0dp"
         android:layout_height="wrap_content"
         app:contentInsetStart="@dimen/default_dimen_0dp"
+        android:paddingTop="@dimen/default_dimen_10dp"
+        android:paddingBottom="@dimen/default_dimen_10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
