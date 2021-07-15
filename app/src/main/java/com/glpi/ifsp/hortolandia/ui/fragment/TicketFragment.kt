@@ -1,18 +1,22 @@
 package com.glpi.ifsp.hortolandia.ui.fragment
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import androidx.paging.CombinedLoadStates
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.glpi.ifsp.hortolandia.databinding.FragmentTicketBinding
+import com.glpi.ifsp.hortolandia.ui.activity.ErrorActivity
 import com.glpi.ifsp.hortolandia.ui.adapter.TicketAdapter
 import com.glpi.ifsp.hortolandia.ui.adapter.TicketLoadStateAdapter
+import com.glpi.ifsp.hortolandia.ui.event.TicketEvent
 import com.glpi.ifsp.hortolandia.ui.viewmodel.TicketViewModel
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -32,7 +36,6 @@ class TicketFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentTicketBinding.inflate(inflater, container, false)
-        ticketViewModel.onStart()
         return binding.root
     }
 
@@ -40,6 +43,8 @@ class TicketFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         ticketAdapter = TicketAdapter()
 
+        setEventObserver()
+        ticketViewModel.onStart()
         setRecyclerView()
         setPagingDataToAdapter()
         setListeners()
@@ -84,6 +89,20 @@ class TicketFragment : Fragment() {
     private fun setListeners() {
         setListenerToSwipeRefresh()
         setListenerToRetryButton()
+    }
+
+    private fun setEventObserver() {
+        ticketViewModel.event.observe(viewLifecycleOwner, Observer {
+            when (it) {
+                is TicketEvent.ShowInternalError -> openErrorActivity()
+            }
+        })
+    }
+
+    private fun openErrorActivity() {
+        val intent = Intent(requireContext(), ErrorActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK
+        startActivity(intent)
     }
 
     private fun setListenerToSwipeRefresh() {

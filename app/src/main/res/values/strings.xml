@@ -22,11 +22,11 @@
     <string name="ticket_empty_result_title">Sem chamados!</string>
     <string name="ticket_empty_result_description">Não foram encontrados chamados para serem exibidos</string>
     <string name="ticket_error_result_title">Ocorreu um erro</string>
-    <string name="ticket_error_result_description">Não foi possível carregar as informações</string>
     <string name="ticket_error_result_button_text">Tentar novamente</string>
     <string name="ticket_update_date_label">Atualizado em</string>
     <string name="ticket_update_status_label">Status</string>
 
     <!-- Common errors -->
     <string name="internal_error">Ocorreu um erro interno</string>
+    <string name="ticket_error_result_description">Não foi possível carregar as informações</string>
 </resources>

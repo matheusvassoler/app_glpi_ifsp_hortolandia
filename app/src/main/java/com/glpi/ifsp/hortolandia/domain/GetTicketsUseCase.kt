@@ -47,7 +47,7 @@ class GetTicketsUseCase(
 
     companion object {
         private const val HTML_START_PARAGRAPH_TAG = "&lt;p&gt;"
-        private const val HTML_END_PARAGRAPH_TAG = ";/p&gt;"
+        private const val HTML_END_PARAGRAPH_TAG = "&lt;/p&gt;"
         private const val AMERICAN_FULL_FORMAT = "yyyy-MM-dd hh:mm:ss"
         private const val BRAZILIAN_FORMAT = "dd/MM/yyyy"
     }

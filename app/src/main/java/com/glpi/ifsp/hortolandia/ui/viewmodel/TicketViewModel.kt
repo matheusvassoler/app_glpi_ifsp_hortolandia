@@ -7,16 +7,16 @@ import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.glpi.ifsp.hortolandia.data.model.Ticket
 import com.glpi.ifsp.hortolandia.domain.GetTicketsUseCase
-import com.glpi.ifsp.hortolandia.infrastructure.exceptions.InternalErrorException
 import com.glpi.ifsp.hortolandia.ui.event.TicketEvent
 import com.hadilq.liveevent.LiveEvent
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.emptyFlow
 
 class TicketViewModel(
     private val getTicketsUseCase: GetTicketsUseCase
 ) : ViewModel() {
 
-    private lateinit var _ticketFlow: Flow<PagingData<Ticket>>
+    private var _ticketFlow: Flow<PagingData<Ticket>> = emptyFlow()
     val ticketFlow: Flow<PagingData<Ticket>>
         get() = _ticketFlow
 
@@ -27,7 +27,7 @@ class TicketViewModel(
     fun onStart() {
         try {
             _ticketFlow = getTicketsUseCase().cachedIn(viewModelScope)
-        } catch (e: InternalErrorException) {
+        } catch (e: Exception) {
             _event.value = TicketEvent.ShowInternalError
         }
     }
