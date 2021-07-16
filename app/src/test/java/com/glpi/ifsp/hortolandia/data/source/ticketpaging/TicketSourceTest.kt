@@ -28,7 +28,7 @@ class TicketSourceTest : BaseUnitTest() {
         // THEN
         assertThat(loadResult).isEqualTo(
             PagingSource.LoadResult.Page(
-                data = listOf(Ticket("", "", "", "", 0)),
+                data = listOf(Ticket("", "", "", "", 0, "")),
                 prevKey = null,
                 nextKey = "4-19"
             )
@@ -45,7 +45,7 @@ class TicketSourceTest : BaseUnitTest() {
         // THEN
         assertThat(loadResult).isEqualTo(
             PagingSource.LoadResult.Page(
-                data = listOf(Ticket("", "", "", "", 0)),
+                data = listOf(Ticket("", "", "", "", 0, "")),
                 prevKey = null,
                 nextKey = "26-41"
             )
@@ -62,7 +62,7 @@ class TicketSourceTest : BaseUnitTest() {
         // THEN
         assertThat(loadResult).isEqualTo(
             PagingSource.LoadResult.Page(
-                data = listOf(Ticket("", "", "", "", 0)),
+                data = listOf(Ticket("", "", "", "", 0, "")),
                 prevKey = null,
                 nextKey = null
             )
@@ -105,7 +105,7 @@ class TicketSourceTest : BaseUnitTest() {
 
     private fun mockResponse(range: String): Response<List<Ticket>> {
         return Response.success(
-            listOf(Ticket("", "", "", "", 0)),
+            listOf(Ticket("", "", "", "", 0, "")),
             Headers.headersOf("Content-Range ", range)
         )
     }

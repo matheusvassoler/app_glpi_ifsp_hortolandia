@@ -23,7 +23,7 @@ class GetTicketsUseCase(
                 val content = removeHtmlCodeFromTicketDescription(ticket.content)
                 val updateDate = formatAmericanDateToBrazil(ticket.updateDate)
                 ticket.run {
-                    Ticket(id, title, content, updateDate, status)
+                    Ticket(id, title, content, updateDate, status, openingDate)
                 }
             }
         }

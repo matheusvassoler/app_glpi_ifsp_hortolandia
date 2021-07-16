@@ -51,12 +51,12 @@ class GetTicketsUseCaseTest : BaseUnitTest() {
     @Test
     fun `UseCase SHOULD call TicketRepository to get Tickets AND format the date for Brazil AND do nothing with the description when it does not has html tag inside`() = testDispatcher.runBlockingTest {
         // GIVEN
-        val expectedList = listOf(Ticket("1", "Ticket 1", "Descrição ticket 1", "08/06/2021", 0))
+        val expectedList = listOf(Ticket("1", "Ticket 1", "Descrição ticket 1", "08/06/2021", 0, "07/06/2021"))
 
         coEvery { sessionUseCase.getSessionToken() } returns "12345"
 
         val flow = flow {
-            emit(PagingData.from(arrayListOf(Ticket("1", "Ticket 1", "Descrição ticket 1", "2021-06-08 22:01:31", 0))))
+            emit(PagingData.from(arrayListOf(Ticket("1", "Ticket 1", "Descrição ticket 1", "2021-06-08 22:01:31", 0, "07/06/2021"))))
         }
 
         coEvery { ticketRepository.getTickets("12345") } returns flow
@@ -78,12 +78,12 @@ class GetTicketsUseCaseTest : BaseUnitTest() {
     @Test
     fun `UseCase SHOULD call TicketRepository to get Tickets AND format the date for brazil AND remove the html tag from the description`() = testDispatcher.runBlockingTest {
         // GIVEN
-        val expectedList = listOf(Ticket("1", "Ticket 1", "Descrição ticket 1", "08/06/2021", 0))
+        val expectedList = listOf(Ticket("1", "Ticket 1", "Descrição ticket 1", "08/06/2021", 0, "07/06/2021"))
 
         coEvery { sessionUseCase.getSessionToken() } returns "12345"
 
         val flow = flow {
-            emit(PagingData.from(arrayListOf(Ticket("1", "Ticket 1", "&lt;p&gt;Descrição ticket 1&lt;/p&gt;", "2021-06-08 22:01:31", 0))))
+            emit(PagingData.from(arrayListOf(Ticket("1", "Ticket 1", "&lt;p&gt;Descrição ticket 1&lt;/p&gt;", "2021-06-08 22:01:31", 0, "07/06/2021"))))
         }
 
         coEvery { ticketRepository.getTickets("12345") } returns flow

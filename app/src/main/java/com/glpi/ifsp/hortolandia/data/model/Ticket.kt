@@ -7,5 +7,6 @@ data class Ticket(
     @SerializedName("name") val title: String,
     @SerializedName("content") val content: String,
     @SerializedName("date_mod") val updateDate: String,
-    @SerializedName("status") val status: Int
+    @SerializedName("status") val status: Int,
+    @SerializedName("date") val openingDate: String
 )
