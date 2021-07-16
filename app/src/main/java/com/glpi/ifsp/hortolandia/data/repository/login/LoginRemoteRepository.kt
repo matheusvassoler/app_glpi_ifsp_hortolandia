@@ -4,7 +4,7 @@ import android.util.Base64
 import android.util.Base64.encodeToString
 import com.glpi.ifsp.hortolandia.data.model.Login
 import com.glpi.ifsp.hortolandia.data.source.remote.ApiClient
-import com.glpi.ifsp.hortolandia.ui.LoginUI
+import com.glpi.ifsp.hortolandia.ui.model.LoginUI
 import retrofit2.Response
 
 class LoginRemoteRepository(

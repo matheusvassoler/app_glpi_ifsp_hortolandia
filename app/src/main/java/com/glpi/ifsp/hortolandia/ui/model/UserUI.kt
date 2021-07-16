@@ -1,4 +1,4 @@
-package com.glpi.ifsp.hortolandia.ui
+package com.glpi.ifsp.hortolandia.ui.model
 
 data class UserUI(
     val id: Int,

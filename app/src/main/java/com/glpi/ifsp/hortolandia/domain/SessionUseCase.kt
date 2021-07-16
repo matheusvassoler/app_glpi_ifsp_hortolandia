@@ -1,7 +1,7 @@
 package com.glpi.ifsp.hortolandia.domain
 
 import com.glpi.ifsp.hortolandia.data.repository.session.SessionRepository
-import com.glpi.ifsp.hortolandia.ui.SessionUI
+import com.glpi.ifsp.hortolandia.ui.model.SessionUI
 
 class SessionUseCase(
     private val sessionRepository: SessionRepository

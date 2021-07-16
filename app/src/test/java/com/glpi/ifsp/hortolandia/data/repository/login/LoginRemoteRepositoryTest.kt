@@ -4,7 +4,7 @@ import com.glpi.ifsp.hortolandia.BaseUnitTest
 import com.glpi.ifsp.hortolandia.data.model.Login
 import com.glpi.ifsp.hortolandia.data.model.User
 import com.glpi.ifsp.hortolandia.data.source.remote.ApiClient
-import com.glpi.ifsp.hortolandia.ui.LoginUI
+import com.glpi.ifsp.hortolandia.ui.model.LoginUI
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.impl.annotations.InjectMockKs

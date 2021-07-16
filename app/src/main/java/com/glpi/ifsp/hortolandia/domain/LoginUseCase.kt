@@ -6,9 +6,9 @@ import com.glpi.ifsp.hortolandia.data.repository.login.LoginRepository
 import com.glpi.ifsp.hortolandia.infrastructure.Constant
 import com.glpi.ifsp.hortolandia.infrastructure.exceptions.ResponseRequestException
 import com.glpi.ifsp.hortolandia.infrastructure.exceptions.UnauthorizedLoginException
-import com.glpi.ifsp.hortolandia.ui.LoginUI
-import com.glpi.ifsp.hortolandia.ui.SessionUI
-import com.glpi.ifsp.hortolandia.ui.UserUI
+import com.glpi.ifsp.hortolandia.ui.model.LoginUI
+import com.glpi.ifsp.hortolandia.ui.model.SessionUI
+import com.glpi.ifsp.hortolandia.ui.model.UserUI
 import java.lang.Exception
 import retrofit2.Response
 
