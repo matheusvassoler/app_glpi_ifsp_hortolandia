@@ -10,8 +10,9 @@
         android:layout_width="@dimen/default_dimen_0dp"
         android:layout_height="wrap_content"
         app:contentInsetStart="@dimen/default_dimen_0dp"
-        android:paddingTop="@dimen/default_dimen_10dp"
-        android:paddingBottom="@dimen/default_dimen_10dp"
+        app:contentInsetStartWithNavigation="0dp"
+        app:contentInsetEndWithActions="0dp"
+        style="@style/ToolbarStyle"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -22,7 +23,7 @@
 
             <TextView
                 android:id="@+id/toolbar_title"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:textSize="@dimen/default_dimen_25sp"
                 android:textStyle="bold"
@@ -30,6 +31,7 @@
                 android:textColor="@color/black"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
                 tools:text="Menu"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>

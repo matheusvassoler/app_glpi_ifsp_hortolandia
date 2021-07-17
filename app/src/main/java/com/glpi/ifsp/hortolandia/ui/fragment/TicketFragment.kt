@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -15,6 +14,7 @@ import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.glpi.ifsp.hortolandia.databinding.FragmentTicketBinding
 import com.glpi.ifsp.hortolandia.ui.activity.ErrorActivity
+import com.glpi.ifsp.hortolandia.ui.activity.TicketDetailsActivity
 import com.glpi.ifsp.hortolandia.ui.adapter.TicketAdapter
 import com.glpi.ifsp.hortolandia.ui.adapter.TicketLoadStateAdapter
 import com.glpi.ifsp.hortolandia.ui.event.TicketEvent
@@ -126,13 +126,7 @@ class TicketFragment : Fragment() {
     }
 
     private fun onTicketClick(ticketUI: TicketUI?) {
-        ticketUI?.let {
-            Toast.makeText(
-                requireContext(),
-                "Clique no chamado",
-                Toast.LENGTH_SHORT
-            ).show()
-        }
+        startActivity(Intent(requireContext(), TicketDetailsActivity::class.java))
     }
 
     override fun onDestroyView() {

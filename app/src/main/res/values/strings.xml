@@ -32,6 +32,13 @@
     <string name="ticket_details_status_pending_label">pendente</string>
     <string name="ticket_details_status_solved_label">solucionado</string>
     <string name="ticket_details_status_closed_label">fechado</string>
+    <string name="ticket_details_toolbar_title">Detalhes</string>
+    <string name="ticket_details_status_label">Status</string>
+    <string name="ticket_details_id_label">Id</string>
+    <string name="ticket_details_title_label">Título</string>
+    <string name="ticket_details_description_label">Descrição</string>
+    <string name="ticket_details_opening_date_label">Data de abertura</string>
+    <string name="ticket_details_update_date_label">Última atualização</string>
 
     <!-- Common errors -->
     <string name="internal_error">Ocorreu um erro interno</string>

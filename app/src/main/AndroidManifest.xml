@@ -15,6 +15,9 @@
         android:theme="@style/Theme.GLPIIFSP"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".ui.activity.TicketDetailsActivity"
+            android:screenOrientation="portrait"/>
+        <activity
             android:name=".ui.activity.ErrorActivity"
             android:screenOrientation="portrait" />
         <activity
