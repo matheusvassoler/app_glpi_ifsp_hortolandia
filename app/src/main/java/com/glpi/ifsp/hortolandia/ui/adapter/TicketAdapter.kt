@@ -9,7 +9,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.glpi.ifsp.hortolandia.databinding.TicketItemBinding
 import com.glpi.ifsp.hortolandia.ui.model.TicketUI
 
-class TicketAdapter : PagingDataAdapter<TicketUI, TicketAdapter.TicketViewHolder>(TicketComparator) {
+class TicketAdapter(
+    private val onTicketClick: (ticket: TicketUI?) -> Unit
+) : PagingDataAdapter<TicketUI, TicketAdapter.TicketViewHolder>(TicketComparator) {
 
     override fun onBindViewHolder(holder: TicketViewHolder, position: Int) {
         holder.bind(getItem(position))
@@ -17,10 +19,13 @@ class TicketAdapter : PagingDataAdapter<TicketUI, TicketAdapter.TicketViewHolder
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TicketViewHolder {
         val binding = TicketItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return TicketViewHolder(binding)
+        return TicketViewHolder(binding, onTicketClick)
     }
 
-    inner class TicketViewHolder(itemBinding: TicketItemBinding) : RecyclerView.ViewHolder(itemBinding.root) {
+    class TicketViewHolder(
+        private val itemBinding: TicketItemBinding,
+        private val onTicketClick: (ticket: TicketUI?) -> Unit
+    ) : RecyclerView.ViewHolder(itemBinding.root) {
 
         private val title: TextView = itemBinding.ticketItemTitle
         private val description: TextView = itemBinding.ticketItemDescription
@@ -32,6 +37,10 @@ class TicketAdapter : PagingDataAdapter<TicketUI, TicketAdapter.TicketViewHolder
             description.text = ticket?.description
             updateDate.text = ticket?.updateDate
             status.text = ticket?.status
+
+            itemBinding.ticketItem.setOnClickListener {
+                onTicketClick(ticket)
+            }
         }
     }
 

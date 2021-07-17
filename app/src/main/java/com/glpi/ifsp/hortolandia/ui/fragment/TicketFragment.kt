@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -17,6 +18,7 @@ import com.glpi.ifsp.hortolandia.ui.activity.ErrorActivity
 import com.glpi.ifsp.hortolandia.ui.adapter.TicketAdapter
 import com.glpi.ifsp.hortolandia.ui.adapter.TicketLoadStateAdapter
 import com.glpi.ifsp.hortolandia.ui.event.TicketEvent
+import com.glpi.ifsp.hortolandia.ui.model.TicketUI
 import com.glpi.ifsp.hortolandia.ui.viewmodel.TicketViewModel
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -41,7 +43,7 @@ class TicketFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        ticketAdapter = TicketAdapter()
+        ticketAdapter = TicketAdapter(::onTicketClick)
 
         setEventObserver()
         ticketViewModel.onStart()
@@ -121,6 +123,16 @@ class TicketFragment : Fragment() {
 
     private fun onRetryLoadTicketList() {
         ticketAdapter.retry()
+    }
+
+    private fun onTicketClick(ticketUI: TicketUI?) {
+        ticketUI?.let {
+            Toast.makeText(
+                requireContext(),
+                "Clique no chamado",
+                Toast.LENGTH_SHORT
+            ).show()
+        }
     }
 
     override fun onDestroyView() {
