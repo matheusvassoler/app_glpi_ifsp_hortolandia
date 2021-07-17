@@ -62,7 +62,7 @@ class GetTicketsUseCaseTest : BaseUnitTest() {
     @Test
     fun `UseCase SHOULD call TicketRepository to get Tickets AND returns TicketUI with formatted date and hour (opening and update) for Brazil AND do nothing with the description when it does not has html tag inside`() = testDispatcher.runBlockingTest {
         // GIVEN
-        val expectedList = listOf(TicketUI(1, "Ticket 1", "Descrição ticket 1", "07/06/2021", "11:06", "08/06/2021", "22:01", "novo"))
+        val expectedList = listOf(TicketUI("1", "Ticket 1", "Descrição ticket 1", "07/06/2021", "11:06", "08/06/2021", "22:01", "novo", 0))
 
         coEvery { sessionUseCase.getSessionToken() } returns "12345"
 
@@ -89,7 +89,7 @@ class GetTicketsUseCaseTest : BaseUnitTest() {
     @Test
     fun `UseCase SHOULD call TicketRepository to get Tickets AND returns TicketUI with formatted date and hour (opening and update) for brazil AND remove the html tag from the description`() = testDispatcher.runBlockingTest {
         // GIVEN
-        val expectedList = listOf(TicketUI(1, "Ticket 1", "Descrição ticket 1", "07/06/2021", "11:06", "08/06/2021", "22:01", "novo"))
+        val expectedList = listOf(TicketUI("1", "Ticket 1", "Descrição ticket 1", "07/06/2021", "11:06", "08/06/2021", "22:01", "novo", 0))
 
         coEvery { sessionUseCase.getSessionToken() } returns "12345"
 
@@ -114,9 +114,9 @@ class GetTicketsUseCaseTest : BaseUnitTest() {
     }
 
     @Test
-    fun `UseCase SHOULD call TicketRepository to get Tickets AND returns TicketUI WITH status novo WHEN status from Ticket is 1`() = testDispatcher.runBlockingTest {
+    fun `UseCase SHOULD call TicketRepository to get Tickets AND returns TicketUI WITH status new AND percentage status progress 0 WHEN status from Ticket is 1`() = testDispatcher.runBlockingTest {
         // GIVEN
-        val expectedList = listOf(TicketUI(1, "Ticket 1", "Descrição ticket 1", "01/12/2021", "12:06", "13/12/2021", "00:01", "novo"))
+        val expectedList = listOf(TicketUI("1", "Ticket 1", "Descrição ticket 1", "01/12/2021", "12:06", "13/12/2021", "00:01", "novo", 0))
 
         coEvery { sessionUseCase.getSessionToken() } returns "12345"
 
@@ -141,9 +141,9 @@ class GetTicketsUseCaseTest : BaseUnitTest() {
     }
 
     @Test
-    fun `UseCase SHOULD call TicketRepository to get Tickets AND returns TicketUI WITH status processando WHEN status from Ticket is 2`() = testDispatcher.runBlockingTest {
+    fun `UseCase SHOULD call TicketRepository to get Tickets AND returns TicketUI WITH status processing AND percentage status progress 25 WHEN status from Ticket is 2`() = testDispatcher.runBlockingTest {
         // GIVEN
-        val expectedList = listOf(TicketUI(1, "Ticket 1", "Descrição ticket 1", "07/06/2021", "11:06", "08/06/2021", "22:01", "processando"))
+        val expectedList = listOf(TicketUI("1", "Ticket 1", "Descrição ticket 1", "07/06/2021", "11:06", "08/06/2021", "22:01", "processando", 25))
 
         coEvery { sessionUseCase.getSessionToken() } returns "12345"
 
@@ -168,9 +168,9 @@ class GetTicketsUseCaseTest : BaseUnitTest() {
     }
 
     @Test
-    fun `UseCase SHOULD call TicketRepository to get Tickets AND returns TicketUI WITH status pendente WHEN status from Ticket is 3`() = testDispatcher.runBlockingTest {
+    fun `UseCase SHOULD call TicketRepository to get Tickets AND returns TicketUI WITH status pending AND percentage status progress 50 WHEN status from Ticket is 3`() = testDispatcher.runBlockingTest {
         // GIVEN
-        val expectedList = listOf(TicketUI(1, "Ticket 1", "Descrição ticket 1", "07/06/2021", "11:06", "08/06/2021", "22:01", "pendente"))
+        val expectedList = listOf(TicketUI("1", "Ticket 1", "Descrição ticket 1", "07/06/2021", "11:06", "08/06/2021", "22:01", "pendente", 50))
 
         coEvery { sessionUseCase.getSessionToken() } returns "12345"
 
@@ -195,9 +195,9 @@ class GetTicketsUseCaseTest : BaseUnitTest() {
     }
 
     @Test
-    fun `UseCase SHOULD call TicketRepository to get Tickets AND returns TicketUI WITH status solucionado WHEN status from Ticket is 4`() = testDispatcher.runBlockingTest {
+    fun `UseCase SHOULD call TicketRepository to get Tickets AND returns TicketUI WITH status solved AND percentage status progress 75 WHEN status from Ticket is 4`() = testDispatcher.runBlockingTest {
         // GIVEN
-        val expectedList = listOf(TicketUI(1, "Ticket 1", "Descrição ticket 1", "07/06/2021", "11:06", "08/06/2021", "22:01", "solucionado"))
+        val expectedList = listOf(TicketUI("1", "Ticket 1", "Descrição ticket 1", "07/06/2021", "11:06", "08/06/2021", "22:01", "solucionado", 75))
 
         coEvery { sessionUseCase.getSessionToken() } returns "12345"
 
@@ -222,9 +222,9 @@ class GetTicketsUseCaseTest : BaseUnitTest() {
     }
 
     @Test
-    fun `UseCase SHOULD call TicketRepository to get Tickets AND returns TicketUI WITH status fechado WHEN status from Ticket is 5`() = testDispatcher.runBlockingTest {
+    fun `UseCase SHOULD call TicketRepository to get Tickets AND returns TicketUI WITH status closed AND percentage status progress 100 WHEN status from Ticket is 5`() = testDispatcher.runBlockingTest {
         // GIVEN
-        val expectedList = listOf(TicketUI(1, "Ticket 1", "Descrição ticket 1", "07/06/2021", "11:06", "08/06/2021", "22:01", "fechado"))
+        val expectedList = listOf(TicketUI("1", "Ticket 1", "Descrição ticket 1", "07/06/2021", "11:06", "08/06/2021", "22:01", "fechado", 100))
 
         coEvery { sessionUseCase.getSessionToken() } returns "12345"
 
@@ -249,9 +249,9 @@ class GetTicketsUseCaseTest : BaseUnitTest() {
     }
 
     @Test
-    fun `UseCase SHOULD call TicketRepository to get Tickets AND returns TicketUI WITH empty status WHEN status from Ticket is differente of 1,2,3,4 or 5`() = testDispatcher.runBlockingTest {
+    fun `UseCase SHOULD call TicketRepository to get Tickets AND returns TicketUI WITH empty status AND percentage status progress 0 WHEN status from Ticket is differente of 1,2,3,4 or 5`() = testDispatcher.runBlockingTest {
         // GIVEN
-        val expectedList = listOf(TicketUI(1, "Ticket 1", "Descrição ticket 1", "07/06/2021", "11:06", "08/06/2021", "22:01", ""))
+        val expectedList = listOf(TicketUI("1", "Ticket 1", "Descrição ticket 1", "07/06/2021", "11:06", "08/06/2021", "22:01", "", 0))
 
         coEvery { sessionUseCase.getSessionToken() } returns "12345"
 

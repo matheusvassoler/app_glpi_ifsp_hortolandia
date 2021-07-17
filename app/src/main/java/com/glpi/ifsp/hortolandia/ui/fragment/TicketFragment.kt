@@ -13,6 +13,7 @@ import androidx.paging.CombinedLoadStates
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.glpi.ifsp.hortolandia.databinding.FragmentTicketBinding
+import com.glpi.ifsp.hortolandia.infrastructure.Constant.ExtrasName.TICKET_UI
 import com.glpi.ifsp.hortolandia.ui.activity.ErrorActivity
 import com.glpi.ifsp.hortolandia.ui.activity.TicketDetailsActivity
 import com.glpi.ifsp.hortolandia.ui.adapter.TicketAdapter
@@ -126,7 +127,10 @@ class TicketFragment : Fragment() {
     }
 
     private fun onTicketClick(ticketUI: TicketUI?) {
-        startActivity(Intent(requireContext(), TicketDetailsActivity::class.java))
+        Intent(requireContext(), TicketDetailsActivity::class.java).apply {
+            putExtra(TICKET_UI, ticketUI)
+            startActivity(this)
+        }
     }
 
     override fun onDestroyView() {

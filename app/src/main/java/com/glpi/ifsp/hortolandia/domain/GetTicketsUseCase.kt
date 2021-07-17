@@ -35,14 +35,15 @@ class GetTicketsUseCase(
         val status = mapIntStatusToString(ticket.status)
         return ticket.run {
             TicketUI(
-                id = id,
+                id = id.toString(),
                 title = title,
                 description = content,
                 openingDate = openingDate,
                 openingHour = openingHour,
                 updateDate = updateDate,
                 updateHour = updateHour,
-                status = status
+                status = status,
+                percentageStatusProgress = getPercentageStatusProgress(this.status)
             )
         }
     }
@@ -75,6 +76,17 @@ class GetTicketsUseCase(
         }
     }
 
+    private fun getPercentageStatusProgress(status: Int): Int {
+        return when (status) {
+            STATUS_NEW -> ZERO_PERCENT
+            STATUS_PROCESSING -> TWENTY_FIVE_PERCENT
+            STATUS_PENDING -> FIFTY_PERCENT
+            STATUS_SOLVED -> SEVENTY_FIVE_PERCENT
+            STATUS_CLOSED -> ONE_HUNDRED_PERCENT
+            else -> ZERO_PERCENT
+        }
+    }
+
     companion object {
         private const val HTML_START_PARAGRAPH_TAG = "&lt;p&gt;"
         private const val HTML_END_PARAGRAPH_TAG = "&lt;/p&gt;"
@@ -88,5 +100,10 @@ class GetTicketsUseCase(
         private const val STATUS_CLOSED = 5
         private const val PT_LANGUAGE = "pt"
         private const val BR_COUNTRY = "BR"
+        private const val ZERO_PERCENT = 0
+        private const val TWENTY_FIVE_PERCENT = 25
+        private const val FIFTY_PERCENT = 50
+        private const val SEVENTY_FIVE_PERCENT = 75
+        private const val ONE_HUNDRED_PERCENT = 100
     }
 }

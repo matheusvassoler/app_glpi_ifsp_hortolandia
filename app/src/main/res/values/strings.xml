@@ -39,6 +39,7 @@
     <string name="ticket_details_description_label">Descrição</string>
     <string name="ticket_details_opening_date_label">Data de abertura</string>
     <string name="ticket_details_update_date_label">Última atualização</string>
+    <string name="ticket_details_date_value">%s - %s</string>
 
     <!-- Common errors -->
     <string name="internal_error">Ocorreu um erro interno</string>
