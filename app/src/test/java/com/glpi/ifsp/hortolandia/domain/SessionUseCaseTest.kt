@@ -2,8 +2,8 @@ package com.glpi.ifsp.hortolandia.domain
 
 import com.glpi.ifsp.hortolandia.BaseUnitTest
 import com.glpi.ifsp.hortolandia.data.repository.session.SessionRepository
-import com.glpi.ifsp.hortolandia.ui.SessionUI
-import com.glpi.ifsp.hortolandia.ui.UserUI
+import com.glpi.ifsp.hortolandia.ui.model.SessionUI
+import com.glpi.ifsp.hortolandia.ui.model.UserUI
 import io.mockk.impl.annotations.InjectMockKs
 import io.mockk.impl.annotations.MockK
 import io.mockk.verify

@@ -5,7 +5,7 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-private const val BASE_URL = "http://192.168.0.12:8888/glpi/apirest.php/"
+private const val BASE_URL = "http://192.168.0.10:8888/glpi/apirest.php/"
 
 class ApiClient {
 

@@ -2,6 +2,7 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'org.jlleitschuh.gradle.ktlint'
 apply from: "$rootDir/tools/detekt.gradle"
+apply plugin: 'kotlin-parcelize'
 
 android {
     compileSdkVersion 30
@@ -75,13 +76,15 @@ dependencies {
 
     //Coroutines
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$versions.coroutines"
+    testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$versions.coroutinesTest"
 
     //MoccK
     implementation "io.mockk:mockk:$versions.mockk"
 
-    // ViewModel and LiveData
+    // ViewModel LiveData and Lifecycle
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$versions.lifecycle"
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:$versions.lifecycle"
+    implementation "androidx.lifecycle:lifecycle-runtime-ktx:$versions.lifecycle"
     testImplementation "androidx.arch.core:core-testing:$versions.coreTesting"
 
     //Hamcrest
@@ -89,4 +92,10 @@ dependencies {
 
     //Google truth
     testImplementation "com.google.truth:truth:$versions.googleTruth"
+
+    // Android Paging3
+    implementation "androidx.paging:paging-runtime-ktx:$versions.paging"
+
+    // LiveEvent
+    implementation "com.github.hadilq:live-event:$versions.liveEvent"
 }

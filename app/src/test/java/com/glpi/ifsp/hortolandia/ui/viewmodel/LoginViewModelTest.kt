@@ -6,8 +6,8 @@ import androidx.lifecycle.ViewModel
 import com.glpi.ifsp.hortolandia.domain.LoginUseCase
 import com.glpi.ifsp.hortolandia.infrastructure.exceptions.ResponseRequestException
 import com.glpi.ifsp.hortolandia.infrastructure.exceptions.UnauthorizedLoginException
-import com.glpi.ifsp.hortolandia.ui.LoginUI
 import com.glpi.ifsp.hortolandia.ui.event.LoginEvent
+import com.glpi.ifsp.hortolandia.ui.model.LoginUI
 import com.glpi.ifsp.hortolandia.ui.state.LoginState
 import com.google.common.truth.Truth.assertThat
 import io.mockk.MockKAnnotations

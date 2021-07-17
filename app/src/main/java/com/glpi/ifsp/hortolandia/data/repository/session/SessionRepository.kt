@@ -1,6 +1,6 @@
 package com.glpi.ifsp.hortolandia.data.repository.session
 
-import com.glpi.ifsp.hortolandia.ui.SessionUI
+import com.glpi.ifsp.hortolandia.ui.model.SessionUI
 
 interface SessionRepository {
 

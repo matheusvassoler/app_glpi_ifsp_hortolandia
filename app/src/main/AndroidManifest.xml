@@ -12,12 +12,17 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:usesCleartextTraffic="true"
-        android:theme="@style/Theme.GLPIIFSP">
+        android:theme="@style/Theme.GLPIIFSP"
+        android:usesCleartextTraffic="true">
+        <activity
+            android:name=".ui.activity.TicketDetailsActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".ui.activity.ErrorActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.HomeActivity"
-            android:screenOrientation="portrait"
-            />
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.LoginActivity"
             android:screenOrientation="portrait">

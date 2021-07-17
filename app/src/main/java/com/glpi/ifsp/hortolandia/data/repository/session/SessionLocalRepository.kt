@@ -1,7 +1,7 @@
 package com.glpi.ifsp.hortolandia.data.repository.session
 
 import com.glpi.ifsp.hortolandia.data.source.local.AppSharedPreferences
-import com.glpi.ifsp.hortolandia.ui.SessionUI
+import com.glpi.ifsp.hortolandia.ui.model.SessionUI
 
 class SessionLocalRepository(
     private val appSharedPreferences: AppSharedPreferences

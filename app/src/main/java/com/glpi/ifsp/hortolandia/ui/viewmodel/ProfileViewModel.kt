@@ -1,6 +1,5 @@
 package com.glpi.ifsp.hortolandia.ui.viewmodel
 
-import BaseLiveEvent
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -9,6 +8,7 @@ import com.glpi.ifsp.hortolandia.domain.LogoutUseCase
 import com.glpi.ifsp.hortolandia.infrastructure.exceptions.InternalErrorException
 import com.glpi.ifsp.hortolandia.ui.event.LogoutEvent
 import com.glpi.ifsp.hortolandia.ui.state.LogoutState
+import com.hadilq.liveevent.LiveEvent
 import java.lang.Exception
 import kotlinx.coroutines.launch
 
@@ -20,7 +20,7 @@ class ProfileViewModel(
     val state: LiveData<LogoutState>
         get() = _state
 
-    private var _event = BaseLiveEvent<LogoutEvent>()
+    private var _event = LiveEvent<LogoutEvent>()
     val event: LiveData<LogoutEvent>
         get() = _event
 

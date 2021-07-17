@@ -13,9 +13,35 @@
     <string name="login_error_message">Houve um problema durante o login. Tente novamente</string>
 
     <!-- Profile Screen -->
+    <string name="profile_toolbar_title">Perfil</string>
     <string name="profile_exit_button_text">Sair</string>
     <string name="profile_logout_error">Ocorreu um erro ao realizar o logout. Tente novamente</string>
 
+    <!-- Ticket Screen -->
+    <string name="ticket_toolbar_title">Chamados</string>
+    <string name="ticket_empty_result_title">Sem chamados!</string>
+    <string name="ticket_empty_result_description">Não foram encontrados chamados para serem exibidos</string>
+    <string name="ticket_error_result_title">Ocorreu um erro</string>
+    <string name="ticket_error_result_button_text">Tentar novamente</string>
+    <string name="ticket_update_date_label">Atualizado em</string>
+    <string name="ticket_update_status_label">Status</string>
+
+    <!-- Ticket Details Screen -->
+    <string name="ticket_details_status_new_label">novo</string>
+    <string name="ticket_details_status_processing_label">processando</string>
+    <string name="ticket_details_status_pending_label">pendente</string>
+    <string name="ticket_details_status_solved_label">solucionado</string>
+    <string name="ticket_details_status_closed_label">fechado</string>
+    <string name="ticket_details_toolbar_title">Detalhes</string>
+    <string name="ticket_details_status_label">Status</string>
+    <string name="ticket_details_id_label">Id</string>
+    <string name="ticket_details_title_label">Título</string>
+    <string name="ticket_details_description_label">Descrição</string>
+    <string name="ticket_details_opening_date_label">Data de abertura</string>
+    <string name="ticket_details_update_date_label">Última atualização</string>
+    <string name="ticket_details_date_value">%s - %s</string>
+
     <!-- Common errors -->
     <string name="internal_error">Ocorreu um erro interno</string>
+    <string name="ticket_error_result_description">Não foi possível carregar as informações</string>
 </resources>
