@@ -26,6 +26,13 @@
     <string name="ticket_update_date_label">Atualizado em</string>
     <string name="ticket_update_status_label">Status</string>
 
+    <!-- Ticket Details Screen -->
+    <string name="ticket_details_status_new_label">novo</string>
+    <string name="ticket_details_status_processing_label">processando</string>
+    <string name="ticket_details_status_pending_label">pendente</string>
+    <string name="ticket_details_status_solved_label">solucionado</string>
+    <string name="ticket_details_status_closed_label">fechado</string>
+
     <!-- Common errors -->
     <string name="internal_error">Ocorreu um erro interno</string>
     <string name="ticket_error_result_description">Não foi possível carregar as informações</string>

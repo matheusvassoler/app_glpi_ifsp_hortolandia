@@ -3,7 +3,7 @@ package com.glpi.ifsp.hortolandia.data.model
 import com.google.gson.annotations.SerializedName
 
 data class Ticket(
-    @SerializedName("id") val id: String,
+    @SerializedName("id") val id: Int,
     @SerializedName("name") val title: String,
     @SerializedName("content") val content: String,
     @SerializedName("date_mod") val updateDate: String,

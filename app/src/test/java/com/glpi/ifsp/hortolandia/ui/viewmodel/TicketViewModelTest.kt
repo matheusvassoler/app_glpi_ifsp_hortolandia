@@ -6,10 +6,10 @@ import androidx.lifecycle.ViewModel
 import androidx.paging.AsyncPagingDataDiffer
 import androidx.paging.PagingData
 import com.glpi.ifsp.hortolandia.BaseUnitTest
-import com.glpi.ifsp.hortolandia.data.model.Ticket
 import com.glpi.ifsp.hortolandia.domain.GetTicketsUseCase
 import com.glpi.ifsp.hortolandia.infrastructure.exceptions.InternalErrorException
 import com.glpi.ifsp.hortolandia.ui.event.TicketEvent
+import com.glpi.ifsp.hortolandia.ui.model.TicketUI
 import com.google.common.truth.Truth.assertThat
 import io.mockk.every
 import io.mockk.impl.annotations.InjectMockKs
@@ -74,14 +74,14 @@ class TicketViewModelTest : BaseUnitTest() {
     @Test
     fun `onStart SHOULD call UseCase and get ticket list`() = runBlocking {
         // GIVEN
-        val expectedResult = listOf(Ticket("1", "Ticket1", "teste", "13/09/2020", 0, "12/09/2020"))
+        val expectedResult = listOf(TicketUI(0, "Ticket 1", "Descrição ticket 1", "08/06/2021", "12:45", "07/06/2021", "11h10", "novo"))
         val pagingData = PagingData.from(expectedResult)
         val ticketFlow = flow {
             emit(pagingData)
         }
         every { getTicketsUseCase() } returns ticketFlow
         val list = AsyncPagingDataDiffer(
-            diffCallback = MyDiffCallback(),
+            diffCallback = MyDiffCallback<TicketUI>(),
             updateCallback = NoopListCallback()
         )
         // WHEN

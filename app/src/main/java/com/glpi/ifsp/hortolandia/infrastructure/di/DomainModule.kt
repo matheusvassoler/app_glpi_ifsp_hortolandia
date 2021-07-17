@@ -10,5 +10,5 @@ val domainModule = module {
     single { LoginUseCase(get(), get()) }
     single { SessionUseCase(get()) }
     single { LogoutUseCase(get(), get()) }
-    single { GetTicketsUseCase(get(), get()) }
+    single { GetTicketsUseCase(get(), get(), get()) }
 }

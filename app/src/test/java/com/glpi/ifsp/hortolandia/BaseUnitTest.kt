@@ -2,7 +2,6 @@ package com.glpi.ifsp.hortolandia
 
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListUpdateCallback
-import com.glpi.ifsp.hortolandia.data.model.Ticket
 import io.mockk.MockKAnnotations
 import org.junit.Before
 
@@ -11,12 +10,12 @@ open class BaseUnitTest {
     @Before
     open fun setup() = MockKAnnotations.init(this, relaxed = true)
 
-    class MyDiffCallback : DiffUtil.ItemCallback<Ticket>() {
-        override fun areItemsTheSame(oldItem: Ticket, newItem: Ticket): Boolean {
-            return oldItem.id == newItem.id
+    class MyDiffCallback<T> : DiffUtil.ItemCallback<T>() {
+        override fun areItemsTheSame(oldItem: T, newItem: T): Boolean {
+            return oldItem == newItem
         }
 
-        override fun areContentsTheSame(oldItem: Ticket, newItem: Ticket): Boolean {
+        override fun areContentsTheSame(oldItem: T, newItem: T): Boolean {
             return oldItem == newItem
         }
     }

@@ -2,6 +2,7 @@ package com.glpi.ifsp.hortolandia
 
 import android.app.Application
 import com.glpi.ifsp.hortolandia.infrastructure.di.domainModule
+import com.glpi.ifsp.hortolandia.infrastructure.di.gatewayModule
 import com.glpi.ifsp.hortolandia.infrastructure.di.repositoryModule
 import com.glpi.ifsp.hortolandia.infrastructure.di.sourceModule
 import com.glpi.ifsp.hortolandia.infrastructure.di.viewModelModule
@@ -19,7 +20,8 @@ class MyApplication : Application() {
                     viewModelModule,
                     domainModule,
                     repositoryModule,
-                    sourceModule
+                    sourceModule,
+                    gatewayModule
                 )
             )
         }
