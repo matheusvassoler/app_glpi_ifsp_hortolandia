@@ -87,7 +87,7 @@ pipeline {
         archiveArtifacts "**/${APP_NAME}-${BUILD_TYPE}.apk"
 
         script {
-            if (env.BRANCH_NAME == 'master' || env.BRANCH_NAME == 'develop' || env.BRANCH_NAME.split('/')[0].toLowerCase() == 'pr_develop') {
+            if (env.BRANCH_NAME == 'master' || env.BRANCH_NAME == 'develop' || env.BRANCH_NAME.split('/')[0].toLowerCase() == 'feature' || env.BRANCH_NAME.split('/')[0].toLowerCase() == 'bugfix') {
                 rtUpload (
                   serverId: "Artifactory_01",
                   spec:
