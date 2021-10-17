@@ -22,7 +22,7 @@ pipeline {
 
             if (env.BRANCH_NAME == 'develop') {
                 ARTIFACTORY_PATH = "glpi-ifsp-hto-app/debug/${env.BRANCH_NAME}/${APP_VERSION}/"
-            } else if (env.BRANCH_NAME.split('/')[0].toLowerCase() == 'pr_develop') {
+            } else if (env.BRANCH_NAME.split('/')[0].toLowerCase() == 'feature' || env.BRANCH_NAME.split('/')[0].toLowerCase() == 'bugfix') {
                 ARTIFACTORY_PATH = "glpi-ifsp-hto-app/debug/PRs/${env.BRANCH_NAME}/"
             }
           }
