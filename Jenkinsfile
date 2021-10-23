@@ -73,11 +73,11 @@ pipeline {
                     sh './gradlew test${BUILD_TYPE}'
                 }
             }
-            stage("Instrumented test") {
-                steps {
-                    sh './gradlew connectedAndroidTest'
-                }
-            }
+//             stage("Instrumented test") {
+//                 steps {
+//                     sh './gradlew connectedAndroidTest'
+//                 }
+//             }
         }
     }
 
