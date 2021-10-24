@@ -41,7 +41,16 @@
     <string name="ticket_details_update_date_label">Última atualização</string>
     <string name="ticket_details_date_value">%s - %s</string>
 
+    <!-- Open Ticket Tutorial Screen -->
+    <string name="open_ticket_tutorial_title">Leitura do QR Code</string>
+    <string name="open_ticket_tutorial_explanation">Toque no botão escanear QR Code e
+        aproxime sua camera próximo ao Código
+        psra fazer a leitura e identificação do objeto
+        que será alvo do chamado.</string>
+    <string name="open_ticket_tutorial_button_label">Escanear QR Code</string>
+
     <!-- Common errors -->
     <string name="internal_error">Ocorreu um erro interno</string>
     <string name="ticket_error_result_description">Não foi possível carregar as informações</string>
+    <string name="open_ticket_toolbar_title">Abrir chamado</string>
 </resources>
