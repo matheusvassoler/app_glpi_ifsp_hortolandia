@@ -49,6 +49,12 @@
         que será alvo do chamado.</string>
     <string name="open_ticket_tutorial_button_label">Escanear QR Code</string>
 
+    <!-- Open Ticket Camera Permission Fragment -->
+    <string name="open_ticket_camera_permission_title">Necessária a permissão para acessar a câmera do dispositivo</string>
+    <string name="open_ticket_camera_permission_subtitle">Sem a permissão não é possível realizar a leitura do QrCode. Forneça a permissão ou volte para home</string>
+    <string name="open_ticket_camera_permission_button">Fornecer permissão</string>
+    <string name="open_ticket_camera_permission_back_screen_button">Voltar para a home</string>
+
     <!-- Common errors -->
     <string name="internal_error">Ocorreu um erro interno</string>
     <string name="ticket_error_result_description">Não foi possível carregar as informações</string>

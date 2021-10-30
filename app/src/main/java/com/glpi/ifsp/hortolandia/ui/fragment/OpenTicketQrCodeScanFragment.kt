@@ -10,6 +10,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.budiyev.android.codescanner.CodeScanner
+import com.glpi.ifsp.hortolandia.R
 import com.glpi.ifsp.hortolandia.databinding.FragmentOpenTicketQrCodeScanBinding
 
 class OpenTicketQrCodeScanFragment : Fragment() {
@@ -23,12 +24,12 @@ class OpenTicketQrCodeScanFragment : Fragment() {
         super.onCreate(savedInstanceState)
 
         activityResultLauncher.launch(Manifest.permission.CAMERA)
-        grantedAccessPermissionCamera = checkAccessPermissionCamera()
     }
 
     override fun onResume() {
         super.onResume()
 
+        grantedAccessPermissionCamera = checkAccessPermissionCamera()
         if (grantedAccessPermissionCamera) {
             codeScanner.startPreview()
         }
@@ -52,7 +53,12 @@ class OpenTicketQrCodeScanFragment : Fragment() {
     private val activityResultLauncher =
         registerForActivityResult(
             ActivityResultContracts.RequestPermission()) { isGranted ->
-            grantedAccessPermissionCamera = isGranted
+            if (!isGranted) {
+                activity?.supportFragmentManager?.beginTransaction()?.apply {
+                    replace(R.id.activity_open_ticket_container, OpenTicketCameraPermissionFragment())
+                    addToBackStack(null)
+                }?.commit()
+            }
         }
 
     private fun checkAccessPermissionCamera() =
