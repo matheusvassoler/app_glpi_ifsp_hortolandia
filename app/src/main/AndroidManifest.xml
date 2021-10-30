@@ -3,6 +3,7 @@
     package="com.glpi.ifsp.hortolandia">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.CAMERA"/>
 
     <application
         android:name=".MyApplication"

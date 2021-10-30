@@ -4,6 +4,13 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <include
+        android:id="@+id/fragment_open_ticket_tutorial_toolbar"
+        layout="@layout/custom_app_bar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
     <TextView
         android:id="@+id/fragment_open_ticket_tutorial_title"
         android:layout_width="@dimen/default_dimen_0dp"
@@ -14,7 +21,7 @@
         android:textColor="@color/black"
         android:textAlignment="center"
         android:text="@string/open_ticket_tutorial_title"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/fragment_open_ticket_tutorial_toolbar"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
 
