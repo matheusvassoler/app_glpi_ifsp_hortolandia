@@ -1,5 +1,6 @@
 package com.glpi.ifsp.hortolandia.ui.activity
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
@@ -34,6 +35,7 @@ class HomeActivity : AppCompatActivity() {
         binding.activityHomeBottomNavigationView.setOnNavigationItemSelectedListener {
             when (it.itemId) {
                 R.id.bottom_nav_menu_home -> initHomeFragment()
+                R.id.bottom_nav_menu_new_ticket -> goToOpenTicketActivity()
                 R.id.bottom_nav_menu_profile -> initProfileFragment()
             }
             true
@@ -49,6 +51,13 @@ class HomeActivity : AppCompatActivity() {
     private fun initHomeFragment() {
         setToolbarTitle(getString(R.string.ticket_toolbar_title))
         replaceFragment(TicketFragment(), HOME_FRAGMENT_TAG)
+    }
+
+    private fun goToOpenTicketActivity() {
+        val intent = Intent(this, OpenTicketActivity::class.java).apply {
+            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
+        }
+        startActivity(intent)
     }
 
     private fun initProfileFragment() {

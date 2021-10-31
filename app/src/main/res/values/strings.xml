@@ -41,7 +41,28 @@
     <string name="ticket_details_update_date_label">Última atualização</string>
     <string name="ticket_details_date_value">%s - %s</string>
 
+    <!-- Open Ticket Tutorial Screen -->
+    <string name="open_ticket_tutorial_title">Leitura do QR Code</string>
+    <string name="open_ticket_tutorial_explanation">Toque no botão escanear QR Code e
+        aproxime sua camera próximo ao Código
+        psra fazer a leitura e identificação do objeto
+        que será alvo do chamado.</string>
+    <string name="open_ticket_tutorial_button_label">Escanear QR Code</string>
+
+    <!-- Open Ticket Camera Permission Fragment -->
+    <string name="open_ticket_camera_permission_title">Necessária a permissão para acessar a câmera do dispositivo</string>
+    <string name="open_ticket_camera_permission_subtitle">Sem a permissão não é possível realizar a leitura do QrCode. Forneça a permissão ou volte para home</string>
+    <string name="open_ticket_camera_permission_button">Fornecer permissão</string>
+
+    <!-- Open Ticket Qr Code Scan Error Screen -->
+    <string name="open_ticket_qr_code_scan_error_title">Falha ao escanear o QrCode</string>
+    <string name="open_ticket_qr_code_scan_error_subtitle">Não foi possível fazer a leitura do QrCode. Tente novamente ou volte para a Home</string>
+    <string name="open_ticket_qr_code_scan_error_try_again_button">Tentar novament</string>
+
     <!-- Common errors -->
     <string name="internal_error">Ocorreu um erro interno</string>
     <string name="ticket_error_result_description">Não foi possível carregar as informações</string>
+    <string name="open_ticket_toolbar_title">Abrir chamado</string>
+    <string name="try_again_button">Tentar novamente</string>
+    <string name="back_to_home_button">Voltar para a home</string>
 </resources>

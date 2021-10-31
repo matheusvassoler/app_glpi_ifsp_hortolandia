@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     package="com.glpi.ifsp.hortolandia">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.CAMERA"/>
 
     <application
         android:name=".MyApplication"
@@ -15,8 +15,11 @@
         android:theme="@style/Theme.GLPIIFSP"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".ui.activity.OpenTicketActivity"
+            android:exported="true" />
+        <activity
             android:name=".ui.activity.TicketDetailsActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.ErrorActivity"
             android:screenOrientation="portrait" />
