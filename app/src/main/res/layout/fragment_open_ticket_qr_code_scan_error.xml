@@ -5,17 +5,17 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <ImageView
-        android:id="@+id/fragment_open_ticket_camera_permission_camera_icon"
-        android:layout_width="@dimen/default_dimen_100dp"
-        android:layout_height="@dimen/default_dimen_100dp"
+        android:id="@+id/fragment_open_ticket_qr_code_scan_error_icon"
+        android:layout_width="@dimen/default_dimen_80dp"
+        android:layout_height="@dimen/default_dimen_80dp"
         android:layout_marginTop="@dimen/default_dimen_150dp"
-        android:src="@drawable/camera_icon"
+        android:src="@drawable/error_icon"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
 
     <TextView
-        android:id="@+id/fragment_open_ticket_camera_permission_title"
+        android:id="@+id/fragment_open_ticket_qr_code_scan_error_title"
         android:layout_width="@dimen/default_dimen_0dp"
         android:layout_height="wrap_content"
         android:textSize="@dimen/default_dimen_20sp"
@@ -24,34 +24,34 @@
         android:layout_marginEnd="@dimen/default_dimen_20dp"
         android:textColor="@color/black"
         android:textAlignment="center"
-        android:text="@string/open_ticket_camera_permission_title"
-        app:layout_constraintTop_toBottomOf="@id/fragment_open_ticket_camera_permission_camera_icon"
+        android:text="@string/open_ticket_qr_code_scan_error_title"
+        app:layout_constraintTop_toBottomOf="@id/fragment_open_ticket_qr_code_scan_error_icon"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
 
     <TextView
-        android:id="@+id/fragment_open_ticket_camera_permission_subtitle"
+        android:id="@+id/fragment_open_ticket_qr_code_scan_error_subtitle"
         android:layout_width="@dimen/default_dimen_0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/default_dimen_10dp"
+        android:layout_marginTop="@dimen/default_dimen_30dp"
         android:layout_marginStart="@dimen/default_dimen_50dp"
         android:layout_marginEnd="@dimen/default_dimen_50dp"
         android:textAlignment="center"
-        android:text="@string/open_ticket_camera_permission_subtitle"
-        app:layout_constraintTop_toBottomOf="@id/fragment_open_ticket_camera_permission_title"
+        android:text="@string/open_ticket_qr_code_scan_error_subtitle"
+        app:layout_constraintTop_toBottomOf="@id/fragment_open_ticket_qr_code_scan_error_title"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/fragment_open_ticket_camera_permission_card_view"
+        android:id="@+id/fragment_open_ticket_qr_code_scan_error_card_view"
         android:layout_width="@dimen/default_dimen_0dp"
         android:layout_height="@dimen/default_dimen_50dp"
-        android:layout_marginTop="@dimen/default_dimen_20dp"
+        android:layout_marginTop="@dimen/default_dimen_30dp"
         android:layout_marginStart="@dimen/default_dimen_20dp"
         android:layout_marginEnd="@dimen/default_dimen_20dp"
         app:cardElevation="@dimen/default_dimen_0dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/fragment_open_ticket_camera_permission_subtitle"
+        app:layout_constraintTop_toBottomOf="@id/fragment_open_ticket_qr_code_scan_error_subtitle"
         app:layout_constraintEnd_toEndOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -63,7 +63,7 @@
                 android:layout_height="wrap_content"
                 android:textColor="@color/blue_link"
                 android:textSize="@dimen/default_dimen_16sp"
-                android:text="@string/open_ticket_camera_permission_button"
+                android:text="@string/try_again_button"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -74,7 +74,7 @@
     </androidx.cardview.widget.CardView>
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/fragment_open_ticket_camera_permission_back_card_view"
+        android:id="@+id/fragment_open_ticket_qr_code_scan_error_back_card_view"
         android:layout_width="@dimen/default_dimen_0dp"
         android:layout_height="@dimen/default_dimen_50dp"
         android:layout_marginStart="@dimen/default_dimen_20dp"

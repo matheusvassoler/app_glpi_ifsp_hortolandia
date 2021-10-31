@@ -72,6 +72,11 @@ class OpenTicketCameraPermissionFragment : Fragment() {
             Manifest.permission.CAMERA
         ) == PackageManager.PERMISSION_GRANTED
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+
     companion object {
         private const val PACKAGE = "package"
     }

@@ -53,10 +53,16 @@
     <string name="open_ticket_camera_permission_title">Necessária a permissão para acessar a câmera do dispositivo</string>
     <string name="open_ticket_camera_permission_subtitle">Sem a permissão não é possível realizar a leitura do QrCode. Forneça a permissão ou volte para home</string>
     <string name="open_ticket_camera_permission_button">Fornecer permissão</string>
-    <string name="open_ticket_camera_permission_back_screen_button">Voltar para a home</string>
+
+    <!-- Open Ticket Qr Code Scan Error Screen -->
+    <string name="open_ticket_qr_code_scan_error_title">Falha ao escanear o QrCode</string>
+    <string name="open_ticket_qr_code_scan_error_subtitle">Não foi possível fazer a leitura do QrCode. Tente novamente ou volte para a Home</string>
+    <string name="open_ticket_qr_code_scan_error_try_again_button">Tentar novament</string>
 
     <!-- Common errors -->
     <string name="internal_error">Ocorreu um erro interno</string>
     <string name="ticket_error_result_description">Não foi possível carregar as informações</string>
     <string name="open_ticket_toolbar_title">Abrir chamado</string>
+    <string name="try_again_button">Tentar novamente</string>
+    <string name="back_to_home_button">Voltar para a home</string>
 </resources>
