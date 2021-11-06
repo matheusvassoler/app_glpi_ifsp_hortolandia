@@ -2,7 +2,7 @@ package com.glpi.ifsp.hortolandia.data.model
 
 import com.google.gson.annotations.SerializedName
 
-data class QuestionData(
+data class Question(
     @SerializedName("id") val id: Int,
     @SerializedName("name") val name: String,
     @SerializedName("fieldtype") val fieldType: String,
