@@ -41,18 +41,18 @@ interface Api {
     suspend fun getForm(
         @Header("Session-Token") sessionToken: String,
         @Path(value = "form_id") formId: Int
-    ): Form
+    ): Response<Form>
 
     @GET("{item_type}")
     @Headers("App-Token: $APP_TOKEN")
     suspend fun getItems(
         @Header("Session-Token") sessionToken: String,
         @Path(value = "item_type") itemType: String
-    ): List<Item>
+    ): Response<List<Item>>
 
     @GET("Location")
     @Headers("App-Token: $APP_TOKEN")
     suspend fun getLocations(
         @Header("Session-Token") sessionToken: String
-    ): List<Location>
+    ): Response<List<Location>>
 }
