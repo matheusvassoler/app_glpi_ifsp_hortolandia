@@ -1,11 +1,15 @@
 package com.glpi.ifsp.hortolandia.data.source.remote
 
+import com.glpi.ifsp.hortolandia.data.model.Form
+import com.glpi.ifsp.hortolandia.data.model.Item
+import com.glpi.ifsp.hortolandia.data.model.Location
 import com.glpi.ifsp.hortolandia.data.model.Login
 import com.glpi.ifsp.hortolandia.data.model.Ticket
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.Headers
+import retrofit2.http.Path
 import retrofit2.http.Query
 
 private const val APP_TOKEN = "2lCh2VLJ7ERtvmoH5mlFsJTGCStGFfI1r6cUEt23"
@@ -31,4 +35,24 @@ interface Api {
         @Header("Session-Token") sessionToken: String,
         @Query("range") searchRange: String
     ): Response<List<Ticket>>
+
+    @GET("PluginFormcreatorForm/{form_id}")
+    @Headers("App-Token: $APP_TOKEN")
+    suspend fun getForm(
+        @Header("Session-Token") sessionToken: String,
+        @Path(value = "form_id") formId: Int
+    ): Form
+
+    @GET("{item_type}")
+    @Headers("App-Token: $APP_TOKEN")
+    suspend fun getItems(
+        @Header("Session-Token") sessionToken: String,
+        @Path(value = "item_type") itemType: String
+    ): List<Item>
+
+    @GET("Location")
+    @Headers("App-Token: $APP_TOKEN")
+    suspend fun getLocations(
+        @Header("Session-Token") sessionToken: String
+    ): List<Location>
 }
