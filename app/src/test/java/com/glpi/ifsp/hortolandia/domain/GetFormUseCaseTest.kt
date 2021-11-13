@@ -10,6 +10,7 @@ import com.glpi.ifsp.hortolandia.data.model.RuleToShowQuestion
 import com.glpi.ifsp.hortolandia.data.model.ValidationResponseSize
 import com.glpi.ifsp.hortolandia.data.repository.form.FormRepository
 import com.glpi.ifsp.hortolandia.infrastructure.exceptions.InternalErrorException
+import com.glpi.ifsp.hortolandia.infrastructure.exceptions.NullResponseBodyException
 import com.glpi.ifsp.hortolandia.infrastructure.exceptions.ResponseRequestException
 import com.glpi.ifsp.hortolandia.ui.model.FormUI
 import com.glpi.ifsp.hortolandia.ui.model.QuestionUI
@@ -48,6 +49,16 @@ class GetFormUseCaseTest : BaseUnitTest() {
         // THEN
         coVerify { formRepository.getForm("12345", 10) }
         assertThat(result).isEqualTo(mockExpectedResult())
+    }
+
+    @Test(expected = NullResponseBodyException::class)
+    fun `UseCase SHOULD throw NullResponseBodyException WHEN response body was null`() = runBlocking {
+        // GIVEN
+        coEvery { sessionUseCase.getSessionToken() } returns "12345"
+        coEvery { formRepository.getForm(any(), any()) } returns Response.success(null)
+
+        // WHEN
+        val result = getFormUseCase(10)
     }
 
     @Test(expected = ResponseRequestException::class)

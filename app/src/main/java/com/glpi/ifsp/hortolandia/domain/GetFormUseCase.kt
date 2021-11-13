@@ -9,6 +9,7 @@ import com.glpi.ifsp.hortolandia.data.model.RuleToShowQuestion
 import com.glpi.ifsp.hortolandia.data.model.ValidationResponseSize
 import com.glpi.ifsp.hortolandia.data.repository.form.FormRepository
 import com.glpi.ifsp.hortolandia.infrastructure.exceptions.InternalErrorException
+import com.glpi.ifsp.hortolandia.infrastructure.exceptions.NullResponseBodyException
 import com.glpi.ifsp.hortolandia.infrastructure.exceptions.ResponseRequestException
 import com.glpi.ifsp.hortolandia.infrastructure.utils.removeUnicodeHtmlTag
 import com.glpi.ifsp.hortolandia.ui.model.FormUI
@@ -22,7 +23,7 @@ class GetFormUseCase(
     private val sessionUseCase: SessionUseCase
 ) {
 
-    suspend operator fun invoke(formId: Int): FormUI? {
+    suspend operator fun invoke(formId: Int): FormUI {
         val sessionToken = sessionUseCase.getSessionToken() ?: throw InternalErrorException()
 
         val response = formRepository.getForm(sessionToken, formId)
@@ -34,9 +35,10 @@ class GetFormUseCase(
         }
     }
 
-    private fun getFormUI(response: Response<Form>): FormUI? {
-        return response.body()?.let { form ->
-            FormUI(
+    private fun getFormUI(response: Response<Form>): FormUI {
+        val form = response.body()
+        if (form != null) {
+            return FormUI(
                 name = form.name,
                 contentDescription = form.contentDescription,
                 questions = getQuestions(form.questions),
@@ -47,6 +49,8 @@ class GetFormUseCase(
                     form.validationOfCharacterSizesInFields
                 )
             )
+        } else {
+            throw NullResponseBodyException()
         }
     }
 
