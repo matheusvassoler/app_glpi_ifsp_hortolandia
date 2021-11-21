@@ -86,6 +86,20 @@ class OpenTicketViewModelTest {
     }
 
     @Test
+    fun `viewModel SHOULD emit ShowLoading and ShowResponseRequestError WHEN form id is null`() {
+        // GIVEN
+        coEvery { getFormUseCase(any()) } throws ResponseRequestException()
+
+        // WHEN
+        viewModel.onStart(null)
+
+        // THEN
+        assertThat(stateList.size).isEqualTo(2)
+        assertThat(stateList[0]).isInstanceOf(OpenTicketState.ShowLoading::class.java)
+        assertThat(stateList[1]).isInstanceOf(OpenTicketState.ShowResponseRequestError::class.java)
+    }
+
+    @Test
     fun `viewModel SHOULD emit ShowLoading and ShowNullResponseBodyError WHEN GetFormUseCase throws NullResponseBodyException`() {
         // GIVEN
         coEvery { getFormUseCase(any()) } throws NullResponseBodyException()

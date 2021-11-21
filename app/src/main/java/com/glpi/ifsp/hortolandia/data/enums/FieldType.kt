@@ -7,5 +7,6 @@ enum class FieldType {
     DATE,
     CHECKBOXES,
     DROPDOWN,
-    TEXTAREA
+    TEXTAREA,
+    EMAIL
 }

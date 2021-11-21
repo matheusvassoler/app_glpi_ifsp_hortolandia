@@ -18,10 +18,13 @@ class OpenTicketViewModel(
     val state: LiveData<OpenTicketState>
         get() = _state
 
-    fun onStart(formId: Int) {
+    fun onStart(formId: Int?) {
         viewModelScope.launch {
             try {
                 _state.value = OpenTicketState.ShowLoading
+                if (formId == null) {
+                    throw ResponseRequestException()
+                }
                 val formUI = getFormUseCase(formId)
                 _state.value = OpenTicketState.ShowFormUI(formUI)
             } catch (e: ResponseRequestException) {

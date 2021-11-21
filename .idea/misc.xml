@@ -19,7 +19,9 @@
         <entry key="app/src/main/res/layout/activity_open_ticket.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_ticket_details.xml" value="0.24074074074074073" />
         <entry key="app/src/main/res/layout/custom_app_bar.xml" value="0.28229166666666666" />
+        <entry key="app/src/main/res/layout/fragment_blank.xml" value="0.28229166666666666" />
         <entry key="app/src/main/res/layout/fragment_open_ticket_camera_permission.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/fragment_open_ticket_form.xml" value="0.28229166666666666" />
         <entry key="app/src/main/res/layout/fragment_open_ticket_qr_code_scan.xml" value="0.24074074074074073" />
         <entry key="app/src/main/res/layout/fragment_open_ticket_qr_code_scan_error.xml" value="0.28229166666666666" />
         <entry key="app/src/main/res/layout/fragment_open_ticket_tutorial.xml" value="0.21666666666666667" />

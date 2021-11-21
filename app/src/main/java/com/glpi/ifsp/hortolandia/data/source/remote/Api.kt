@@ -4,6 +4,7 @@ import com.glpi.ifsp.hortolandia.data.model.Form
 import com.glpi.ifsp.hortolandia.data.model.Item
 import com.glpi.ifsp.hortolandia.data.model.Location
 import com.glpi.ifsp.hortolandia.data.model.Login
+import com.glpi.ifsp.hortolandia.data.model.Session
 import com.glpi.ifsp.hortolandia.data.model.Ticket
 import retrofit2.Response
 import retrofit2.http.GET
@@ -12,7 +13,7 @@ import retrofit2.http.Headers
 import retrofit2.http.Path
 import retrofit2.http.Query
 
-private const val APP_TOKEN = "2lCh2VLJ7ERtvmoH5mlFsJTGCStGFfI1r6cUEt23"
+private const val APP_TOKEN = "aT5zDoqXEFUE2QM7ko9RAPcsZtGlqTNn3A91xSQW"
 
 interface Api {
 
@@ -55,4 +56,10 @@ interface Api {
     suspend fun getLocations(
         @Header("Session-Token") sessionToken: String
     ): Response<List<Location>>
+
+    @GET("getFullSession")
+    @Headers("App-Token: $APP_TOKEN")
+    suspend fun getUserInfo(
+        @Header("Session-Token") sessionToken: String
+    ): Response<Session>
 }

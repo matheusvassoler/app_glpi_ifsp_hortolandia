@@ -9,6 +9,7 @@ import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.impl.annotations.InjectMockKs
 import io.mockk.impl.annotations.MockK
+import io.mockk.mockk
 import kotlinx.coroutines.runBlocking
 import org.junit.Test
 import retrofit2.Response
@@ -28,6 +29,15 @@ class LoginRemoteRepositoryTest : BaseUnitTest() {
         loginRemoteRepository.makeLogin(mockLoginUI())
 
         coVerify { apiClient().callLoginResponse(any()) }
+    }
+
+    @Test
+    fun `getUserInfo - Check Api call`() = runBlocking {
+        coEvery { apiClient().getUserInfo(any()) } returns mockk()
+
+        loginRemoteRepository.getUserInfo("123")
+
+        coVerify { apiClient().getUserInfo("123") }
     }
 
     private fun mockResponse(): Response<Login> {

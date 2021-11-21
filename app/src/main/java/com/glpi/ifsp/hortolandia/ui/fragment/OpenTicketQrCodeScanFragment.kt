@@ -9,9 +9,13 @@ import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import com.budiyev.android.codescanner.AutoFocusMode
 import com.budiyev.android.codescanner.CodeScanner
+import com.budiyev.android.codescanner.DecodeCallback
+import com.budiyev.android.codescanner.ScanMode
 import com.glpi.ifsp.hortolandia.R
 import com.glpi.ifsp.hortolandia.databinding.FragmentOpenTicketQrCodeScanBinding
+import com.google.zxing.BarcodeFormat
 
 class OpenTicketQrCodeScanFragment : Fragment() {
 
@@ -48,6 +52,20 @@ class OpenTicketQrCodeScanFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         binding.fragmentOpenTicketQrCodeScanToolbar.toolbarTitle.text = TOOLBAR_TITLE
         codeScanner = CodeScanner(requireActivity(), binding.scannerView)
+
+        codeScanner.camera = CodeScanner.CAMERA_BACK
+        codeScanner.formats = listOf(BarcodeFormat.QR_CODE)
+        codeScanner.autoFocusMode = AutoFocusMode.SAFE
+        codeScanner.scanMode = ScanMode.SINGLE
+        codeScanner.isAutoFocusEnabled = true
+        codeScanner.isFlashEnabled = false
+
+        codeScanner.decodeCallback = DecodeCallback {
+            activity?.supportFragmentManager?.beginTransaction()?.apply {
+                replace(R.id.activity_open_ticket_container, OpenTicketFormFragment.newInstance(it.text))
+                addToBackStack(null)
+            }?.commit()
+        }
     }
 
     private val activityResultLauncher =
