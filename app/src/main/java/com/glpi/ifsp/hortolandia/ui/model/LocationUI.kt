@@ -5,6 +5,6 @@ data class LocationUI(
     val name: String,
     val parentLocation: Int,
     val hierarchicalLevelOfLocation: Int,
-    val subLocationsId: List<Int>,
+    val subLocationsId: List<Int>?,
     val completeName: String
 )

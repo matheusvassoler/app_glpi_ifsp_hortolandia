@@ -16,5 +16,5 @@ val domainModule = module {
     single { GetTicketsUseCase(get(), get(), get()) }
     single { GetItemUseCase(get(), get()) }
     single { GetLocationUseCase(get(), get()) }
-    single { GetFormUseCase(get(), get()) }
+    single { GetFormUseCase(get(), get(), get(), get()) }
 }

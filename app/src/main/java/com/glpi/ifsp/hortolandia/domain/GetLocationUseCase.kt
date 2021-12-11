@@ -45,9 +45,13 @@ class GetLocationUseCase(
         return locations
     }
 
-    private fun getSubLocationsId(location: Location): List<Int> {
-        val mapObj: Map<String, String> = getMapWithSubLocationsId(location)
-        return convertMapWithSubLocationsIdToList(mapObj)
+    private fun getSubLocationsId(location: Location): List<Int>? {
+        return if (location.subLocationsId != null) {
+            val mapObj: Map<String, String> = getMapWithSubLocationsId(location)
+            convertMapWithSubLocationsIdToList(mapObj)
+        } else {
+            null
+        }
     }
 
     private fun convertMapWithSubLocationsIdToList(mapObj: Map<String, String>): List<Int> {

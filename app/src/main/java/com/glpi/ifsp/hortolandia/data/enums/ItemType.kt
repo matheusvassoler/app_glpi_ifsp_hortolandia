@@ -1,5 +1,7 @@
 package com.glpi.ifsp.hortolandia.data.enums
 
 enum class ItemType {
-    PRINTER
+    PRINTER,
+    LOCATION,
+    SOFTWARE
 }

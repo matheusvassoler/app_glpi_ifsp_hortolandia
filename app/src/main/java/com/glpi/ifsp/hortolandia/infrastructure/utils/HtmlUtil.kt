@@ -10,8 +10,18 @@ fun String.removeUnicodeHtmlTag(): String {
         .replace("&lt;li&gt;", "")
         .replace("&lt;/li&gt;", "")
         .replace("&lt;/ul&gt;", "")
+        .replace("-&gt;", ".")
+        .replace("  ", "")
         .replace(".", ". ")
         .replace(";", ". ")
+        .replace(" .", ".")
+        .replace(".  ", ". ")
+}
+
+fun String.removeHtmlH3Tag(): String {
+    return this.replace("&lt;h3&gt", "")
+        .replace("&lt;/h3&gt;", "")
+        .replace(";", "")
 }
 
 fun String.convertUnicodeHtmlToText(): String {

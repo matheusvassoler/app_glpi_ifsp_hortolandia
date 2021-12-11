@@ -2,6 +2,7 @@ package com.glpi.ifsp.hortolandia.ui.model
 
 import com.glpi.ifsp.hortolandia.data.enums.FieldRule
 import com.glpi.ifsp.hortolandia.data.enums.FieldType
+import com.glpi.ifsp.hortolandia.data.model.Item
 
 data class QuestionUI(
     val id: Int,
@@ -11,5 +12,7 @@ data class QuestionUI(
     val values: String?,
     val fieldRule: FieldRule,
     val displayOrder: Int,
-    val isRequired: Boolean
+    val isRequired: Boolean,
+    val items: List<Item>? = null,
+    val locations: List<LocationUI>? = null
 )

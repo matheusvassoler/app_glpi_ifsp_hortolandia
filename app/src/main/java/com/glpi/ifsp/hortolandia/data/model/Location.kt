@@ -7,6 +7,6 @@ data class Location(
     @SerializedName("name") val name: String,
     @SerializedName("locations_id") val parentLocation: Int,
     @SerializedName("level") val hierarchicalLevelOfLocation: Int,
-    @SerializedName("sons_cache") val subLocationsId: String,
+    @SerializedName("sons_cache") val subLocationsId: String?,
     @SerializedName("completename") val completeName: String
 )
