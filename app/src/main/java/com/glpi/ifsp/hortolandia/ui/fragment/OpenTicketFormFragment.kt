@@ -5,33 +5,40 @@ import android.content.Context
 import android.graphics.Typeface
 import android.net.Uri
 import android.os.Bundle
+import android.text.InputType
 import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
+import android.widget.Button
+import android.widget.CheckBox
+import android.widget.LinearLayout
+import android.widget.Spinner
+import android.widget.TextView
 import androidx.core.content.ContextCompat
-import androidx.core.view.marginBottom
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import com.glpi.ifsp.hortolandia.R
 import com.glpi.ifsp.hortolandia.data.enums.FieldRule
 import com.glpi.ifsp.hortolandia.data.enums.FieldType
+import com.glpi.ifsp.hortolandia.data.model.Item
 import com.glpi.ifsp.hortolandia.databinding.FragmentOpenTicketFormBinding
+import com.glpi.ifsp.hortolandia.ui.model.FormUI
+import com.glpi.ifsp.hortolandia.ui.model.LocationUI
 import com.glpi.ifsp.hortolandia.ui.model.QuestionUI
+import com.glpi.ifsp.hortolandia.ui.model.RuleToShowQuestionUI
 import com.glpi.ifsp.hortolandia.ui.state.OpenTicketState
 import com.glpi.ifsp.hortolandia.ui.viewmodel.OpenTicketViewModel
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
-import org.koin.android.viewmodel.ext.android.viewModel
 import java.text.SimpleDateFormat
-import java.util.*
-import android.text.InputType
-import android.util.Log
-import android.widget.*
-import com.glpi.ifsp.hortolandia.ui.model.RuleToShowQuestionUI
-import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
-
+import java.util.Calendar
+import java.util.Date
+import java.util.Locale
+import kotlin.collections.ArrayList
+import org.koin.android.viewmodel.ext.android.viewModel
 
 private const val FORM_URL_PARAM = "FORM_URL_PARAM"
 private const val ID = "id"
@@ -121,94 +128,16 @@ class OpenTicketFormFragment : Fragment() {
                                 val spinner = Spinner(requireContext(), Spinner.MODE_DIALOG)
                                 spinner.layoutParams = layoutParams
 
-                                val optionsToSelect =
-                                    question.values?.split("\r\n")?.filter { item ->
-                                        item != ""
-                                    } as ArrayList<String>
-                                optionsToSelect.add(0, "-----")
+                                val optionsToSelect = getValuesToFillSpinner(question)
 
-                                val adapter: ArrayAdapter<String> = ArrayAdapter<String>(
-                                    requireContext(),
-                                    R.layout.spinner_text_view,
-                                    optionsToSelect
-                                )
-
-                                adapter.setDropDownViewResource(R.layout.dropdown_spinner_text_view)
-                                spinner.adapter = adapter
+                                spinner.adapter = setupAdapterForSpinner(optionsToSelect)
                                 var selectedItem = ""
 
                                 if (it.formUI.conditionsToHideOrShowQuestions.isNotEmpty()) {
-                                    spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-                                        override fun onItemSelected(
-                                            p0: AdapterView<*>?,
-                                            p1: View?,
-                                            p2: Int,
-                                            p3: Long
-                                        ) {
-                                            val selectedOption = (p1 as TextView).text.toString()
-
-                                            if (selectedItem != "") {
-                                                conditionsToHideOrShowQuestions.forEach { ruleToShowQuestionUI ->
-                                                    if (ruleToShowQuestionUI.valueThatTriggersCondition == selectedItem) {
-                                                        val idOfQuestionShouldAppearOrDisappear = ruleToShowQuestionUI.questionIdThatDisappearsOrAppearsBasedOnACondition
-
-                                                        for(i in 0 until binding.fragmentOpenTicketFormLayout.childCount) {
-                                                            val field = binding.fragmentOpenTicketFormLayout.getChildAt(i)
-                                                            if (field.tag == idOfQuestionShouldAppearOrDisappear) {
-                                                                field.visibility = View.GONE
-                                                            }
-                                                        }
-                                                    }
-                                                }
-                                            }
-
-                                            conditionsToHideOrShowQuestions.forEach { ruleToShowQuestionUI ->
-                                                if (ruleToShowQuestionUI.valueThatTriggersCondition == selectedOption) {
-                                                    val idOfQuestionShouldAppearOrDisappear = ruleToShowQuestionUI.questionIdThatDisappearsOrAppearsBasedOnACondition
-
-                                                    for(i in 0 until binding.fragmentOpenTicketFormLayout.childCount) {
-                                                        val field = binding.fragmentOpenTicketFormLayout.getChildAt(i)
-                                                        if (field.tag == idOfQuestionShouldAppearOrDisappear) {
-                                                            val questionShouldAppearOrDisappear = it.formUI.questions.find { questionUI ->
-                                                                questionUI.id == idOfQuestionShouldAppearOrDisappear
-                                                            }
-                                                            val ruleType = questionShouldAppearOrDisappear?.fieldRule
-
-                                                            if (ruleType == FieldRule.HIDDEN_UNLESS) {
-                                                                field.visibility = View.VISIBLE
-                                                            } else {
-                                                                field.visibility = View.GONE
-                                                            }
-                                                        }
-                                                    }
-                                                }
-                                            }
-
-                                            if (selectedItem != selectedOption) {
-                                                selectedItem = selectedOption
-                                            }
-                                        }
-
-                                        override fun onNothingSelected(p0: AdapterView<*>?) {
-                                            TODO("Not yet implemented")
-                                        }
-                                    }
+                                    setListenerForSpinner(spinner, selectedItem, conditionsToHideOrShowQuestions, it.formUI)
                                 }
 
-                                val textField = TextView(requireContext())
-                                textField.layoutParams = layoutParams
-                                textField.text = question.name
-
-                                textField.tag = question.id
-                                spinner.tag = question.id
-
-                                if (question.fieldRule == FieldRule.HIDDEN_UNLESS) {
-                                    spinner.visibility = View.GONE
-                                    textField.visibility = View.GONE
-                                }
-
-                                binding.fragmentOpenTicketFormLayout.addView(textField)
-                                binding.fragmentOpenTicketFormLayout.addView(spinner)
+                                setupSpinnerViewsOnLayout(question, spinner)
                             }
                             FieldType.CHECKBOXES -> {
                                 if (question.name.lowercase().contains("termos e condições")) {
@@ -282,355 +211,16 @@ class OpenTicketFormFragment : Fragment() {
                             }
                             FieldType.GLPISELECT -> {
                                 if (question.items != null) {
-                                    val conditionsToHideOrShowQuestions =
-                                        it.formUI.conditionsToHideOrShowQuestions
-                                    val spinner = Spinner(requireContext(), Spinner.MODE_DIALOG)
-                                    spinner.layoutParams = layoutParams
-
-                                    val optionsToSelect = question.items.map { item ->
-                                        item.name
-                                    } as ArrayList<String>
-                                    optionsToSelect.add(0, "-----")
-
-                                    val adapter: ArrayAdapter<String> = ArrayAdapter<String>(
-                                        requireContext(),
-                                        R.layout.spinner_text_view,
-                                        optionsToSelect
-                                    )
-
-                                    adapter.setDropDownViewResource(R.layout.dropdown_spinner_text_view)
-                                    spinner.adapter = adapter
-                                    var selectedItem = ""
-
-                                    if (it.formUI.conditionsToHideOrShowQuestions.isNotEmpty()) {
-                                        spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-                                            override fun onItemSelected(
-                                                p0: AdapterView<*>?,
-                                                p1: View?,
-                                                p2: Int,
-                                                p3: Long
-                                            ) {
-                                                val selectedOption = (p1 as TextView).text.toString()
-
-                                                if (selectedItem != "") {
-                                                    conditionsToHideOrShowQuestions.forEach { ruleToShowQuestionUI ->
-                                                        if (ruleToShowQuestionUI.valueThatTriggersCondition == selectedItem) {
-                                                            val idOfQuestionShouldAppearOrDisappear = ruleToShowQuestionUI.questionIdThatDisappearsOrAppearsBasedOnACondition
-
-                                                            for(i in 0 until binding.fragmentOpenTicketFormLayout.childCount) {
-                                                                val field = binding.fragmentOpenTicketFormLayout.getChildAt(i)
-                                                                if (field.tag == idOfQuestionShouldAppearOrDisappear) {
-                                                                    field.visibility = View.GONE
-                                                                }
-                                                            }
-                                                        }
-                                                    }
-                                                }
-
-                                                conditionsToHideOrShowQuestions.forEach { ruleToShowQuestionUI ->
-                                                    if (ruleToShowQuestionUI.valueThatTriggersCondition == selectedOption) {
-                                                        val idOfQuestionShouldAppearOrDisappear = ruleToShowQuestionUI.questionIdThatDisappearsOrAppearsBasedOnACondition
-
-                                                        for(i in 0 until binding.fragmentOpenTicketFormLayout.childCount) {
-                                                            val field = binding.fragmentOpenTicketFormLayout.getChildAt(i)
-                                                            if (field.tag == idOfQuestionShouldAppearOrDisappear) {
-                                                                val questionShouldAppearOrDisappear = it.formUI.questions.find { questionUI ->
-                                                                    questionUI.id == idOfQuestionShouldAppearOrDisappear
-                                                                }
-                                                                val ruleType = questionShouldAppearOrDisappear?.fieldRule
-
-                                                                if (ruleType == FieldRule.HIDDEN_UNLESS) {
-                                                                    field.visibility = View.VISIBLE
-                                                                } else {
-                                                                    field.visibility = View.GONE
-                                                                }
-                                                            }
-                                                        }
-                                                    }
-                                                }
-
-                                                if (selectedItem != selectedOption) {
-                                                    selectedItem = selectedOption
-                                                }
-                                            }
-
-                                            override fun onNothingSelected(p0: AdapterView<*>?) {
-                                                TODO("Not yet implemented")
-                                            }
-                                        }
-                                    }
-
-                                    val textField = TextView(requireContext())
-                                    textField.layoutParams = layoutParams
-                                    textField.text = question.name
-
-                                    textField.tag = question.id
-                                    spinner.tag = question.id
-
-                                    if (question.fieldRule == FieldRule.HIDDEN_UNLESS) {
-                                        spinner.visibility = View.GONE
-                                        textField.visibility = View.GONE
-                                    }
-
-                                    binding.fragmentOpenTicketFormLayout.addView(textField)
-                                    binding.fragmentOpenTicketFormLayout.addView(spinner)
+                                    setupSpinnerForItems(it.formUI, question.items, question)
                                 } else if (question.locations != null) {
-
+                                    setupSpinnerForLocations(question.locations, it.formUI, question)
                                 }
                             }
                             FieldType.DROPDOWN -> {
                                 if (question.items != null) {
-                                    val conditionsToHideOrShowQuestions =
-                                        it.formUI.conditionsToHideOrShowQuestions
-                                    val spinner = Spinner(requireContext(), Spinner.MODE_DIALOG)
-                                    spinner.layoutParams = layoutParams
-
-                                    val optionsToSelect = question.items.map { item ->
-                                        item.name
-                                    } as ArrayList<String>
-                                    optionsToSelect.add(0, "-----")
-
-                                    val adapter: ArrayAdapter<String> = ArrayAdapter<String>(
-                                        requireContext(),
-                                        R.layout.spinner_text_view,
-                                        optionsToSelect
-                                    )
-
-                                    adapter.setDropDownViewResource(R.layout.dropdown_spinner_text_view)
-                                    spinner.adapter = adapter
-                                    var selectedItem = ""
-
-                                    if (it.formUI.conditionsToHideOrShowQuestions.isNotEmpty()) {
-                                        spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-                                            override fun onItemSelected(
-                                                p0: AdapterView<*>?,
-                                                p1: View?,
-                                                p2: Int,
-                                                p3: Long
-                                            ) {
-                                                val selectedOption = (p1 as TextView).text.toString()
-
-                                                if (selectedItem != "") {
-                                                    conditionsToHideOrShowQuestions.forEach { ruleToShowQuestionUI ->
-                                                        if (ruleToShowQuestionUI.valueThatTriggersCondition == selectedItem) {
-                                                            val idOfQuestionShouldAppearOrDisappear = ruleToShowQuestionUI.questionIdThatDisappearsOrAppearsBasedOnACondition
-
-                                                            for(i in 0 until binding.fragmentOpenTicketFormLayout.childCount) {
-                                                                val field = binding.fragmentOpenTicketFormLayout.getChildAt(i)
-                                                                if (field.tag == idOfQuestionShouldAppearOrDisappear) {
-                                                                    field.visibility = View.GONE
-                                                                }
-                                                            }
-                                                        }
-                                                    }
-                                                }
-
-                                                conditionsToHideOrShowQuestions.forEach { ruleToShowQuestionUI ->
-                                                    if (ruleToShowQuestionUI.valueThatTriggersCondition == selectedOption) {
-                                                        val idOfQuestionShouldAppearOrDisappear = ruleToShowQuestionUI.questionIdThatDisappearsOrAppearsBasedOnACondition
-
-                                                        for(i in 0 until binding.fragmentOpenTicketFormLayout.childCount) {
-                                                            val field = binding.fragmentOpenTicketFormLayout.getChildAt(i)
-                                                            if (field.tag == idOfQuestionShouldAppearOrDisappear) {
-                                                                val questionShouldAppearOrDisappear = it.formUI.questions.find { questionUI ->
-                                                                    questionUI.id == idOfQuestionShouldAppearOrDisappear
-                                                                }
-                                                                val ruleType = questionShouldAppearOrDisappear?.fieldRule
-
-                                                                if (ruleType == FieldRule.HIDDEN_UNLESS) {
-                                                                    field.visibility = View.VISIBLE
-                                                                } else {
-                                                                    field.visibility = View.GONE
-                                                                }
-                                                            }
-                                                        }
-                                                    }
-                                                }
-
-                                                if (selectedItem != selectedOption) {
-                                                    selectedItem = selectedOption
-                                                }
-                                            }
-
-                                            override fun onNothingSelected(p0: AdapterView<*>?) {
-                                                TODO("Not yet implemented")
-                                            }
-                                        }
-                                    }
-
-                                    val textField = TextView(requireContext())
-                                    textField.layoutParams = layoutParams
-                                    textField.text = question.name
-
-                                    textField.tag = question.id
-                                    spinner.tag = question.id
-
-                                    if (question.fieldRule == FieldRule.HIDDEN_UNLESS) {
-                                        spinner.visibility = View.GONE
-                                        textField.visibility = View.GONE
-                                    }
-
-                                    binding.fragmentOpenTicketFormLayout.addView(textField)
-                                    binding.fragmentOpenTicketFormLayout.addView(spinner)
+                                    setupSpinnerForItems(it.formUI, question.items, question)
                                 } else if (question.locations != null) {
-//                                    val parentLocation =
-//                                        question.locations.filter {
-//                                            location -> location.hierarchicalLevelOfLocation == 1
-//                                        }
-//
-//                                    val locationsSortedByParentAbbreviated = arrayListOf<String>()
-//                                    val locationsSortedByParentCompleteName = arrayListOf<String>()
-//
-//                                    val locationsSortedByName =
-//                                        question.locations.sortedBy { location ->
-//                                            location.name
-//                                        }
-//
-//                                    parentLocation.forEach { location ->
-//                                        locationsSortedByParentAbbreviated.add(location.name)
-//                                        locationsSortedByParentCompleteName.add(location.name)
-//                                        locationsSortedByName.forEach { sortedLocation ->
-//                                            if (sortedLocation.parentLocation == location.id) {
-//                                                locationsSortedByParentAbbreviated.add("\t\t\t" + location.name)
-//                                                locationsSortedByParentCompleteName.add(location.completeName)
-//                                            }
-//                                        }
-//                                    }
-//
-//                                    //Log.i("ALATA", locationsSortedByParentAbbreviated.toString())
-//
-//                                    val spinner = Spinner(requireContext(), Spinner.MODE_DIALOG)
-//                                    spinner.layoutParams = layoutParams
-//
-//
-//                                    val adapter: ArrayAdapter<String> = ArrayAdapter<String>(
-//                                        requireContext(),
-//                                        R.layout.spinner_text_view,
-//                                        locationsSortedByParentAbbreviated
-//                                    )
-//
-//                                    adapter.setDropDownViewResource(R.layout.dropdown_spinner_text_view)
-//                                    spinner.adapter = adapter
-//
-//                                    spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-//                                        override fun onItemSelected(
-//                                            p0: AdapterView<*>?,
-//                                            p1: View?,
-//                                            p2: Int,
-//                                            p3: Long
-//                                        ) {
-//                                            Log.i("ALATA", locationsSortedByParentCompleteName[p2])
-//                                        }
-//
-//                                        override fun onNothingSelected(p0: AdapterView<*>?) {
-//                                            //Do nothing
-//                                        }
-//                                    }
-//
-//                                    val textField = TextView(requireContext())
-//                                    textField.layoutParams = layoutParams
-//                                    textField.text = question.name
-//
-//                                    textField.tag = question.id
-//                                    spinner.tag = question.id
-//
-//                                    if (question.fieldRule == FieldRule.HIDDEN_UNLESS) {
-//                                        spinner.visibility = View.GONE
-//                                        textField.visibility = View.GONE
-//                                    }
-
-                                    val conditionsToHideOrShowQuestions =
-                                        it.formUI.conditionsToHideOrShowQuestions
-                                    val spinner = Spinner(requireContext(), Spinner.MODE_DIALOG)
-                                    spinner.layoutParams = layoutParams
-
-                                    val optionsToSelect = question.locations.map { item ->
-                                        item.name
-                                    } as ArrayList<String>
-                                    optionsToSelect.add(0, "-----")
-
-                                    val adapter: ArrayAdapter<String> = ArrayAdapter<String>(
-                                        requireContext(),
-                                        R.layout.spinner_text_view,
-                                        optionsToSelect
-                                    )
-
-                                    adapter.setDropDownViewResource(R.layout.dropdown_spinner_text_view)
-                                    spinner.adapter = adapter
-                                    var selectedItem = ""
-
-                                    if (it.formUI.conditionsToHideOrShowQuestions.isNotEmpty()) {
-                                        spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-                                            override fun onItemSelected(
-                                                p0: AdapterView<*>?,
-                                                p1: View?,
-                                                p2: Int,
-                                                p3: Long
-                                            ) {
-                                                val selectedOption = (p1 as TextView).text.toString()
-
-                                                if (selectedItem != "") {
-                                                    conditionsToHideOrShowQuestions.forEach { ruleToShowQuestionUI ->
-                                                        if (ruleToShowQuestionUI.valueThatTriggersCondition == selectedItem) {
-                                                            val idOfQuestionShouldAppearOrDisappear = ruleToShowQuestionUI.questionIdThatDisappearsOrAppearsBasedOnACondition
-
-                                                            for(i in 0 until binding.fragmentOpenTicketFormLayout.childCount) {
-                                                                val field = binding.fragmentOpenTicketFormLayout.getChildAt(i)
-                                                                if (field.tag == idOfQuestionShouldAppearOrDisappear) {
-                                                                    field.visibility = View.GONE
-                                                                }
-                                                            }
-                                                        }
-                                                    }
-                                                }
-
-                                                conditionsToHideOrShowQuestions.forEach { ruleToShowQuestionUI ->
-                                                    if (ruleToShowQuestionUI.valueThatTriggersCondition == selectedOption) {
-                                                        val idOfQuestionShouldAppearOrDisappear = ruleToShowQuestionUI.questionIdThatDisappearsOrAppearsBasedOnACondition
-
-                                                        for(i in 0 until binding.fragmentOpenTicketFormLayout.childCount) {
-                                                            val field = binding.fragmentOpenTicketFormLayout.getChildAt(i)
-                                                            if (field.tag == idOfQuestionShouldAppearOrDisappear) {
-                                                                val questionShouldAppearOrDisappear = it.formUI.questions.find { questionUI ->
-                                                                    questionUI.id == idOfQuestionShouldAppearOrDisappear
-                                                                }
-                                                                val ruleType = questionShouldAppearOrDisappear?.fieldRule
-
-                                                                if (ruleType == FieldRule.HIDDEN_UNLESS) {
-                                                                    field.visibility = View.VISIBLE
-                                                                } else {
-                                                                    field.visibility = View.GONE
-                                                                }
-                                                            }
-                                                        }
-                                                    }
-                                                }
-
-                                                if (selectedItem != selectedOption) {
-                                                    selectedItem = selectedOption
-                                                }
-                                            }
-
-                                            override fun onNothingSelected(p0: AdapterView<*>?) {
-                                                TODO("Not yet implemented")
-                                            }
-                                        }
-                                    }
-
-                                    val textField = TextView(requireContext())
-                                    textField.layoutParams = layoutParams
-                                    textField.text = question.name
-
-                                    textField.tag = question.id
-                                    spinner.tag = question.id
-
-                                    if (question.fieldRule == FieldRule.HIDDEN_UNLESS) {
-                                        spinner.visibility = View.GONE
-                                        textField.visibility = View.GONE
-                                    }
-
-                                    binding.fragmentOpenTicketFormLayout.addView(textField)
-                                    binding.fragmentOpenTicketFormLayout.addView(spinner)
+                                    setupSpinnerForLocations(question.locations, it.formUI, question)
                                 }
                             }
                             FieldType.TEXTAREA -> {
@@ -639,14 +229,14 @@ class OpenTicketFormFragment : Fragment() {
                                 til.hint = question.name
                                 til.boxBackgroundColor = resources.getColor(R.color.white)
                                 val et =
-                                    TextInputEditText(til.context) //important: get the themed context from the TextInputLayout
+                                    TextInputEditText(til.context) // important: get the themed context from the TextInputLayout
 
-                                //et.isSingleLine = false
+                                // et.isSingleLine = false
                                 et.inputType = InputType.TYPE_CLASS_TEXT or
                                         InputType.TYPE_TEXT_FLAG_MULTI_LINE
                                 til.addView(et)
 
-                                //til.tag = "text_input_layout_" + question.id
+                                // til.tag = "text_input_layout_" + question.id
                                 til.tag = question.id
 
                                 if (question.fieldRule == FieldRule.HIDDEN_UNLESS) {
@@ -672,6 +262,243 @@ class OpenTicketFormFragment : Fragment() {
                 }
             }
         })
+    }
+
+    private fun setupSpinnerForLocations(
+        locations: List<LocationUI>,
+        formUI: FormUI,
+        question: QuestionUI
+    ) {
+        val parentLocation = getParentLocations(locations)
+        val locationsSortedByParent = arrayListOf<String>()
+        val locationsSortedByParentCompleteName = arrayListOf<String>()
+        val locationsSortedByName = sortLocationsByName(locations)
+
+        buildListWithParentAndSubLocations(
+            parentLocation,
+            locationsSortedByParent,
+            locationsSortedByParentCompleteName,
+            locationsSortedByName
+        )
+
+        setupLayoutAndDataForSpinnerWithLocations(formUI, locationsSortedByParent, question)
+    }
+
+    private fun setupLayoutAndDataForSpinnerWithLocations(
+        formUI: FormUI,
+        locationsSortedByParentAbbreviated: ArrayList<String>,
+        question: QuestionUI
+    ) {
+        val conditionsToHideOrShowQuestions = formUI.conditionsToHideOrShowQuestions
+        val spinner = Spinner(requireContext(), Spinner.MODE_DIALOG)
+        spinner.layoutParams = layoutParams
+
+        val optionsToSelect = getLocationsToFillSpinner(locationsSortedByParentAbbreviated)
+
+        spinner.adapter = setupAdapterForSpinner(optionsToSelect)
+        var selectedItem = ""
+
+        if (formUI.conditionsToHideOrShowQuestions.isNotEmpty()) {
+            setListenerForSpinner(spinner, selectedItem, conditionsToHideOrShowQuestions, formUI)
+        }
+
+        setupSpinnerViewsOnLayout(question, spinner)
+    }
+
+    private fun buildListWithParentAndSubLocations(
+        parentLocation: List<LocationUI>,
+        locationsSortedByParentAbbreviated: ArrayList<String>,
+        locationsSortedByParentCompleteName: ArrayList<String>,
+        locationsSortedByName: List<LocationUI>
+    ) {
+        parentLocation.forEach { location ->
+            locationsSortedByParentAbbreviated.add(location.name)
+            locationsSortedByParentCompleteName.add(location.name)
+            locationsSortedByName.forEach { sortedLocation ->
+                if (sortedLocation.parentLocation == location.id) {
+                    locationsSortedByParentAbbreviated.add("\t\t\t" + sortedLocation.name)
+                    locationsSortedByParentCompleteName.add(sortedLocation.completeName)
+                }
+            }
+        }
+    }
+
+    private fun sortLocationsByName(locations: List<LocationUI>): List<LocationUI> {
+        return locations.sortedBy { location ->
+            location.name
+        }
+    }
+
+    private fun getParentLocations(locations: List<LocationUI>): List<LocationUI> {
+        return locations.filter { location ->
+            location.hierarchicalLevelOfLocation == 1
+        }
+    }
+
+    private fun getLocationsToFillSpinner(locations: ArrayList<String>): ArrayList<String> {
+        locations.add(0, "-----")
+        return locations
+    }
+
+    private fun getValuesToFillSpinner(question: QuestionUI): ArrayList<String> {
+        val optionsToSelect =
+            question.values?.split("\r\n")?.filter { item ->
+                item != ""
+            } as ArrayList<String>
+        optionsToSelect.add(0, "-----")
+        return optionsToSelect
+    }
+
+    private fun setupSpinnerForItems(
+        formUI: FormUI,
+        items: List<Item>,
+        question: QuestionUI
+    ) {
+        val conditionsToHideOrShowQuestions =
+            formUI.conditionsToHideOrShowQuestions
+        val spinner = Spinner(requireContext(), Spinner.MODE_DIALOG)
+        spinner.layoutParams = layoutParams
+
+        val optionsToSelect = getItemsToFillSpinner(items)
+        spinner.adapter = setupAdapterForSpinner(optionsToSelect)
+        var selectedItem = ""
+
+        if (formUI.conditionsToHideOrShowQuestions.isNotEmpty()) {
+            setListenerForSpinner(spinner, selectedItem, conditionsToHideOrShowQuestions, formUI)
+        }
+
+        setupSpinnerViewsOnLayout(question, spinner)
+    }
+
+    private fun getItemsToFillSpinner(items: List<Item>): ArrayList<String> {
+        val optionsToSelect = items.map { item ->
+            item.name
+        } as ArrayList<String>
+        optionsToSelect.add(0, "-----")
+        return optionsToSelect
+    }
+
+    private fun setupSpinnerViewsOnLayout(
+        question: QuestionUI,
+        spinner: Spinner
+    ) {
+        val textField = TextView(requireContext())
+        textField.layoutParams = layoutParams
+        textField.text = question.name
+        textField.tag = question.id
+        spinner.tag = question.id
+
+        if (question.fieldRule == FieldRule.HIDDEN_UNLESS) {
+            spinner.visibility = View.GONE
+            textField.visibility = View.GONE
+        }
+
+        binding.fragmentOpenTicketFormLayout.addView(textField)
+        binding.fragmentOpenTicketFormLayout.addView(spinner)
+    }
+
+    private fun setListenerForSpinner(
+        spinner: Spinner,
+        selectedItem: String,
+        conditionsToHideOrShowQuestions: List<RuleToShowQuestionUI>,
+        formUI: FormUI
+    ) {
+        var selectedItemCopy = selectedItem
+        spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(
+                p0: AdapterView<*>?,
+                p1: View?,
+                p2: Int,
+                p3: Long
+            ) {
+                val selectedOption = (p1 as TextView).text.toString()
+
+                checkSelectedItemIsNotEmpty(selectedItemCopy, conditionsToHideOrShowQuestions)
+
+                conditionsToHideOrShowQuestions.forEach { ruleToShowQuestionUI ->
+                    if (ruleToShowQuestionUI.valueThatTriggersCondition == selectedOption) {
+                        val idOfQuestionShouldAppearOrDisappear =
+                            ruleToShowQuestionUI.questionIdThatDisappearsOrAppearsBasedOnACondition
+
+                        checkIfQuestionOnSpinnerShouldAppearOrDisappear(
+                            idOfQuestionShouldAppearOrDisappear,
+                            formUI
+                        )
+                    }
+                }
+
+                if (selectedItemCopy != selectedOption) {
+                    selectedItemCopy = selectedOption
+                }
+            }
+
+            override fun onNothingSelected(p0: AdapterView<*>?) {
+                TODO("Not yet implemented")
+            }
+        }
+    }
+
+    private fun checkIfQuestionOnSpinnerShouldAppearOrDisappear(
+        idOfQuestionShouldAppearOrDisappear: Int,
+        formUI: FormUI
+    ) {
+        for (i in 0 until binding.fragmentOpenTicketFormLayout.childCount) {
+            val field = binding.fragmentOpenTicketFormLayout.getChildAt(i)
+            if (field.tag == idOfQuestionShouldAppearOrDisappear) {
+                val questionShouldAppearOrDisappear =
+                    formUI.questions.find { questionUI ->
+                        questionUI.id == idOfQuestionShouldAppearOrDisappear
+                    }
+                val ruleType = questionShouldAppearOrDisappear?.fieldRule
+
+                if (ruleType == FieldRule.HIDDEN_UNLESS) {
+                    field.visibility = View.VISIBLE
+                } else {
+                    field.visibility = View.GONE
+                }
+            }
+        }
+    }
+
+    private fun checkSelectedItemIsNotEmpty(
+        selectedItemCopy: String,
+        conditionsToHideOrShowQuestions: List<RuleToShowQuestionUI>
+    ) {
+        if (selectedItemCopy != "") {
+            hideQuestionOnSpinnerFromEvaluatingIfIsAnIssueThatShouldDisappear(
+                conditionsToHideOrShowQuestions,
+                selectedItemCopy
+            )
+        }
+    }
+
+    private fun hideQuestionOnSpinnerFromEvaluatingIfIsAnIssueThatShouldDisappear(
+        conditionsToHideOrShowQuestions: List<RuleToShowQuestionUI>,
+        selectedItemCopy: String
+    ) {
+        conditionsToHideOrShowQuestions.forEach { ruleToShowQuestionUI ->
+            if (ruleToShowQuestionUI.valueThatTriggersCondition == selectedItemCopy) {
+                val idOfQuestionShouldAppearOrDisappear =
+                    ruleToShowQuestionUI.questionIdThatDisappearsOrAppearsBasedOnACondition
+
+                for (i in 0 until binding.fragmentOpenTicketFormLayout.childCount) {
+                    val field = binding.fragmentOpenTicketFormLayout.getChildAt(i)
+                    if (field.tag == idOfQuestionShouldAppearOrDisappear) {
+                        field.visibility = View.GONE
+                    }
+                }
+            }
+        }
+    }
+
+    private fun setupAdapterForSpinner(optionsToSelect: ArrayList<String>): ArrayAdapter<String> {
+        val adapter: ArrayAdapter<String> = ArrayAdapter<String>(
+            requireContext(),
+            R.layout.spinner_text_view,
+            optionsToSelect
+        )
+        adapter.setDropDownViewResource(R.layout.dropdown_spinner_text_view)
+        return adapter
     }
 
     private fun setupTextInputLayout(question: QuestionUI): TextInputLayout {

@@ -1,24 +1,13 @@
 package com.glpi.ifsp.hortolandia.ui.fragment
 
-import android.media.MediaPlayer
 import android.os.Build
 import android.os.Bundle
 import android.text.Html
-import android.util.Base64
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.glpi.ifsp.hortolandia.databinding.FragmentOpenTicketTermsAndConditionsBinding
-import android.widget.LinearLayout
-
-import android.webkit.JavascriptInterface
-import android.webkit.WebView
-
-import android.webkit.WebViewClient
-
-
-
 
 class OpenTicketTermsAndConditionsFragment : Fragment() {
 
@@ -53,12 +42,12 @@ class OpenTicketTermsAndConditionsFragment : Fragment() {
         val teste = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             // FROM_HTML_MODE_LEGACY is the behaviour that was used for versions below android N
             // we are using this flag to give a consistent behaviour
-            Html.fromHtml(description, Html.FROM_HTML_MODE_LEGACY);
+            Html.fromHtml(description, Html.FROM_HTML_MODE_LEGACY)
         } else {
-            Html.fromHtml(description);
+            Html.fromHtml(description)
         }
 
-        description?.let { binding.fragmentOpenTicketTermsAndConditionsWebView.loadData("<html><head><style>h3 {font-weight: normal; font-size: 15px}</style></head><body>"+teste.toString()+"</body></html>", "text/html", "UTF-8"); }
+        description?.let { binding.fragmentOpenTicketTermsAndConditionsWebView.loadData("<html><head><style>h3 {font-weight: normal; font-size: 15px}</style></head><body>$teste</body></html>", "text/html", "UTF-8"); }
     }
 
     override fun onDestroyView() {

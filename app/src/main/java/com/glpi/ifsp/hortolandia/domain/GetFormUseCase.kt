@@ -4,21 +4,27 @@ import com.glpi.ifsp.hortolandia.data.enums.ComparisonMethod
 import com.glpi.ifsp.hortolandia.data.enums.FieldRule
 import com.glpi.ifsp.hortolandia.data.enums.FieldType
 import com.glpi.ifsp.hortolandia.data.enums.ItemType
-import com.glpi.ifsp.hortolandia.data.model.*
+import com.glpi.ifsp.hortolandia.data.model.Form
+import com.glpi.ifsp.hortolandia.data.model.Item
+import com.glpi.ifsp.hortolandia.data.model.Question
+import com.glpi.ifsp.hortolandia.data.model.RuleToShowQuestion
+import com.glpi.ifsp.hortolandia.data.model.ValidationResponseSize
 import com.glpi.ifsp.hortolandia.data.repository.form.FormRepository
 import com.glpi.ifsp.hortolandia.infrastructure.exceptions.InternalErrorException
 import com.glpi.ifsp.hortolandia.infrastructure.exceptions.NullResponseBodyException
 import com.glpi.ifsp.hortolandia.infrastructure.exceptions.ResponseRequestException
-import com.glpi.ifsp.hortolandia.infrastructure.utils.removeHtmlH3Tag
 import com.glpi.ifsp.hortolandia.infrastructure.utils.removeUnicodeHtmlTag
-import com.glpi.ifsp.hortolandia.ui.model.*
+import com.glpi.ifsp.hortolandia.ui.model.FormUI
+import com.glpi.ifsp.hortolandia.ui.model.LocationUI
+import com.glpi.ifsp.hortolandia.ui.model.QuestionUI
+import com.glpi.ifsp.hortolandia.ui.model.RuleToShowQuestionUI
+import com.glpi.ifsp.hortolandia.ui.model.ValidationResponseSizeUI
 import com.google.gson.Gson
 import com.google.gson.JsonSyntaxException
 import com.google.gson.reflect.TypeToken
-import retrofit2.Response
-import java.lang.Exception
 import java.lang.IllegalArgumentException
 import java.util.HashMap
+import retrofit2.Response
 
 class GetFormUseCase(
     private val formRepository: FormRepository,
@@ -138,18 +144,6 @@ class GetFormUseCase(
         }
     }
 
-    private fun getQuestionValues(values: String?): String? {
-        return try {
-            val mapObj: Map<String, String> = Gson().fromJson(
-                values,
-                object : TypeToken<HashMap<String?, Any?>?>() {}.type
-            )
-            mapObj.getValue("itemtype")
-        } catch (e: IllegalStateException) {
-            values
-        }
-    }
-
     private suspend fun getItems(values: String?): List<Item>? {
         if (values != null) {
             if (values.isNotBlank()) {
@@ -174,7 +168,6 @@ class GetFormUseCase(
                     } catch (e: IllegalArgumentException) {
                         null
                     }
-
                 } catch (e: IllegalStateException) {
                     try {
                         if (ItemType.valueOf(values.uppercase()) != ItemType.LOCATION) {
@@ -198,7 +191,7 @@ class GetFormUseCase(
 
     private suspend fun getLocations(values: String?): List<LocationUI>? {
         if (values != null) {
-            if(values.isNotBlank()) {
+            if (values.isNotBlank()) {
                 return try {
                     val mapObj: Map<String, String> = Gson().fromJson(
                         values,
@@ -210,7 +203,6 @@ class GetFormUseCase(
                     } else {
                         null
                     }
-
                 } catch (e: JsonSyntaxException) {
                     try {
                         return if (ItemType.valueOf(values.uppercase()) == ItemType.LOCATION) {
@@ -221,8 +213,7 @@ class GetFormUseCase(
                     } catch (e: IllegalArgumentException) {
                         null
                     }
-                }
-                catch (e: IllegalStateException) {
+                } catch (e: IllegalStateException) {
                     try {
                         return if (ItemType.valueOf(values.uppercase()) == ItemType.LOCATION) {
                             getLocationUseCase()
