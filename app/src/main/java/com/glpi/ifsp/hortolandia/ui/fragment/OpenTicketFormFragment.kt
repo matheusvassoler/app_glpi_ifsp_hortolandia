@@ -38,6 +38,7 @@ import java.util.Calendar
 import java.util.Date
 import java.util.Locale
 import kotlin.collections.ArrayList
+import kotlin.collections.forEach as kForEach
 import org.koin.android.viewmodel.ext.android.viewModel
 
 private const val FORM_URL_PARAM = "FORM_URL_PARAM"
@@ -127,7 +128,7 @@ class OpenTicketFormFragment : Fragment() {
     }
 
     private fun setupQuestionsAccordingToTheirType(it: OpenTicketState.ShowFormUI) {
-        it.formUI.questions.forEach { question ->
+        it.formUI.questions.kForEach { question ->
             when (question.fieldType) {
                 FieldType.TEXT -> {
                     val til = setupTextInputLayout(question)
@@ -257,7 +258,7 @@ class OpenTicketFormFragment : Fragment() {
         formUI: FormUI,
         isChecked: Boolean
     ) {
-        conditionsToHideOrShowQuestions.forEach { ruleToShowQuestionUI ->
+        conditionsToHideOrShowQuestions.kForEach { ruleToShowQuestionUI ->
             if (ruleToShowQuestionUI.valueThatTriggersCondition == optionSelected) {
                 val idOfQuestionShouldAppearOrDisappear =
                     ruleToShowQuestionUI.questionIdThatDisappearsOrAppearsBasedOnACondition
@@ -410,10 +411,10 @@ class OpenTicketFormFragment : Fragment() {
         locationsSortedByParentCompleteName: ArrayList<String>,
         locationsSortedByName: List<LocationUI>
     ) {
-        parentLocation.forEach { location ->
+        parentLocation.kForEach { location ->
             locationsSortedByParentAbbreviated.add(location.name)
             locationsSortedByParentCompleteName.add(location.name)
-            locationsSortedByName.forEach { sortedLocation ->
+            locationsSortedByName.kForEach { sortedLocation ->
                 if (sortedLocation.parentLocation == location.id) {
                     locationsSortedByParentAbbreviated.add("\t\t\t" + sortedLocation.name)
                     locationsSortedByParentCompleteName.add(sortedLocation.completeName)
@@ -514,7 +515,7 @@ class OpenTicketFormFragment : Fragment() {
 
                 checkSelectedItemIsNotEmpty(selectedItemCopy, conditionsToHideOrShowQuestions)
 
-                conditionsToHideOrShowQuestions.forEach { ruleToShowQuestionUI ->
+                conditionsToHideOrShowQuestions.kForEach { ruleToShowQuestionUI ->
                     if (ruleToShowQuestionUI.valueThatTriggersCondition == selectedOption) {
                         val idOfQuestionShouldAppearOrDisappear =
                             ruleToShowQuestionUI.questionIdThatDisappearsOrAppearsBasedOnACondition
@@ -575,7 +576,7 @@ class OpenTicketFormFragment : Fragment() {
         conditionsToHideOrShowQuestions: List<RuleToShowQuestionUI>,
         selectedItemCopy: String
     ) {
-        conditionsToHideOrShowQuestions.forEach { ruleToShowQuestionUI ->
+        conditionsToHideOrShowQuestions.kForEach { ruleToShowQuestionUI ->
             if (ruleToShowQuestionUI.valueThatTriggersCondition == selectedItemCopy) {
                 val idOfQuestionShouldAppearOrDisappear =
                     ruleToShowQuestionUI.questionIdThatDisappearsOrAppearsBasedOnACondition
@@ -670,12 +671,6 @@ class OpenTicketFormFragment : Fragment() {
     private fun Int.toDp(context: Context): Int = TypedValue.applyDimension(
         TypedValue.COMPLEX_UNIT_DIP, this.toFloat(), context.resources.displayMetrics
     ).toInt()
-
-    private fun LinearLayout.alterLayoutParams(callback: ((LinearLayout.LayoutParams) -> Unit)) {
-        val layoutParams = this.layoutParams
-        callback(layoutParams as LinearLayout.LayoutParams)
-        this.layoutParams = layoutParams
-    }
 
     companion object {
         fun newInstance(formUrl: String) =
