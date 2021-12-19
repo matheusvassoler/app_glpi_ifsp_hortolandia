@@ -34,6 +34,12 @@ class GetFormUseCaseTest : BaseUnitTest() {
     @RelaxedMockK
     private lateinit var sessionUseCase: SessionUseCase
 
+    @RelaxedMockK
+    private lateinit var getItemUseCase: GetItemUseCase
+
+    @RelaxedMockK
+    private lateinit var getLocationUseCase: GetLocationUseCase
+
     @InjectMockKs
     private lateinit var getFormUseCase: GetFormUseCase
 
