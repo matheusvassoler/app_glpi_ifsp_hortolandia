@@ -1,6 +1,9 @@
 <resources>
     <string name="app_name">GLPI IFSP</string>
 
+    <!-- Toolbar -->
+    <string name="toolbar_title_open_ticket">Abrir chamado</string>
+
     <!-- Login Screen -->
     <string name="login_title">Olá!</string>
     <string name="login_subtitle">Faça o login para continuar</string>
@@ -65,6 +68,4 @@
     <string name="open_ticket_toolbar_title">Abrir chamado</string>
     <string name="try_again_button">Tentar novamente</string>
     <string name="back_to_home_button">Voltar para a home</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

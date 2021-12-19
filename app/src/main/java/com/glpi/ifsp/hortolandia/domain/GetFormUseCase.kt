@@ -146,91 +146,99 @@ class GetFormUseCase(
 
     private suspend fun getItems(values: String?): List<Item>? {
         if (values != null) {
-            if (values.isNotBlank()) {
-                return try {
-                    val mapObj: Map<String, String> = Gson().fromJson(
-                        values,
-                        object : TypeToken<HashMap<String?, Any?>?>() {}.type
-                    )
-                    val itemType = mapObj.getValue("itemtype")
-                    if (ItemType.valueOf(itemType.uppercase()) != ItemType.LOCATION) {
-                        getItemUseCase(ItemType.valueOf(itemType.uppercase()))
-                    } else {
-                        null
-                    }
+            return if (values.isNotBlank()) {
+                try {
+                    getItemFromJsonStringConvertedToObject(values)
                 } catch (e: JsonSyntaxException) {
-                    try {
-                        if (ItemType.valueOf(values.uppercase()) != ItemType.LOCATION) {
-                            getItemUseCase(ItemType.valueOf(values.uppercase()))
-                        } else {
-                            null
-                        }
-                    } catch (e: IllegalArgumentException) {
-                        null
-                    }
+                    tryToGetItemFromItemType(values)
                 } catch (e: IllegalStateException) {
-                    try {
-                        if (ItemType.valueOf(values.uppercase()) != ItemType.LOCATION) {
-                            getItemUseCase(ItemType.valueOf(values.uppercase()))
-                        } else {
-                            null
-                        }
-                    } catch (e: IllegalArgumentException) {
-                        null
-                    }
+                    tryToGetItemFromItemType(values)
                 } catch (e: IllegalArgumentException) {
                     null
                 }
             } else {
-                return null
+                null
             }
         } else {
             return null
         }
     }
 
+    private suspend fun tryToGetItemFromItemType(values: String?) =
+        if (values != null) {
+            try {
+                getItemFromItemType(values)
+            } catch (e: IllegalArgumentException) {
+                null
+            }
+        } else {
+            null
+        }
+
+    private suspend fun getItemFromJsonStringConvertedToObject(values: String?): List<Item>? {
+        val mapObj: Map<String, String> = Gson().fromJson(
+            values,
+            object : TypeToken<HashMap<String?, Any?>?>() {}.type
+        )
+        val itemType = mapObj.getValue("itemtype")
+        return getItemFromItemType(itemType)
+    }
+
+    private suspend fun getItemFromItemType(values: String) =
+        if (ItemType.valueOf(values.uppercase()) != ItemType.LOCATION) {
+            getItemUseCase(ItemType.valueOf(values.uppercase()))
+        } else {
+            null
+        }
+
     private suspend fun getLocations(values: String?): List<LocationUI>? {
         if (values != null) {
-            if (values.isNotBlank()) {
-                return try {
-                    val mapObj: Map<String, String> = Gson().fromJson(
-                        values,
-                        object : TypeToken<HashMap<String?, Any?>?>() {}.type
-                    )
-                    val itemType = mapObj.getValue("itemtype")
-                    return if (ItemType.valueOf(itemType.uppercase()) == ItemType.LOCATION) {
-                        getLocationUseCase()
-                    } else {
-                        null
-                    }
+            return if (values.isNotBlank()) {
+                try {
+                    getLocationFromJsonStringConvertedToObject(values)
                 } catch (e: JsonSyntaxException) {
-                    try {
-                        return if (ItemType.valueOf(values.uppercase()) == ItemType.LOCATION) {
-                            getLocationUseCase()
-                        } else {
-                            null
-                        }
-                    } catch (e: IllegalArgumentException) {
-                        null
-                    }
+                    tryToGetLocationFromItemType(values)
                 } catch (e: IllegalStateException) {
-                    try {
-                        return if (ItemType.valueOf(values.uppercase()) == ItemType.LOCATION) {
-                            getLocationUseCase()
-                        } else {
-                            null
-                        }
-                    } catch (e: IllegalArgumentException) {
-                        null
-                    }
+                    tryToGetLocationFromItemType(values)
                 } catch (e: IllegalArgumentException) {
                     null
                 }
             } else {
-                return null
+                null
             }
         } else {
             return null
+        }
+    }
+
+    private suspend fun tryToGetLocationFromItemType(
+        values: String?
+    ): List<LocationUI>? {
+        return if (values != null) {
+            try {
+                return getLocationFromItemType(values)
+            } catch (e: IllegalArgumentException) {
+                null
+            }
+        } else {
+            null
+        }
+    }
+
+    private suspend fun getLocationFromJsonStringConvertedToObject(values: String?): List<LocationUI>? {
+        val mapObj: Map<String, String> = Gson().fromJson(
+            values,
+            object : TypeToken<HashMap<String?, Any?>?>() {}.type
+        )
+        val itemType = mapObj.getValue("itemtype")
+        return getLocationFromItemType(itemType)
+    }
+
+    private suspend fun getLocationFromItemType(values: String): List<LocationUI>? {
+        return if (ItemType.valueOf(values.uppercase()) == ItemType.LOCATION) {
+            getLocationUseCase()
+        } else {
+            null
         }
     }
 
