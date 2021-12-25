@@ -5,7 +5,9 @@ import android.content.Context
 import android.graphics.Typeface
 import android.net.Uri
 import android.os.Bundle
+import android.text.Editable
 import android.text.InputType
+import android.text.TextWatcher
 import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
@@ -21,6 +23,7 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import com.glpi.ifsp.hortolandia.R
+import com.glpi.ifsp.hortolandia.data.enums.ComparisonMethod
 import com.glpi.ifsp.hortolandia.data.enums.FieldRule
 import com.glpi.ifsp.hortolandia.data.enums.FieldType
 import com.glpi.ifsp.hortolandia.data.model.Item
@@ -131,15 +134,15 @@ class OpenTicketFormFragment : Fragment() {
         it.formUI.questions.kForEach { question ->
             when (question.fieldType) {
                 FieldType.TEXT -> {
-                    val til = setupTextInputLayout(question)
+                    val til = setupTextInputLayout(question, it.formUI)
                     binding.fragmentOpenTicketFormLayout.addView(til)
                 }
                 FieldType.DATE -> {
-                    val til = setupTextInputLayout(question)
+                    val til = setupTextInputLayout(question, it.formUI)
                     binding.fragmentOpenTicketFormLayout.addView(til)
                 }
                 FieldType.EMAIL -> {
-                    val til = setupTextInputLayout(question)
+                    val til = setupTextInputLayout(question, it.formUI)
                     binding.fragmentOpenTicketFormLayout.addView(til)
                 }
                 FieldType.SELECT -> {
@@ -149,7 +152,7 @@ class OpenTicketFormFragment : Fragment() {
                     setupCheckbox(question, it.formUI)
                 }
                 FieldType.INTEGER -> {
-                    val til = setupTextInputLayout(question)
+                    val til = setupTextInputLayout(question, it.formUI)
                     binding.fragmentOpenTicketFormLayout.addView(til)
                 }
                 FieldType.GLPISELECT -> {
@@ -266,7 +269,7 @@ class OpenTicketFormFragment : Fragment() {
                 for (i in 0 until binding.fragmentOpenTicketFormLayout.childCount) {
                     val field = binding.fragmentOpenTicketFormLayout.getChildAt(i)
 
-                    checkIfQuestionShouldAppearOrDesappearFromCheckbox(
+                    checkIfQuestionShouldAppearOrDisappearFromCheckbox(
                         field,
                         idOfQuestionShouldAppearOrDisappear,
                         formUI,
@@ -277,7 +280,7 @@ class OpenTicketFormFragment : Fragment() {
         }
     }
 
-    private fun checkIfQuestionShouldAppearOrDesappearFromCheckbox(
+    private fun checkIfQuestionShouldAppearOrDisappearFromCheckbox(
         field: View,
         idOfQuestionShouldAppearOrDisappear: Int,
         formUI: FormUI,
@@ -605,7 +608,7 @@ class OpenTicketFormFragment : Fragment() {
         return adapter
     }
 
-    private fun setupTextInputLayout(question: QuestionUI): TextInputLayout {
+    private fun setupTextInputLayout(question: QuestionUI, formUI: FormUI): TextInputLayout {
         val til = TextInputLayout(requireContext())
         val et = TextInputEditText(til.context)
 
@@ -618,6 +621,9 @@ class OpenTicketFormFragment : Fragment() {
             FieldType.INTEGER -> et.inputType = InputType.TYPE_CLASS_NUMBER
             else -> et.inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS
         }
+
+        setListenerForTextInput(et, formUI, question)
+
         til.addView(et)
 
         if (question.fieldRule == FieldRule.HIDDEN_UNLESS) {
@@ -627,12 +633,65 @@ class OpenTicketFormFragment : Fragment() {
         return til
     }
 
+    private fun setListenerForTextInput(
+        textInputEditText: TextInputEditText,
+        formUI: FormUI,
+        question: QuestionUI
+    ) {
+        var questionAppearOrDisappear = false
+        var fieldShouldAppearOrDisappear: View? = null
+        textInputEditText.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                // Do nothing
+            }
+
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                val typedText = p0.toString()
+
+                for (m in formUI.conditionsToHideOrShowQuestions.indices) {
+                    val ruleToShowQuestionUI = formUI.conditionsToHideOrShowQuestions[m]
+                    if (question.id == ruleToShowQuestionUI.questionIdThatControlsTheCondition) {
+                        when (ruleToShowQuestionUI.comparisonMethod) {
+                            ComparisonMethod.EQUAL -> {
+                                if (typedText == ruleToShowQuestionUI.valueThatTriggersCondition) {
+                                    val idOfQuestionShouldAppearOrDisappear =
+                                        ruleToShowQuestionUI.questionIdThatDisappearsOrAppearsBasedOnACondition
+
+                                    for (i in 0 until binding.fragmentOpenTicketFormLayout.childCount) {
+                                        val field =
+                                            binding.fragmentOpenTicketFormLayout.getChildAt(i)
+                                        if (field.tag == idOfQuestionShouldAppearOrDisappear) {
+                                            field.visibility = View.VISIBLE
+                                            questionAppearOrDisappear = true
+                                            fieldShouldAppearOrDisappear = field
+                                        }
+                                    }
+                                } else {
+                                    if (questionAppearOrDisappear && fieldShouldAppearOrDisappear != null) {
+                                        fieldShouldAppearOrDisappear!!.visibility = View.GONE
+                                        questionAppearOrDisappear = false
+                                        fieldShouldAppearOrDisappear = null
+                                    }
+                                }
+                            }
+                        }
+                        break
+                    }
+                }
+            }
+
+            override fun afterTextChanged(p0: Editable?) {
+                // Do nothing
+            }
+        })
+    }
+
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
     }
 
-    fun TextInputEditText.transformIntoDatePicker(context: Context, format: String, maxDate: Date? = null) {
+    private fun TextInputEditText.transformIntoDatePicker(context: Context, format: String, maxDate: Date? = null) {
         isFocusableInTouchMode = false
         isClickable = true
         isFocusable = false
