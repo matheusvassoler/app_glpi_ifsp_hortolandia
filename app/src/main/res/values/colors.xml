@@ -7,6 +7,7 @@
     <color name="green_light">#8ec547</color>
     <color name="green_ultra_dark">#5D6E48</color>
     <color name="gray_dark">#707070</color>
+    <color name="gray_dark_for_field_hint">#666666</color>
     <color name="gray_ultra_light">#EFEFF0</color>
     <color name="gray_light">#dbdbdb</color>
     <color name="blue_link">#008ECF</color>

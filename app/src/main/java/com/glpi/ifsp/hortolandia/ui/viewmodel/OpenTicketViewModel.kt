@@ -34,4 +34,8 @@ class OpenTicketViewModel(
             }
         }
     }
+
+    fun createTicket() {
+
+    }
 }
