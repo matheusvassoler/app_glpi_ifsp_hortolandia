@@ -1,6 +1,9 @@
 <resources>
     <string name="app_name">GLPI IFSP</string>
 
+    <!-- Toolbar -->
+    <string name="toolbar_title_open_ticket">Abrir chamado</string>
+
     <!-- Login Screen -->
     <string name="login_title">Olá!</string>
     <string name="login_subtitle">Faça o login para continuar</string>
@@ -58,6 +61,20 @@
     <string name="open_ticket_qr_code_scan_error_title">Falha ao escanear o QrCode</string>
     <string name="open_ticket_qr_code_scan_error_subtitle">Não foi possível fazer a leitura do QrCode. Tente novamente ou volte para a Home</string>
     <string name="open_ticket_qr_code_scan_error_try_again_button">Tentar novament</string>
+
+    <!-- Failed Registration Screen -->
+    <string name="failed_registration_title">Falha ao enviar o chamado</string>
+    <string name="failed_registration_subtitle">Não foi possível enviar sua solicitação.Tente novamente ou volte para a home</string>
+
+    <!-- Registration Successfully Screen -->
+    <string name="registration_successfully_title">Chamado enviado com sucesso</string>
+    <string name="registration_successfully_subtitle">Aguarde e em breve iremos retornar sua solicitação </string>
+
+    <!-- Request Error Screen -->
+    <string name="request_error_subtitle">Não foi possível obter o formulário para abrir o chamado. Volte para a home e tente novamente</string>
+
+    <!-- Open Ticket Screen -->
+    <string name="open_ticket_continue_button">Continuar</string>
 
     <!-- Common errors -->
     <string name="internal_error">Ocorreu um erro interno</string>

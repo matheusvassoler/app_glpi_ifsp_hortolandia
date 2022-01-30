@@ -2,6 +2,8 @@ package com.glpi.ifsp.hortolandia.domain
 
 import android.util.Log
 import com.glpi.ifsp.hortolandia.data.model.Login
+import com.glpi.ifsp.hortolandia.data.model.Session
+import com.glpi.ifsp.hortolandia.data.model.User
 import com.glpi.ifsp.hortolandia.data.repository.login.LoginRepository
 import com.glpi.ifsp.hortolandia.infrastructure.Constant
 import com.glpi.ifsp.hortolandia.infrastructure.exceptions.ResponseRequestException
@@ -34,7 +36,7 @@ class LoginUseCase(
         checkIfLoginIsSuccessful(loginResponse)
     }
 
-    private fun checkIfLoginIsSuccessful(loginResponse: Response<Login>) {
+    private suspend fun checkIfLoginIsSuccessful(loginResponse: Response<Login>) {
         when {
             loginResponse.isSuccessful -> {
                 checkIfResponseBodyHasValue(loginResponse)
@@ -48,7 +50,7 @@ class LoginUseCase(
         }
     }
 
-    private fun checkIfResponseBodyHasValue(loginResponse: Response<Login>) {
+    private suspend fun checkIfResponseBodyHasValue(loginResponse: Response<Login>) {
         val loginData = loginResponse.body()
         if (loginData != null) {
             val sessionUI = convertResponseBodyToSessionUI(loginData)
@@ -56,8 +58,8 @@ class LoginUseCase(
         }
     }
 
-    private fun convertResponseBodyToSessionUI(loginData: Login): SessionUI {
-        val user = loginData.user
+    private suspend fun convertResponseBodyToSessionUI(loginData: Login): SessionUI {
+        val user: User = loginData.user ?: getUserInfo(loginData)
         // TODO - Apagar isso no futuro, apenas para log
         Log.i("APP_TOKEN_SESSION", loginData.sessionToken)
         return SessionUI(
@@ -69,6 +71,20 @@ class LoginUseCase(
                 lastName = user.lastName
             )
         )
+    }
+
+    private suspend fun getUserInfo(loginData: Login): User {
+        val response = loginRepository.getUserInfo(loginData.sessionToken)
+        if (response.isSuccessful) {
+            val session: Session? = response.body()
+            if (session != null) {
+                return session.user
+            } else {
+                throw ResponseRequestException()
+            }
+        } else {
+            throw ResponseRequestException()
+        }
     }
 
     private fun storeSessionDataLocally(sessionUI: SessionUI) =

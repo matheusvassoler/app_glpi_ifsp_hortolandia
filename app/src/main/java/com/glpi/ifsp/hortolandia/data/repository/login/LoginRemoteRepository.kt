@@ -3,6 +3,7 @@ package com.glpi.ifsp.hortolandia.data.repository.login
 import android.util.Base64
 import android.util.Base64.encodeToString
 import com.glpi.ifsp.hortolandia.data.model.Login
+import com.glpi.ifsp.hortolandia.data.model.Session
 import com.glpi.ifsp.hortolandia.data.source.remote.ApiClient
 import com.glpi.ifsp.hortolandia.ui.model.LoginUI
 import retrofit2.Response
@@ -15,6 +16,10 @@ class LoginRemoteRepository(
         val usernameAndPassword = prepareUsernameAndPasswordForBase64(login)
         val authHeader = createBase64StringForAuthHeader(usernameAndPassword)
         return apiClient().callLoginResponse(authHeader)
+    }
+
+    override suspend fun getUserInfo(sessionToken: String): Response<Session> {
+        return apiClient().getUserInfo(sessionToken)
     }
 
     private fun createBase64StringForAuthHeader(base: String): String =

@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <ImageView
+        android:id="@+id/activity_registration_successfully_success_icon"
+        android:layout_width="@dimen/default_dimen_80dp"
+        android:layout_height="@dimen/default_dimen_80dp"
+        android:layout_marginTop="@dimen/default_dimen_150dp"
+        android:src="@drawable/success_icon"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <TextView
+        android:id="@+id/activity_registration_successfully_success_title"
+        android:layout_width="@dimen/default_dimen_0dp"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/default_dimen_20sp"
+        android:layout_marginTop="@dimen/default_dimen_20dp"
+        android:layout_marginStart="@dimen/default_dimen_20dp"
+        android:layout_marginEnd="@dimen/default_dimen_20dp"
+        android:textColor="@color/black"
+        android:textAlignment="center"
+        android:text="@string/registration_successfully_title"
+        app:layout_constraintTop_toBottomOf="@id/activity_registration_successfully_success_icon"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <TextView
+        android:id="@+id/activity_registration_successfully_success_subtitle"
+        android:layout_width="@dimen/default_dimen_0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/default_dimen_30dp"
+        android:layout_marginStart="@dimen/default_dimen_50dp"
+        android:layout_marginEnd="@dimen/default_dimen_50dp"
+        android:textAlignment="center"
+        android:text="@string/registration_successfully_subtitle"
+        app:layout_constraintTop_toBottomOf="@id/activity_registration_successfully_success_title"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/activity_registration_successfully_back_card_view"
+        android:layout_width="@dimen/default_dimen_0dp"
+        android:layout_height="@dimen/default_dimen_50dp"
+        android:layout_marginStart="@dimen/default_dimen_20dp"
+        android:layout_marginEnd="@dimen/default_dimen_20dp"
+        android:layout_marginBottom="@dimen/default_dimen_20dp"
+        android:text="@string/back_to_home_button"
+        android:textAllCaps="false"
+        android:backgroundTint="@color/green_dark"
+        android:foreground="?android:attr/selectableItemBackground"
+        android:focusable="true"
+        android:clickable="true"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/activity_registration_successfully_button"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/activity_registration_successfully_button_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/back_to_home_button"
+                android:textColor="@color/white"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
