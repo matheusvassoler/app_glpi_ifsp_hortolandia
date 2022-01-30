@@ -1,5 +1,6 @@
 package com.glpi.ifsp.hortolandia.domain
 
+import android.os.Build
 import com.glpi.ifsp.hortolandia.data.model.TicketData
 import com.glpi.ifsp.hortolandia.data.model.TicketInput
 import com.glpi.ifsp.hortolandia.data.repository.ticket.TicketRepository
@@ -47,8 +48,12 @@ class CreateTicketUseCase(
     }
 
     private fun getContent(answersToSave: Map<String, String>): String {
-        return answersToSave.entries.stream().map { entrySet ->
-            entrySet.key + ": " + entrySet.value
-        }.collect(Collectors.joining("\n"))
+        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            answersToSave.entries.stream().map { entrySet ->
+                entrySet.key + ": " + entrySet.value
+            }.collect(Collectors.joining("\n"))
+        } else {
+            TODO("Subir a versao do app em breve")
+        }
     }
 }
