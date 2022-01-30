@@ -17,7 +17,6 @@ import android.widget.AutoCompleteTextView
 import android.widget.Button
 import android.widget.CheckBox
 import android.widget.LinearLayout
-import android.widget.Spinner
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
@@ -47,7 +46,7 @@ import org.koin.android.viewmodel.ext.android.viewModel
 private const val FORM_URL_PARAM = "FORM_URL_PARAM"
 private const val ID = "id"
 
-@Suppress("TooManyFunctions", "LongMethod", "MaxLineLength", "ComplexMethod", "ComplexCondition")
+@Suppress("TooManyFunctions", "LongMethod", "MaxLineLength", "ComplexMethod", "ComplexCondition", "LargeClass")
 class OpenTicketFormFragment : Fragment() {
 
     private val openTicketViewModel: OpenTicketViewModel by viewModel()
@@ -95,7 +94,8 @@ class OpenTicketFormFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         openTicketViewModel.onStart(formId)
-        binding.fragmentOpenTicketFormToolbar.toolbarTitle.text = "Abrir chamado"
+        binding.fragmentOpenTicketFormToolbar.toolbarTitle.text =
+            getString(R.string.open_ticket_header_title)
 
         openTicketViewModel.state.observe(viewLifecycleOwner, Observer {
             when (it) {
@@ -350,8 +350,6 @@ class OpenTicketFormFragment : Fragment() {
                                 if (question.items != null) {
                                     val conditionsToHideOrShowQuestions =
                                         it.formUI.conditionsToHideOrShowQuestions
-                                    val spinner = Spinner(requireContext(), Spinner.MODE_DIALOG)
-                                    spinner.layoutParams = layoutParams
 
                                     val optionsToSelect = question.items.map { item ->
                                         item.name
@@ -364,26 +362,26 @@ class OpenTicketFormFragment : Fragment() {
                                     )
 
                                     adapter.setDropDownViewResource(R.layout.dropdown_spinner_text_view)
-                                    spinner.adapter = adapter
                                     var selectedItem = ""
 
+                                    val (textInputLayout, autoCompleteTextView) = setupTextInputLayoutForSpinner(adapter, question)
                                     if (it.formUI.conditionsToHideOrShowQuestions.isNotEmpty()) {
-                                        spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-                                            override fun onItemSelected(
-                                                p0: AdapterView<*>?,
-                                                p1: View?,
-                                                p2: Int,
-                                                p3: Long
-                                            ) {
-                                                val selectedOption = (p1 as TextView).text.toString()
+                                        autoCompleteTextView.onItemClickListener =
+                                            AdapterView.OnItemClickListener { _, view, _, _ ->
+                                                val selectedOption =
+                                                    (view as TextView).text.toString()
 
                                                 if (selectedItem != "") {
                                                     conditionsToHideOrShowQuestions.forEach { ruleToShowQuestionUI ->
                                                         if (ruleToShowQuestionUI.valueThatTriggersCondition == selectedItem) {
-                                                            val idOfQuestionShouldAppearOrDisappear = ruleToShowQuestionUI.questionIdThatDisappearsOrAppearsBasedOnACondition
+                                                            val idOfQuestionShouldAppearOrDisappear =
+                                                                ruleToShowQuestionUI.questionIdThatDisappearsOrAppearsBasedOnACondition
 
                                                             for (i in 0 until binding.fragmentOpenTicketFormLayout.childCount) {
-                                                                val field = binding.fragmentOpenTicketFormLayout.getChildAt(i)
+                                                                val field =
+                                                                    binding.fragmentOpenTicketFormLayout.getChildAt(
+                                                                        i
+                                                                    )
                                                                 if (field.tag == idOfQuestionShouldAppearOrDisappear) {
                                                                     field.visibility = View.GONE
                                                                 }
@@ -394,15 +392,21 @@ class OpenTicketFormFragment : Fragment() {
 
                                                 conditionsToHideOrShowQuestions.forEach { ruleToShowQuestionUI ->
                                                     if (ruleToShowQuestionUI.valueThatTriggersCondition == selectedOption) {
-                                                        val idOfQuestionShouldAppearOrDisappear = ruleToShowQuestionUI.questionIdThatDisappearsOrAppearsBasedOnACondition
+                                                        val idOfQuestionShouldAppearOrDisappear =
+                                                            ruleToShowQuestionUI.questionIdThatDisappearsOrAppearsBasedOnACondition
 
                                                         for (i in 0 until binding.fragmentOpenTicketFormLayout.childCount) {
-                                                            val field = binding.fragmentOpenTicketFormLayout.getChildAt(i)
+                                                            val field =
+                                                                binding.fragmentOpenTicketFormLayout.getChildAt(
+                                                                    i
+                                                                )
                                                             if (field.tag == idOfQuestionShouldAppearOrDisappear || field.tag == "text_field_$idOfQuestionShouldAppearOrDisappear" || field.tag == "spinner_$idOfQuestionShouldAppearOrDisappear" || field.tag == "checkbox_$idOfQuestionShouldAppearOrDisappear") {
-                                                                val questionShouldAppearOrDisappear = it.formUI.questions.find { questionUI ->
-                                                                    questionUI.id == idOfQuestionShouldAppearOrDisappear
-                                                                }
-                                                                val ruleType = questionShouldAppearOrDisappear?.fieldRule
+                                                                val questionShouldAppearOrDisappear =
+                                                                    it.formUI.questions.find { questionUI ->
+                                                                        questionUI.id == idOfQuestionShouldAppearOrDisappear
+                                                                    }
+                                                                val ruleType =
+                                                                    questionShouldAppearOrDisappear?.fieldRule
 
                                                                 if (ruleType == FieldRule.HIDDEN_UNLESS) {
                                                                     field.visibility = View.VISIBLE
@@ -418,20 +422,12 @@ class OpenTicketFormFragment : Fragment() {
                                                     selectedItem = selectedOption
                                                 }
                                             }
-
-                                            override fun onNothingSelected(p0: AdapterView<*>?) {
-                                                TODO("Not yet implemented")
-                                            }
-                                        }
                                     }
 
-                                    val (textInputLayout, autoCompleteTextView) = setupTextInputLayoutForSpinner(adapter, question)
                                     binding.fragmentOpenTicketFormLayout.addView(textInputLayout)
                                 } else if (question.locations != null) {
                                     val conditionsToHideOrShowQuestions =
                                         it.formUI.conditionsToHideOrShowQuestions
-                                    val spinner = Spinner(requireContext(), Spinner.MODE_DIALOG)
-                                    spinner.layoutParams = layoutParams
 
                                     val optionsToSelect = question.locations.map { item ->
                                         item.name
@@ -444,18 +440,14 @@ class OpenTicketFormFragment : Fragment() {
                                     )
 
                                     adapter.setDropDownViewResource(R.layout.dropdown_spinner_text_view)
-                                    spinner.adapter = adapter
                                     var selectedItem = ""
 
+                                    val (textInputLayout, autoCompleteTextView) = setupTextInputLayoutForSpinner(adapter, question)
+
                                     if (it.formUI.conditionsToHideOrShowQuestions.isNotEmpty()) {
-                                        spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-                                            override fun onItemSelected(
-                                                p0: AdapterView<*>?,
-                                                p1: View?,
-                                                p2: Int,
-                                                p3: Long
-                                            ) {
-                                                val selectedOption = (p1 as TextView).text.toString()
+                                        autoCompleteTextView.onItemClickListener =
+                                            AdapterView.OnItemClickListener { _, view, _, _ ->
+                                                val selectedOption = (view as TextView).text.toString()
 
                                                 if (selectedItem != "") {
                                                     conditionsToHideOrShowQuestions.forEach { ruleToShowQuestionUI ->
@@ -498,14 +490,8 @@ class OpenTicketFormFragment : Fragment() {
                                                     selectedItem = selectedOption
                                                 }
                                             }
-
-                                            override fun onNothingSelected(p0: AdapterView<*>?) {
-                                                TODO("Not yet implemented")
-                                            }
-                                        }
                                     }
 
-                                    val (textInputLayout, autoCompleteTextView) = setupTextInputLayoutForSpinner(adapter, question)
                                     binding.fragmentOpenTicketFormLayout.addView(textInputLayout)
                                 }
                             }
@@ -513,8 +499,6 @@ class OpenTicketFormFragment : Fragment() {
                                 if (question.items != null) {
                                     val conditionsToHideOrShowQuestions =
                                         it.formUI.conditionsToHideOrShowQuestions
-                                    val spinner = Spinner(requireContext(), Spinner.MODE_DIALOG)
-                                    spinner.layoutParams = layoutParams
 
                                     val optionsToSelect = question.items.map { item ->
                                         item.name
@@ -527,18 +511,14 @@ class OpenTicketFormFragment : Fragment() {
                                     )
 
                                     adapter.setDropDownViewResource(R.layout.dropdown_spinner_text_view)
-                                    spinner.adapter = adapter
                                     var selectedItem = ""
 
+                                    val (textInputLayout, autoCompleteTextView) = setupTextInputLayoutForSpinner(adapter, question)
+
                                     if (it.formUI.conditionsToHideOrShowQuestions.isNotEmpty()) {
-                                        spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-                                            override fun onItemSelected(
-                                                p0: AdapterView<*>?,
-                                                p1: View?,
-                                                p2: Int,
-                                                p3: Long
-                                            ) {
-                                                val selectedOption = (p1 as TextView).text.toString()
+                                        autoCompleteTextView.onItemClickListener =
+                                            AdapterView.OnItemClickListener { _, view, _, _ ->
+                                                val selectedOption = (view as TextView).text.toString()
 
                                                 if (selectedItem != "") {
                                                     conditionsToHideOrShowQuestions.forEach { ruleToShowQuestionUI ->
@@ -581,20 +561,12 @@ class OpenTicketFormFragment : Fragment() {
                                                     selectedItem = selectedOption
                                                 }
                                             }
-
-                                            override fun onNothingSelected(p0: AdapterView<*>?) {
-                                                TODO("Not yet implemented")
-                                            }
-                                        }
                                     }
 
-                                    val (textInputLayout, autoCompleteTextView) = setupTextInputLayoutForSpinner(adapter, question)
                                     binding.fragmentOpenTicketFormLayout.addView(textInputLayout)
                                 } else if (question.locations != null) {
                                     val conditionsToHideOrShowQuestions =
                                         it.formUI.conditionsToHideOrShowQuestions
-                                    val spinner = Spinner(requireContext(), Spinner.MODE_DIALOG)
-                                    spinner.layoutParams = layoutParams
 
                                     val optionsToSelect = question.locations.map { item ->
                                         item.name
@@ -607,18 +579,14 @@ class OpenTicketFormFragment : Fragment() {
                                     )
 
                                     adapter.setDropDownViewResource(R.layout.dropdown_spinner_text_view)
-                                    spinner.adapter = adapter
                                     var selectedItem = ""
 
+                                    val (textInputLayout, autoCompleteTextView) = setupTextInputLayoutForSpinner(adapter, question)
+
                                     if (it.formUI.conditionsToHideOrShowQuestions.isNotEmpty()) {
-                                        spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-                                            override fun onItemSelected(
-                                                p0: AdapterView<*>?,
-                                                p1: View?,
-                                                p2: Int,
-                                                p3: Long
-                                            ) {
-                                                val selectedOption = (p1 as TextView).text.toString()
+                                        autoCompleteTextView.onItemClickListener =
+                                            AdapterView.OnItemClickListener { _, view, _, _ ->
+                                                val selectedOption = (view as TextView).text.toString()
 
                                                 if (selectedItem != "") {
                                                     conditionsToHideOrShowQuestions.forEach { ruleToShowQuestionUI ->
@@ -661,14 +629,8 @@ class OpenTicketFormFragment : Fragment() {
                                                     selectedItem = selectedOption
                                                 }
                                             }
-
-                                            override fun onNothingSelected(p0: AdapterView<*>?) {
-                                                TODO("Not yet implemented")
-                                            }
-                                        }
                                     }
 
-                                    val (textInputLayout, autoCompleteTextView) = setupTextInputLayoutForSpinner(adapter, question)
                                     binding.fragmentOpenTicketFormLayout.addView(textInputLayout)
                                 }
                             }
@@ -676,7 +638,7 @@ class OpenTicketFormFragment : Fragment() {
                                 val til = TextInputLayout(requireContext())
                                 til.layoutParams = layoutParams
                                 til.hint = question.name
-                                til.boxBackgroundColor = resources.getColor(R.color.white)
+                                til.boxBackgroundColor = ContextCompat.getColor(requireContext(), R.color.white)
                                 val et =
                                     TextInputEditText(til.context) // important: get the themed context from the TextInputLayout
 
