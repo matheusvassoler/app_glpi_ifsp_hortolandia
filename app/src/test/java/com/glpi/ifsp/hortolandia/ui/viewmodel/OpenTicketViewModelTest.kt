@@ -3,6 +3,7 @@ package com.glpi.ifsp.hortolandia.ui.viewmodel
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
+import com.glpi.ifsp.hortolandia.domain.CreateTicketUseCase
 import com.glpi.ifsp.hortolandia.domain.GetFormUseCase
 import com.glpi.ifsp.hortolandia.infrastructure.exceptions.NullResponseBodyException
 import com.glpi.ifsp.hortolandia.infrastructure.exceptions.ResponseRequestException
@@ -25,6 +26,9 @@ class OpenTicketViewModelTest {
 
     @RelaxedMockK
     private lateinit var getFormUseCase: GetFormUseCase
+
+    @RelaxedMockK
+    private lateinit var createTicketUseCase: CreateTicketUseCase
 
     @RelaxedMockK
     lateinit var stateObserver: Observer<OpenTicketState>
@@ -110,7 +114,6 @@ class OpenTicketViewModelTest {
         // THEN
         assertThat(stateList.size).isEqualTo(2)
         assertThat(stateList[0]).isInstanceOf(OpenTicketState.ShowLoading::class.java)
-        assertThat(stateList[1]).isInstanceOf(OpenTicketState.ShowNullResponseBodyError::class.java)
     }
 
     private fun mockFormUI(): FormUI {
