@@ -74,6 +74,7 @@
     <string name="request_error_subtitle">Não foi possível obter o formulário para abrir o chamado. Volte para a home e tente novamente</string>
 
     <!-- Open Ticket Screen -->
+    <string name="open_ticket_header_title">Abrir chamado</string>
     <string name="open_ticket_continue_button">Continuar</string>
 
     <!-- Common errors -->
