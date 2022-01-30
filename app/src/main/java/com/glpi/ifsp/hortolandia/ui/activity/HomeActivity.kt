@@ -1,5 +1,6 @@
 package com.glpi.ifsp.hortolandia.ui.activity
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
@@ -10,6 +11,17 @@ import com.glpi.ifsp.hortolandia.ui.fragment.ProfileFragment
 import com.glpi.ifsp.hortolandia.ui.fragment.TicketFragment
 
 class HomeActivity : AppCompatActivity() {
+
+    companion object {
+        private const val PROFILE_FRAGMENT_TAG = "ProfileFragment"
+        private const val HOME_FRAGMENT_TAG = "TicketFragment"
+
+        fun newInstance(context: Context): Intent {
+            return Intent(context, HomeActivity::class.java).apply {
+                flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            }
+        }
+    }
 
     private lateinit var binding: ActivityHomeBinding
 
@@ -73,10 +85,5 @@ class HomeActivity : AppCompatActivity() {
 
     private fun setToolbarTitle(title: String) {
         binding.activityHomeToolbar.toolbarTitle.text = title
-    }
-
-    companion object {
-        private const val PROFILE_FRAGMENT_TAG = "ProfileFragment"
-        private const val HOME_FRAGMENT_TAG = "TicketFragment"
     }
 }

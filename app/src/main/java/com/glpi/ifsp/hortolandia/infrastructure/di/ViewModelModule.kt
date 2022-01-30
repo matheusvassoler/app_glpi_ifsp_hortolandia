@@ -11,5 +11,5 @@ val viewModelModule = module {
     viewModel { LoginViewModel(get()) }
     viewModel { ProfileViewModel(get()) }
     viewModel { TicketViewModel(get()) }
-    viewModel { OpenTicketViewModel(get()) }
+    viewModel { OpenTicketViewModel(get(), get()) }
 }

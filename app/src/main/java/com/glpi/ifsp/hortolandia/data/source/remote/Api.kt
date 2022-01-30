@@ -6,10 +6,13 @@ import com.glpi.ifsp.hortolandia.data.model.Location
 import com.glpi.ifsp.hortolandia.data.model.Login
 import com.glpi.ifsp.hortolandia.data.model.Session
 import com.glpi.ifsp.hortolandia.data.model.Ticket
+import com.glpi.ifsp.hortolandia.data.model.TicketInput
 import retrofit2.Response
+import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.Headers
+import retrofit2.http.POST
 import retrofit2.http.Path
 import retrofit2.http.Query
 
@@ -62,4 +65,11 @@ interface Api {
     suspend fun getUserInfo(
         @Header("Session-Token") sessionToken: String
     ): Response<Session>
+
+    @POST("Ticket")
+    @Headers("App-Token: $APP_TOKEN")
+    suspend fun createTicket(
+        @Header("Session-Token") sessionToken: String,
+        @Body ticketInput: TicketInput
+    ): Response<Void>
 }

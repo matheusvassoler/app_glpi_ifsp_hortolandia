@@ -6,5 +6,4 @@ sealed class OpenTicketState {
     data class ShowFormUI(val formUI: FormUI) : OpenTicketState()
     object ShowLoading : OpenTicketState()
     object ShowResponseRequestError : OpenTicketState()
-    object ShowNullResponseBodyError : OpenTicketState()
 }

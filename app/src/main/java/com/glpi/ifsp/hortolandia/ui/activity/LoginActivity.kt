@@ -1,5 +1,6 @@
 package com.glpi.ifsp.hortolandia.ui.activity
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
@@ -18,6 +19,14 @@ class LoginActivity : AppCompatActivity() {
 
     private val loginViewModel: LoginViewModel by viewModel()
     private lateinit var binding: ActivityLoginBinding
+
+    companion object {
+        fun newInstance(context: Context): Intent {
+            return Intent(context, LoginActivity::class.java).apply {
+                flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            }
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,7 +54,7 @@ class LoginActivity : AppCompatActivity() {
         loginViewModel.event.observe(this, Observer {
             when (it) {
                 is LoginEvent.OpenHome -> {
-                    startActivity(Intent(this, HomeActivity::class.java))
+                    startActivity(HomeActivity.newInstance(this))
                 }
                 is LoginEvent.ShowBadCredentialError -> {
                     showSnackBar(getString(R.string.login_bad_credentials_error_message))
