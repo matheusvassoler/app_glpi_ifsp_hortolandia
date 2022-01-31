@@ -706,10 +706,28 @@ class OpenTicketFormFragment : Fragment() {
 
         if (title.isNotEmpty() && description.isNotEmpty()) {
             button.setOnClickListener {
+                val answersToSave: HashMap<String, String> = hashMapOf()
+                for (i in 0 until binding.fragmentOpenTicketFormLayout.childCount) {
+                    val field = binding.fragmentOpenTicketFormLayout.getChildAt(i)
+
+                    formUI.questions.forEach { question ->
+                        if (field.id == question.id && field.visibility == View.VISIBLE) {
+                            when (field) {
+                                is TextInputLayout -> {
+                                    answersToSave[question.name] = field.editText?.text.toString()
+                                }
+                                is CheckBox -> {
+                                    answersToSave[question.name] = field.text.toString()
+                                }
+                            }
+                        }
+                    }
+                }
+
                 activity?.supportFragmentManager?.beginTransaction()?.apply {
                     replace(
                         R.id.activity_open_ticket_container,
-                        OpenTicketTermsAndConditionsFragment.newInstance(title, description)
+                        OpenTicketTermsAndConditionsFragment.newInstance(title, description, formUI.name, answersToSave)
                     )
                     addToBackStack(null)
                 }?.commit()
