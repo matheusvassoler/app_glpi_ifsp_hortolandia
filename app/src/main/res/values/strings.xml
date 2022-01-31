@@ -77,6 +77,10 @@
     <string name="open_ticket_header_title">Abrir chamado</string>
     <string name="open_ticket_continue_button">Continuar</string>
 
+    <!-- Terms And Conditions Screen -->
+    <string name="terms_and_conditions_check_box_text">Estou ciente dos termos e condições</string>
+    <string name="terms_and_conditions_button_text">Continuar</string>
+
     <!-- Common errors -->
     <string name="internal_error">Ocorreu um erro interno</string>
     <string name="ticket_error_result_description">Não foi possível carregar as informações</string>
