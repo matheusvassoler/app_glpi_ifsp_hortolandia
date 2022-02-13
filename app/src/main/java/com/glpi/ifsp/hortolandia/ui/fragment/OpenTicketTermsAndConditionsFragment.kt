@@ -33,8 +33,8 @@ class OpenTicketTermsAndConditionsFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            title = it.getString("title")
-            description = it.getString("description")
+            title = it.getString(TERMS_TITLE_EXTRA)
+            description = it.getString(TERMS_DESCRIPTION)
             ticketTitle = it.getString(TICKET_TITLE_EXTRA)
             answersToSave = it.getSerializable(ANSWERS_TO_SAVE_EXTRA) as HashMap<String, String>?
         }
@@ -66,6 +66,7 @@ class OpenTicketTermsAndConditionsFragment : Fragment() {
         binding.fragmentOpenTicketTermsAndConditionsButton.isEnabled = false
 
         setupObservers()
+        setListeners()
     }
 
     private fun setListeners() {
@@ -185,6 +186,8 @@ class OpenTicketTermsAndConditionsFragment : Fragment() {
     }
 
     companion object {
+        private const val TERMS_TITLE_EXTRA = "title"
+        private const val TERMS_DESCRIPTION = "description"
         private const val ANSWERS_TO_SAVE_EXTRA = "ANSWERS_TO_SAVE_EXTRA"
         private const val TICKET_TITLE_EXTRA = "TICKET_TITLE_EXTRA"
 
@@ -196,8 +199,8 @@ class OpenTicketTermsAndConditionsFragment : Fragment() {
         ) =
             OpenTicketTermsAndConditionsFragment().apply {
                 arguments = Bundle().apply {
-                    putString("title", title)
-                    putString("description", description)
+                    putString(TERMS_TITLE_EXTRA, title)
+                    putString(TERMS_DESCRIPTION, description)
                     putString(TICKET_TITLE_EXTRA, ticketTitle)
                     putSerializable(ANSWERS_TO_SAVE_EXTRA, answersToSave)
                 }
