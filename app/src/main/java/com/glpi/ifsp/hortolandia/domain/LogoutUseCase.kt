@@ -1,8 +1,10 @@
 package com.glpi.ifsp.hortolandia.domain
 
 import com.glpi.ifsp.hortolandia.data.repository.logout.LogoutRepository
+import com.glpi.ifsp.hortolandia.infrastructure.Constant
 import com.glpi.ifsp.hortolandia.infrastructure.exceptions.InternalErrorException
 import com.glpi.ifsp.hortolandia.infrastructure.exceptions.ResponseRequestException
+import com.glpi.ifsp.hortolandia.infrastructure.exceptions.UnauthorizedLoginException
 
 class LogoutUseCase(
     private val logoutRepository: LogoutRepository,
@@ -16,6 +18,10 @@ class LogoutUseCase(
 
         if (response.isSuccessful) {
             sessionUseCase.clearSessionData()
+        } else if (response.code() == Constant.RequestStatusCode.UNAUTHORIZED ||
+            response.code() == Constant.RequestStatusCode.FORBIDDEN
+        ) {
+            throw UnauthorizedLoginException()
         } else {
             throw ResponseRequestException()
         }

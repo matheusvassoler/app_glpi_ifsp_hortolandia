@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.glpi.ifsp.hortolandia.domain.LogoutUseCase
 import com.glpi.ifsp.hortolandia.infrastructure.exceptions.InternalErrorException
+import com.glpi.ifsp.hortolandia.infrastructure.exceptions.UnauthorizedLoginException
 import com.glpi.ifsp.hortolandia.ui.event.LogoutEvent
 import com.glpi.ifsp.hortolandia.ui.state.LogoutState
 import com.hadilq.liveevent.LiveEvent
@@ -29,6 +30,8 @@ class ProfileViewModel(
             try {
                 _state.value = LogoutState.ShowLoading
                 logoutUseCase()
+                _event.value = LogoutEvent.GoToLogin
+            } catch (e: UnauthorizedLoginException) {
                 _event.value = LogoutEvent.GoToLogin
             } catch (e: InternalErrorException) {
                 _event.value = LogoutEvent.ShowInternalError
