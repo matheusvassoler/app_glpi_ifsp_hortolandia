@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.glpi.ifsp.hortolandia.databinding.FragmentTicketBinding
 import com.glpi.ifsp.hortolandia.infrastructure.Constant.ExtrasName.TICKET_UI
 import com.glpi.ifsp.hortolandia.ui.activity.ErrorActivity
+import com.glpi.ifsp.hortolandia.ui.activity.LoginActivity
 import com.glpi.ifsp.hortolandia.ui.activity.TicketDetailsActivity
 import com.glpi.ifsp.hortolandia.ui.adapter.TicketAdapter
 import com.glpi.ifsp.hortolandia.ui.adapter.TicketLoadStateAdapter
@@ -98,6 +99,7 @@ class TicketFragment : Fragment() {
         ticketViewModel.event.observe(viewLifecycleOwner, Observer {
             when (it) {
                 is TicketEvent.ShowInternalError -> openErrorActivity()
+                is TicketEvent.OpenLoginScreen -> startActivity(LoginActivity.newInstance(requireContext()))
             }
         })
     }
