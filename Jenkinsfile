@@ -14,7 +14,7 @@ pipeline {
     stage('Detect build type') {
       steps {
         script {
-          if (env.BRANCH_NAME == 'master' || env.CHANGE_TARGET == 'master') {
+          if (env.BRANCH_NAME == 'main' || env.CHANGE_TARGET == 'main') {
             env.BUILD_TYPE = 'release'
             ARTIFACTORY_PATH = "glpi-ifsp-hto-app/release/${APP_VERSION}/"
           } else {
