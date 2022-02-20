@@ -5,6 +5,7 @@ import com.glpi.ifsp.hortolandia.infrastructure.Constant
 import com.glpi.ifsp.hortolandia.infrastructure.exceptions.InternalErrorException
 import com.glpi.ifsp.hortolandia.infrastructure.exceptions.ResponseRequestException
 import com.glpi.ifsp.hortolandia.infrastructure.exceptions.UnauthorizedLoginException
+import retrofit2.Response
 
 class LogoutUseCase(
     private val logoutRepository: LogoutRepository,
@@ -16,6 +17,10 @@ class LogoutUseCase(
 
         val response = logoutRepository.killSession(sessionToken)
 
+        clearUserSession(response)
+    }
+
+    private fun clearUserSession(response: Response<Void>) {
         if (response.isSuccessful) {
             sessionUseCase.clearSessionData()
         } else if (response.code() == Constant.RequestStatusCode.UNAUTHORIZED ||
