@@ -1,7 +1,8 @@
-plugins {
-    id 'com.android.application'
-    id 'kotlin-android'
-}
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'org.jlleitschuh.gradle.ktlint'
+apply from: "$rootDir/tools/detekt.gradle"
+apply plugin: 'kotlin-parcelize'
 
 android {
     compileSdkVersion 30
@@ -9,7 +10,7 @@ android {
 
     defaultConfig {
         applicationId "com.glpi.ifsp.hortolandia"
-        minSdkVersion 21
+        minSdkVersion 24
         targetSdkVersion 30
         versionCode 1
         versionName "1.0"
@@ -30,16 +31,78 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
+
+    testOptions {
+        unitTests.returnDefaultValues = true
+    }
+
+    sourceSets {
+        main {
+            assets {
+                srcDirs 'src\\main\\assets', 'src\\main\\resources'
+            }
+        }
+    }
+
+    buildFeatures {
+        viewBinding true
+    }
 }
 
 dependencies {
 
-    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-    implementation 'androidx.core:core-ktx:1.3.2'
-    implementation 'androidx.appcompat:appcompat:1.2.0'
-    implementation 'com.google.android.material:material:1.2.1'
-    implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
-    testImplementation 'junit:junit:4.+'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.2'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$versions.kotlin"
+    implementation "androidx.core:core-ktx:$versions.ktx"
+    implementation "androidx.appcompat:appcompat:$versions.appcompat"
+    implementation "com.google.android.material:material:$versions.material"
+    implementation "androidx.constraintlayout:constraintlayout:$versions.constraintLayout"
+    implementation "androidx.fragment:fragment-ktx:$versions.fragment"
+    implementation "androidx.legacy:legacy-support-v4:$versions.legacySupport"
+    testImplementation "junit:junit:$versions.junit"
+    androidTestImplementation "androidx.test.ext:junit:$versions.junitExt"
+    androidTestImplementation "androidx.test.espresso:espresso-core:$versions.espresso"
+
+    // Koin for Kotlin apps
+    implementation "org.koin:koin-android:$versions.koin"
+    implementation "org.koin:koin-android-viewmodel:$versions.koin"
+
+    //Retrofit
+    implementation "com.squareup.retrofit2:retrofit:$versions.retrofit"
+    implementation "com.squareup.retrofit2:converter-gson:$versions.retrofit"
+
+    //Okhttp3
+    implementation "com.squareup.okhttp3:logging-interceptor:$versions.okhttp3"
+    testImplementation "com.squareup.okhttp3:mockwebserver:$versions.okhttp3"
+
+    //Coroutines
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$versions.coroutines"
+    testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$versions.coroutinesTest"
+
+    //MoccK
+    implementation "io.mockk:mockk:$versions.mockk"
+
+    // ViewModel LiveData and Lifecycle
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$versions.lifecycle"
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:$versions.lifecycle"
+    implementation "androidx.lifecycle:lifecycle-runtime-ktx:$versions.lifecycle"
+    testImplementation "androidx.arch.core:core-testing:$versions.coreTesting"
+
+    //Hamcrest
+    testImplementation "org.hamcrest:hamcrest:$versions.hamcrest"
+
+    //Google truth
+    testImplementation "com.google.truth:truth:$versions.googleTruth"
+
+    // Android Paging3
+    implementation "androidx.paging:paging-runtime-ktx:$versions.paging"
+
+    // LiveEvent
+    implementation "com.github.hadilq:live-event:$versions.liveEvent"
+
+    // Code Scanner by Budiyev
+    implementation "com.budiyev.android:code-scanner:$versions.codeScanner"
+
+    implementation 'com.annimon:stream:1.2.2'
+
+    implementation 'net.sourceforge.streamsupport:streamsupport:1.7.4'
 }

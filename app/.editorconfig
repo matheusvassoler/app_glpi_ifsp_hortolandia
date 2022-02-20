@@ -1,0 +1,2 @@
+[*.{kt,kts}]
+disabled_rules = experimental:no-empty-first-line-in-method-block

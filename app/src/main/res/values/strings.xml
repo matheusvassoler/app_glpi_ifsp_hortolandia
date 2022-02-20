@@ -1,3 +1,90 @@
 <resources>
     <string name="app_name">GLPI IFSP</string>
+
+    <!-- Toolbar -->
+    <string name="toolbar_title_open_ticket">Abrir chamado</string>
+
+    <!-- Login Screen -->
+    <string name="login_title">Olá!</string>
+    <string name="login_subtitle">Faça o login para continuar</string>
+    <string name="login_username_field_hint">Usuário</string>
+    <string name="login_password_field_hint">Senha</string>
+    <string name="login_button_name">Acessar</string>
+    <string name="empty_username_field_error_message">O campo usuário está vázio</string>
+    <string name="empty_password_field_error_message">O campo senha está vázio</string>
+    <string name="login_bad_credentials_error_message">O usuário e/ou senha incorretos</string>
+    <string name="login_error_message">Houve um problema durante o login. Tente novamente</string>
+
+    <!-- Profile Screen -->
+    <string name="profile_toolbar_title">Perfil</string>
+    <string name="profile_exit_button_text">Sair</string>
+    <string name="profile_logout_error">Ocorreu um erro ao realizar o logout. Tente novamente</string>
+
+    <!-- Ticket Screen -->
+    <string name="ticket_toolbar_title">Chamados</string>
+    <string name="ticket_empty_result_title">Sem chamados!</string>
+    <string name="ticket_empty_result_description">Não foram encontrados chamados para serem exibidos</string>
+    <string name="ticket_error_result_title">Ocorreu um erro</string>
+    <string name="ticket_error_result_button_text">Tentar novamente</string>
+    <string name="ticket_update_date_label">Atualizado em</string>
+    <string name="ticket_update_status_label">Status</string>
+
+    <!-- Ticket Details Screen -->
+    <string name="ticket_details_status_new_label">novo</string>
+    <string name="ticket_details_status_processing_label">processando</string>
+    <string name="ticket_details_status_pending_label">pendente</string>
+    <string name="ticket_details_status_solved_label">solucionado</string>
+    <string name="ticket_details_status_closed_label">fechado</string>
+    <string name="ticket_details_toolbar_title">Detalhes</string>
+    <string name="ticket_details_status_label">Status</string>
+    <string name="ticket_details_id_label">Id</string>
+    <string name="ticket_details_title_label">Título</string>
+    <string name="ticket_details_description_label">Descrição</string>
+    <string name="ticket_details_opening_date_label">Data de abertura</string>
+    <string name="ticket_details_update_date_label">Última atualização</string>
+    <string name="ticket_details_date_value">%s - %s</string>
+
+    <!-- Open Ticket Tutorial Screen -->
+    <string name="open_ticket_tutorial_title">Leitura do QR Code</string>
+    <string name="open_ticket_tutorial_explanation">Toque no botão escanear QR Code e
+        aproxime sua camera próximo ao Código
+        psra fazer a leitura e identificação do objeto
+        que será alvo do chamado.</string>
+    <string name="open_ticket_tutorial_button_label">Escanear QR Code</string>
+
+    <!-- Open Ticket Camera Permission Fragment -->
+    <string name="open_ticket_camera_permission_title">Necessária a permissão para acessar a câmera do dispositivo</string>
+    <string name="open_ticket_camera_permission_subtitle">Sem a permissão não é possível realizar a leitura do QrCode. Forneça a permissão ou volte para home</string>
+    <string name="open_ticket_camera_permission_button">Fornecer permissão</string>
+
+    <!-- Open Ticket Qr Code Scan Error Screen -->
+    <string name="open_ticket_qr_code_scan_error_title">Falha ao escanear o QrCode</string>
+    <string name="open_ticket_qr_code_scan_error_subtitle">Não foi possível fazer a leitura do QrCode. Tente novamente ou volte para a Home</string>
+    <string name="open_ticket_qr_code_scan_error_try_again_button">Tentar novament</string>
+
+    <!-- Failed Registration Screen -->
+    <string name="failed_registration_title">Falha ao enviar o chamado</string>
+    <string name="failed_registration_subtitle">Não foi possível enviar sua solicitação.Tente novamente ou volte para a home</string>
+
+    <!-- Registration Successfully Screen -->
+    <string name="registration_successfully_title">Chamado enviado com sucesso</string>
+    <string name="registration_successfully_subtitle">Aguarde e em breve iremos retornar sua solicitação </string>
+
+    <!-- Request Error Screen -->
+    <string name="request_error_subtitle">Não foi possível obter o formulário para abrir o chamado. Volte para a home e tente novamente</string>
+
+    <!-- Open Ticket Screen -->
+    <string name="open_ticket_header_title">Abrir chamado</string>
+    <string name="open_ticket_continue_button">Continuar</string>
+
+    <!-- Terms And Conditions Screen -->
+    <string name="terms_and_conditions_check_box_text">Estou ciente dos termos e condições</string>
+    <string name="terms_and_conditions_button_text">Continuar</string>
+
+    <!-- Common errors -->
+    <string name="internal_error">Ocorreu um erro interno</string>
+    <string name="ticket_error_result_description">Não foi possível carregar as informações</string>
+    <string name="open_ticket_toolbar_title">Abrir chamado</string>
+    <string name="try_again_button">Tentar novamente</string>
+    <string name="back_to_home_button">Voltar para a home</string>
 </resources>
