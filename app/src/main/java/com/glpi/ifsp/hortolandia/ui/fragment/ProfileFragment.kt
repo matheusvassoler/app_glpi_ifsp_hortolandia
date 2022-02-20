@@ -1,6 +1,5 @@
 package com.glpi.ifsp.hortolandia.ui.fragment
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -74,9 +73,7 @@ class ProfileFragment : Fragment() {
     }
 
     private fun goToLogin() {
-        val intent = Intent(requireContext(), LoginActivity::class.java)
-        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK
-        startActivity(intent)
+        startActivity(LoginActivity.newInstance(requireContext()))
     }
 
     private fun showSnackBar(message: String) {

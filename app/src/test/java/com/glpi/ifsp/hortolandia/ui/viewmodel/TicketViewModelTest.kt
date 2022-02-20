@@ -7,6 +7,7 @@ import androidx.paging.AsyncPagingDataDiffer
 import androidx.paging.PagingData
 import com.glpi.ifsp.hortolandia.BaseUnitTest
 import com.glpi.ifsp.hortolandia.domain.GetTicketsUseCase
+import com.glpi.ifsp.hortolandia.domain.SessionUseCase
 import com.glpi.ifsp.hortolandia.infrastructure.exceptions.InternalErrorException
 import com.glpi.ifsp.hortolandia.ui.event.TicketEvent
 import com.glpi.ifsp.hortolandia.ui.model.TicketUI
@@ -35,6 +36,9 @@ class TicketViewModelTest : BaseUnitTest() {
 
     @RelaxedMockK
     private lateinit var getTicketsUseCase: GetTicketsUseCase
+
+    @RelaxedMockK
+    private lateinit var sessionUseCase: SessionUseCase
 
     @InjectMockKs
     private lateinit var viewModel: TicketViewModel

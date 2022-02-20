@@ -4,6 +4,8 @@ import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.glpi.ifsp.hortolandia.data.model.Ticket
 import com.glpi.ifsp.hortolandia.data.source.remote.ApiClient
+import com.glpi.ifsp.hortolandia.infrastructure.Constant
+import com.glpi.ifsp.hortolandia.infrastructure.exceptions.UnauthorizedLoginException
 
 class TicketSource(
     private val api: ApiClient,
@@ -13,6 +15,12 @@ class TicketSource(
         return try {
             val pageNumber = params.key ?: INITIAL_RANGE
             val response = api().getTickets(sessionToken, pageNumber)
+
+            if (response.code() == Constant.RequestStatusCode.UNAUTHORIZED ||
+                response.code() == Constant.RequestStatusCode.FORBIDDEN) {
+                throw UnauthorizedLoginException()
+            }
+
             val data: List<Ticket>? = response.body()
             val currentRange: String = response.headers()[RANGE_HEADER_NAME].orEmpty()
 
