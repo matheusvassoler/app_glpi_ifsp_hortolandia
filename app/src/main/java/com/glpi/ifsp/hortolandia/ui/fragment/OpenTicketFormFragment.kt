@@ -2,7 +2,6 @@ package com.glpi.ifsp.hortolandia.ui.fragment
 
 import android.app.DatePickerDialog
 import android.content.Context
-import android.graphics.Color
 import android.graphics.Typeface
 import android.net.Uri
 import android.os.Bundle
@@ -51,8 +50,8 @@ class OpenTicketFormFragment : Fragment() {
 
     private var title: String = ""
     private var description: String = ""
-    private lateinit var allQuestions: List<QuestionUI>
-    val conditionsControlledByField = arrayListOf<RuleToShowQuestionUI>()
+    private lateinit var allFormQuestions: List<QuestionUI>
+    private lateinit var allFormConditions: List<RuleToShowQuestionUI>
 
     private lateinit var layoutParams: LinearLayout.LayoutParams
 
@@ -103,22 +102,9 @@ class OpenTicketFormFragment : Fragment() {
                 is OpenTicketState.ShowFormUI -> {
                     binding.fragmentOpenTicketFormProgressBar.visibility = View.INVISIBLE
                     createFormHeader(it.formUI.name)
-
-                    val conditionsToHideOrShowQuestions = it.formUI.conditionsToHideOrShowQuestions
-                    allQuestions = it.formUI.questions
-
-                    it.formUI.questions.forEach { question ->
-                        for (condition in conditionsToHideOrShowQuestions) {
-                            if (question.id == condition.questionIdThatControlsTheCondition) {
-                                conditionsControlledByField.add(condition)
-                            }
-                        }
-                        when (question.fieldType) {
-                            FieldType.SELECT -> {
-                                createViewForFieldTypeSelect(question, conditionsToHideOrShowQuestions)
-                            }
-                        }
-                    }
+                    allFormQuestions = it.formUI.questions
+                    allFormConditions = it.formUI.conditionsToHideOrShowQuestions
+                    createFields(it)
                 }
             }
         })
@@ -142,6 +128,22 @@ class OpenTicketFormFragment : Fragment() {
                 }
             }
         })
+    }
+
+    private fun createFields(showFormUIState: OpenTicketState.ShowFormUI) {
+        showFormUIState.formUI.questions.forEach { question ->
+            val conditionsControlledByField: ArrayList<RuleToShowQuestionUI> = arrayListOf()
+            for (condition in allFormConditions) {
+                if (question.id == condition.questionIdThatControlsTheCondition) {
+                    conditionsControlledByField.add(condition)
+                }
+            }
+            when (question.fieldType) {
+                FieldType.SELECT -> {
+                    createViewForFieldTypeSelect(question, conditionsControlledByField)
+                }
+            }
+        }
     }
 
     override fun onDestroyView() {
@@ -168,7 +170,7 @@ class OpenTicketFormFragment : Fragment() {
 
     private fun createViewForFieldTypeSelect(
         question: QuestionUI,
-        conditions: List<RuleToShowQuestionUI>
+        conditionsControlledByField: List<RuleToShowQuestionUI>
     ) {
         val optionsToSelect =
             question.values?.split("\r\n")?.filter { item ->
@@ -197,64 +199,60 @@ class OpenTicketFormFragment : Fragment() {
             autoCompleteTextView.onItemClickListener =
                 AdapterView.OnItemClickListener { _, selectedView, _, _ ->
                     val selectedOption = (selectedView as TextView).text.toString()
-
-
-                    for (condition in conditionsControlledByField) {
-                        if (condition.questionIdThatControlsTheCondition == question.id) {
-                            if (condition.valueThatTriggersCondition == selectedOption) {
-                                val controlledQuestion = getQuestionById(allQuestions, condition.questionIdThatDisappearsOrAppearsBasedOnACondition)
-
-                                if (controlledQuestion?.fieldRule == FieldRule.HIDDEN_UNLESS) {
-                                    //  TODO - Exibir questão
-                                    for(j in 0 until binding.fragmentOpenTicketFormLayout.childCount) {
-                                        val view = binding.fragmentOpenTicketFormLayout.getChildAt(j)
-                                        if (view.tag == controlledQuestion.id) {
-                                            view.visibility = View.VISIBLE
-                                        }
-                                    }
-                                    showQuestion(arrayListOf(controlledQuestion), true, conditions)
-                                } else {
-                                    // TODO - Ocultar questão
-                                    for(j in 0 until binding.fragmentOpenTicketFormLayout.childCount!!) {
-                                        val vieww = binding.fragmentOpenTicketFormLayout.getChildAt(j)
-                                        if (vieww.tag == controlledQuestion?.id) {
-                                            vieww.visibility = View.GONE
-                                        }
-                                    }
-                                    hideQuestion(arrayListOf(controlledQuestion), true, conditions)
-                                }
-                            } else {
-                                val controlledQuestion = getQuestionById(allQuestions, condition.questionIdThatDisappearsOrAppearsBasedOnACondition)
-
-                                if (controlledQuestion?.fieldRule == FieldRule.HIDDEN_UNLESS) {
-                                    //  TODO - Esconder questão
-                                    for(j in 0 until binding.fragmentOpenTicketFormLayout.childCount!!) {
-                                        val vieww = binding.fragmentOpenTicketFormLayout.getChildAt(j)
-                                        if (vieww.tag == controlledQuestion.id) {
-                                            vieww.visibility = View.GONE
-                                        }
-                                    }
-                                    hideQuestion(arrayListOf(controlledQuestion), true, conditions)
-                                } else {
-                                    // TODO - Exibir questão
-                                    for(j in 0 until binding.fragmentOpenTicketFormLayout.childCount!!) {
-                                        val vieww = binding.fragmentOpenTicketFormLayout.getChildAt(j)
-                                        if (vieww.tag == controlledQuestion?.id) {
-                                            vieww.visibility = View.VISIBLE
-                                        }
-                                    }
-                                    //showQuestion(hashMapOf(controlledQuestion?.id.toString() to controlledQuestion), true, data?.conditions)
-                                }
-                            }
-                        }
-                    }
-
+                    hideOrShowField(conditionsControlledByField, question, selectedOption)
                 }
         }
         if (question.fieldRule == FieldRule.HIDDEN_UNLESS) {
             textInputLayout.visibility = View.GONE
         }
         binding.fragmentOpenTicketFormLayout.addView(textInputLayout)
+    }
+
+    private fun hideOrShowField(
+        conditionsControlledByField: List<RuleToShowQuestionUI>,
+        question: QuestionUI,
+        answerEnteredInTheField: String
+    ) {
+        for (condition in conditionsControlledByField) {
+            if (condition.questionIdThatControlsTheCondition == question.id) {
+                val controlledQuestion = getQuestionById(
+                    allFormQuestions,
+                    condition.questionIdThatDisappearsOrAppearsBasedOnACondition
+                )
+
+                if (condition.valueThatTriggersCondition == answerEnteredInTheField) {
+
+                    if (controlledQuestion?.fieldRule == FieldRule.HIDDEN_UNLESS) {
+                        //  TODO - Exibir questão
+                        setFieldVisibility(controlledQuestion, View.VISIBLE)
+                        showQuestion(arrayListOf(controlledQuestion))
+                    } else {
+                        // TODO - Ocultar questão
+                        setFieldVisibility(controlledQuestion, View.GONE)
+                        hideQuestion(arrayListOf(controlledQuestion))
+                    }
+                } else {
+
+                    if (controlledQuestion?.fieldRule == FieldRule.HIDDEN_UNLESS) {
+                        setFieldVisibility(controlledQuestion, View.GONE)
+                        hideQuestion(arrayListOf(controlledQuestion))
+                    } else {
+                        // TODO - Exibir questão
+                        setFieldVisibility(controlledQuestion, View.VISIBLE)
+                        //showQuestion(arrayListOf(controlledQuestion), true, conditions)
+                    }
+                }
+            }
+        }
+    }
+
+    private fun setFieldVisibility(controlledQuestion: QuestionUI?, visibility: Int) {
+        for (j in 0 until binding.fragmentOpenTicketFormLayout.childCount) {
+            val view = binding.fragmentOpenTicketFormLayout.getChildAt(j)
+            if (view.tag == controlledQuestion?.id) {
+                view.visibility = visibility
+            }
+        }
     }
 
     private fun getQuestionById(questions: List<QuestionUI>, id: Int): QuestionUI? {
@@ -266,14 +264,13 @@ class OpenTicketFormFragment : Fragment() {
         return null
     }
 
-    private fun hideQuestion(questions: List<QuestionUI?>, hasQuestionsToLook: Boolean, conditions: List<RuleToShowQuestionUI>) {
-        val controlledQuestions: ArrayList<QuestionUI?> = arrayListOf()
-        //if (hasQuestionsToLook) {
-        for (question in questions) {
-            for (condition in conditions) {
+    private fun hideQuestion(questionsThatCanTriggerConditions: List<QuestionUI?>) {
+        val questionsControlledByOtherQuestion: ArrayList<QuestionUI?> = arrayListOf()
+        for (question in questionsThatCanTriggerConditions) {
+            for (condition in allFormConditions) {
                 if (condition.questionIdThatControlsTheCondition == question?.id) {
                     if (question.fieldRule == FieldRule.HIDDEN_UNLESS) {
-                        val controlledQuestion = getQuestionById(allQuestions, condition.questionIdThatDisappearsOrAppearsBasedOnACondition)
+                        val controlledQuestion = getQuestionById(allFormQuestions, condition.questionIdThatDisappearsOrAppearsBasedOnACondition)
 
                         for(j in 0 until binding.fragmentOpenTicketFormLayout.childCount) {
                             val view = binding.fragmentOpenTicketFormLayout.getChildAt(j)
@@ -282,26 +279,22 @@ class OpenTicketFormFragment : Fragment() {
                             }
                         }
 
-                        controlledQuestions.add(controlledQuestion)
+                        questionsControlledByOtherQuestion.add(controlledQuestion)
                         println("Questão ${controlledQuestion?.name} foi ocultada")
                     }
                 }
             }
         }
 
-        if (controlledQuestions.isNotEmpty()) {
-            hideQuestion(controlledQuestions, true, conditions)
+        if (questionsControlledByOtherQuestion.isNotEmpty()) {
+            hideQuestion(questionsControlledByOtherQuestion)
         }
-        //}
     }
 
-    private fun showQuestion(questions: List<QuestionUI?>, hasQuestionsToLook: Boolean, conditions: List<RuleToShowQuestionUI>) {
-        val controlledQuestions: ArrayList<QuestionUI?> = arrayListOf()
-        //if (hasQuestionsToLook) {
-        for (question in questions) {
-            for (condition in conditions) {
-
-
+    private fun showQuestion(questionsThatCanTriggerConditions: List<QuestionUI?>) {
+        val questionsControlledByOtherQuestion: ArrayList<QuestionUI?> = arrayListOf()
+        for (question in questionsThatCanTriggerConditions) {
+            for (condition in allFormConditions) {
                 if (condition.questionIdThatControlsTheCondition == question?.id) {
                     for(j in 0 until binding.fragmentOpenTicketFormLayout.childCount) {
                         val view = binding.fragmentOpenTicketFormLayout.getChildAt(j)
@@ -309,8 +302,8 @@ class OpenTicketFormFragment : Fragment() {
                         if (view.tag == question.id) {
                             if (view is TextInputLayout) {
                                 if (question.fieldRule == FieldRule.HIDDEN_UNLESS && view.editText?.text.toString() == condition.valueThatTriggersCondition) {
-                                    val controlledQuestion = getQuestionById(allQuestions, condition.questionIdThatDisappearsOrAppearsBasedOnACondition)
-                                    controlledQuestions.add(controlledQuestion)
+                                    val controlledQuestion = getQuestionById(allFormQuestions, condition.questionIdThatDisappearsOrAppearsBasedOnACondition)
+                                    questionsControlledByOtherQuestion.add(controlledQuestion)
                                     println("Questão ${controlledQuestion?.name} foi exibida")
 
                                     for(m in 0 until binding.fragmentOpenTicketFormLayout.childCount) {
@@ -330,10 +323,9 @@ class OpenTicketFormFragment : Fragment() {
             }
         }
 
-        if (controlledQuestions.isNotEmpty()) {
-            showQuestion(controlledQuestions, true, conditions)
+        if (questionsControlledByOtherQuestion.isNotEmpty()) {
+            showQuestion(questionsControlledByOtherQuestion)
         }
-        //}
     }
 
     private fun getLayoutParams(width: Int? = null, height: Int? = null): LinearLayout.LayoutParams {
