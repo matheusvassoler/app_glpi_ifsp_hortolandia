@@ -220,28 +220,40 @@ class OpenTicketFormFragment : Fragment() {
                     condition.questionIdThatDisappearsOrAppearsBasedOnACondition
                 )
 
-                if (condition.valueThatTriggersCondition == answerEnteredInTheField) {
+                checkFieldValueTriggersCondition(
+                    condition,
+                    answerEnteredInTheField,
+                    controlledQuestion
+                )
+            }
+        }
+    }
 
-                    if (controlledQuestion?.fieldRule == FieldRule.HIDDEN_UNLESS) {
-                        //  TODO - Exibir questão
-                        setFieldVisibility(controlledQuestion, View.VISIBLE)
-                        showQuestion(arrayListOf(controlledQuestion))
-                    } else {
-                        // TODO - Ocultar questão
-                        setFieldVisibility(controlledQuestion, View.GONE)
-                        hideQuestion(arrayListOf(controlledQuestion))
-                    }
-                } else {
+    private fun checkFieldValueTriggersCondition(
+        condition: RuleToShowQuestionUI,
+        answerEnteredInTheField: String,
+        controlledQuestion: QuestionUI?
+    ) {
+        if (condition.valueThatTriggersCondition == answerEnteredInTheField) {
 
-                    if (controlledQuestion?.fieldRule == FieldRule.HIDDEN_UNLESS) {
-                        setFieldVisibility(controlledQuestion, View.GONE)
-                        hideQuestion(arrayListOf(controlledQuestion))
-                    } else {
-                        // TODO - Exibir questão
-                        setFieldVisibility(controlledQuestion, View.VISIBLE)
-                        //showQuestion(arrayListOf(controlledQuestion), true, conditions)
-                    }
-                }
+            if (controlledQuestion?.fieldRule == FieldRule.HIDDEN_UNLESS) {
+                //  TODO - Exibir questão
+                setFieldVisibility(controlledQuestion, View.VISIBLE)
+                showQuestion(arrayListOf(controlledQuestion))
+            } else {
+                // TODO - Ocultar questão
+                setFieldVisibility(controlledQuestion, View.GONE)
+                hideQuestion(arrayListOf(controlledQuestion))
+            }
+        } else {
+
+            if (controlledQuestion?.fieldRule == FieldRule.HIDDEN_UNLESS) {
+                setFieldVisibility(controlledQuestion, View.GONE)
+                hideQuestion(arrayListOf(controlledQuestion))
+            } else {
+                // TODO - Exibir questão
+                setFieldVisibility(controlledQuestion, View.VISIBLE)
+                showQuestion(arrayListOf(controlledQuestion))
             }
         }
     }
