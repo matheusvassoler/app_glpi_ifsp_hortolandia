@@ -70,9 +70,9 @@ class OpenTicketFormFragment : Fragment() {
             ViewGroup.LayoutParams.WRAP_CONTENT
         )
 
-        layoutParams.topMargin = TWENTY_MARGIN_TOP.toDp(requireContext())
-        layoutParams.marginStart = TWENTY_MARGIN_START.toDp(requireContext())
-        layoutParams.marginEnd = TWENTY_MARGIN_END.toDp(requireContext())
+        //layoutParams.topMargin = TWENTY_MARGIN_TOP.toDp(requireContext())
+        //layoutParams.marginStart = TWENTY_MARGIN_START.toDp(requireContext())
+        //layoutParams.marginEnd = TWENTY_MARGIN_END.toDp(requireContext())
     }
 
     override fun onCreateView(
@@ -152,12 +152,7 @@ class OpenTicketFormFragment : Fragment() {
     }
 
     private fun createFormHeader(formName: String) {
-        val textView: TextView = TextViewBuilder(
-            requireContext(),
-            formName,
-            ViewGroup.LayoutParams.MATCH_PARENT,
-            ViewGroup.LayoutParams.WRAP_CONTENT
-        )
+        val textView = TextViewBuilder(requireContext(), formName, MATCH_PARENT, WRAP_CONTENT)
             .setTypeFace(Typeface.DEFAULT_BOLD)
             .setTextColor(R.color.black)
             .setTextSize(TEXT_SIZE_18_SP)
@@ -172,40 +167,34 @@ class OpenTicketFormFragment : Fragment() {
         question: QuestionUI,
         conditionsControlledByField: List<RuleToShowQuestionUI>
     ) {
+        val optionsToSelect = getValueForFieldTypeSelect(question)
+        val onItemClickListener = getOnItemClickListener(conditionsControlledByField, question)
+        val textInputLayout = buildSpinnerView(optionsToSelect, question, onItemClickListener)
+        hideInitiallyFieldThatHasHiddenUnlessRule(question.fieldRule, textInputLayout)
+        binding.fragmentOpenTicketFormLayout.addView(textInputLayout)
+    }
+
+    private fun getValueForFieldTypeSelect(question: QuestionUI): ArrayList<String> {
         val optionsToSelect =
             question.values?.split("\r\n")?.filter { item ->
                 item != ""
             } as ArrayList<String>
+        return optionsToSelect
+    }
 
-        val (textInputLayout, autoCompleteTextView) = SpinnerBuilder(
-            requireContext(),
-            optionsToSelect,
-            ViewGroup.LayoutParams.MATCH_PARENT,
-            SPACING_60.toDp(requireContext())
-        )
-            .setHint(question.name)
-            .setTag(question.id)
-            .setBackgroundColor(R.color.white)
-            .setTextSize(TEXT_SIZE_16_SP)
-            .setLeftMargin(SPACING_20)
-            .setTopMargin(SPACING_20)
-            .setRightMargin(SPACING_20)
-            .setLeftPadding(SPACING_12)
-            .setTopPadding(SPACING_30)
-            .setBottomPadding(SPACING_10)
-            .build()
-
+    private fun getOnItemClickListener(
+        conditionsControlledByField: List<RuleToShowQuestionUI>,
+        question: QuestionUI
+    ): AdapterView.OnItemClickListener? {
+        var onItemClickListener: AdapterView.OnItemClickListener? = null
         if (conditionsControlledByField.isNotEmpty()) {
-            autoCompleteTextView.onItemClickListener =
+            onItemClickListener =
                 AdapterView.OnItemClickListener { _, selectedView, _, _ ->
                     val selectedOption = (selectedView as TextView).text.toString()
                     hideOrShowField(conditionsControlledByField, question, selectedOption)
                 }
         }
-        if (question.fieldRule == FieldRule.HIDDEN_UNLESS) {
-            textInputLayout.visibility = View.GONE
-        }
-        binding.fragmentOpenTicketFormLayout.addView(textInputLayout)
+        return onItemClickListener
     }
 
     private fun hideOrShowField(
@@ -248,6 +237,7 @@ class OpenTicketFormFragment : Fragment() {
         } else {
 
             if (controlledQuestion?.fieldRule == FieldRule.HIDDEN_UNLESS) {
+                //  TODO - Exibir questão
                 setFieldVisibility(controlledQuestion, View.GONE)
                 hideQuestion(arrayListOf(controlledQuestion))
             } else {
@@ -340,6 +330,35 @@ class OpenTicketFormFragment : Fragment() {
         }
     }
 
+    private fun buildSpinnerView(
+        optionsToSelect: ArrayList<String>,
+        question: QuestionUI,
+        onItemClickListener: AdapterView.OnItemClickListener?
+    ): TextInputLayout {
+        return SpinnerBuilder(requireContext(), optionsToSelect, MATCH_PARENT, SPACING_60.toDp())
+            .setHint(question.name)
+            .setTag(question.id)
+            .setBackgroundColor(R.color.white)
+            .setTextSize(TEXT_SIZE_16_SP)
+            .setLeftMargin(SPACING_20)
+            .setTopMargin(SPACING_20)
+            .setRightMargin(SPACING_20)
+            .setLeftPadding(SPACING_12)
+            .setTopPadding(SPACING_30)
+            .setBottomPadding(SPACING_10)
+            .setOnItemClickListener(onItemClickListener)
+            .build()
+    }
+
+    private fun hideInitiallyFieldThatHasHiddenUnlessRule(
+        fieldRule: FieldRule,
+        textInputLayout: TextInputLayout
+    ) {
+        if (fieldRule == FieldRule.HIDDEN_UNLESS) {
+            textInputLayout.visibility = View.GONE
+        }
+    }
+
     private fun getLayoutParams(width: Int? = null, height: Int? = null): LinearLayout.LayoutParams {
         return LinearLayout.LayoutParams(
             width ?: ViewGroup.LayoutParams.MATCH_PARENT,
@@ -375,8 +394,8 @@ class OpenTicketFormFragment : Fragment() {
         }
     }
 
-    private fun Int.toDp(context: Context): Int = TypedValue.applyDimension(
-        TypedValue.COMPLEX_UNIT_DIP, this.toFloat(), context.resources.displayMetrics
+    private fun Int.toDp(): Int = TypedValue.applyDimension(
+        TypedValue.COMPLEX_UNIT_DIP, this.toFloat(), requireContext().resources.displayMetrics
     ).toInt()
 
     private fun LinearLayout.alterLayoutParams(callback: ((LinearLayout.LayoutParams) -> Unit)) {
@@ -403,6 +422,8 @@ class OpenTicketFormFragment : Fragment() {
         private const val TEXT_SIZE_16_SP = 16.0f
         private const val TEXT_SIZE_18_SP = 18.0f
 
+        private const val MATCH_PARENT = ViewGroup.LayoutParams.MATCH_PARENT
+        private const val WRAP_CONTENT = ViewGroup.LayoutParams.WRAP_CONTENT
         private const val SPACING_0 = 0
         private const val SPACING_10 = 10
         private const val SPACING_12 = 12

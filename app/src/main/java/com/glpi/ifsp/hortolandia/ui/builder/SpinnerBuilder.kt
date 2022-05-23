@@ -4,13 +4,13 @@ import android.content.Context
 import android.text.InputType
 import android.util.TypedValue
 import android.view.ContextThemeWrapper
+import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import android.widget.LinearLayout
 import androidx.core.content.ContextCompat
 import com.glpi.ifsp.hortolandia.R
 import com.glpi.ifsp.hortolandia.infrastructure.extensions.toDp
-import com.glpi.ifsp.hortolandia.ui.fragment.OpenTicketFormFragment
 import com.google.android.material.textfield.TextInputLayout
 
 class SpinnerBuilder(
@@ -33,6 +33,7 @@ class SpinnerBuilder(
     private var topPadding: Int = 0
     private var rightPadding: Int = 0
     private var bottomPadding: Int = 0
+    private var onItemClickListener: AdapterView.OnItemClickListener? = null
     private lateinit var layoutParams: LinearLayout.LayoutParams
     private lateinit var textInputLayout: TextInputLayout
     private lateinit var autoCompleteTextView: AutoCompleteTextView
@@ -89,13 +90,17 @@ class SpinnerBuilder(
         this.bottomPadding = bottomPadding
     }
 
-    fun build(): Pair<TextInputLayout, AutoCompleteTextView> {
+    fun setOnItemClickListener(listener: AdapterView.OnItemClickListener?) = apply {
+        this.onItemClickListener = listener
+    }
+
+    fun build(): TextInputLayout {
         setSpinnerDimensions()
         setTextInputLayout()
         setAutoCompleteTextView()
         textInputLayout.addView(autoCompleteTextView)
 
-        return Pair(textInputLayout, autoCompleteTextView)
+        return textInputLayout
     }
 
     private fun setSpinnerDimensions() {
@@ -164,6 +169,7 @@ class SpinnerBuilder(
         autoCompleteTextView.layoutParams = layoutParams
         setTextSizeToAutoCompleteTextView()
         setPaddingToAutoCompleteTextView()
+        setOnItemClickListenerToAutoCompleteTextView()
     }
 
     private fun getAdapter(): ArrayAdapter<String> {
@@ -194,6 +200,12 @@ class SpinnerBuilder(
             rightPadding.toDp(context),
             bottomPadding.toDp(context)
         )
+    }
+
+    private fun setOnItemClickListenerToAutoCompleteTextView() {
+        onItemClickListener?.let {
+            autoCompleteTextView.onItemClickListener = it
+        }
     }
 
     private fun getContextThemeWrapper(context: Context, themeResId: Int?): ContextThemeWrapper {
