@@ -20,6 +20,7 @@ import com.glpi.ifsp.hortolandia.ui.activity.FailedRegistrationActivity
 import com.glpi.ifsp.hortolandia.ui.activity.LoginActivity
 import com.glpi.ifsp.hortolandia.ui.activity.RegistrationSuccessfullyActivity
 import com.glpi.ifsp.hortolandia.ui.activity.RequestErrorActivity
+import com.glpi.ifsp.hortolandia.ui.builder.CheckBoxBuilder
 import com.glpi.ifsp.hortolandia.ui.builder.SpinnerBuilder
 import com.glpi.ifsp.hortolandia.ui.builder.TextInputLayoutBuilder
 import com.glpi.ifsp.hortolandia.ui.builder.TextViewBuilder
@@ -143,6 +144,15 @@ class OpenTicketFormFragment : Fragment() {
                 FieldType.TEXT -> {
                     createViewToFieldTypeText(question)
                 }
+                FieldType.DATE -> {
+                    createViewToFieldTypeText(question)
+                }
+                FieldType.EMAIL -> {
+                    createViewToFieldTypeText(question)
+                }
+                FieldType.CHECKBOXES -> {
+                    createViewToFieldTypeCheckbox(question)
+                }
                 FieldType.SELECT -> {
                     createViewForFieldTypeSelect(question, conditionsControlledByField)
                 }
@@ -179,6 +189,48 @@ class OpenTicketFormFragment : Fragment() {
             .build()
         hideInitiallyFieldThatHasHiddenUnlessRule(question.fieldRule, textInputLayout)
         binding.fragmentOpenTicketFormLayout.addView(textInputLayout)
+    }
+
+    private fun createViewToFieldTypeCheckbox(question: QuestionUI) {
+        if (question.values?.contains("\r\n") == true) {
+            createCheckBoxWhenQuestionHasMoreThanOneOption(question.values, question)
+        } else {
+            createCheckBox(question)
+        }
+    }
+
+    private fun createCheckBoxWhenQuestionHasMoreThanOneOption(
+        values: String,
+        question: QuestionUI
+    ) {
+        val splittedText = values.split("\r\n")
+        splittedText.forEach { questionInfo ->
+            val checkBox = CheckBoxBuilder(requireContext())
+                .setText(questionInfo)
+                .setTag(question.id)
+                .setLeftMargin(SPACING_14)
+                .setTopMargin(SPACING_20)
+                .setRightMargin(SPACING_14)
+                .setTextColor(R.color.gray_dark_for_field_hint)
+                .setTextSize(TEXT_SIZE_16_SP)
+                .build()
+            hideInitiallyFieldThatHasHiddenUnlessRule(question.fieldRule, checkBox)
+            binding.fragmentOpenTicketFormLayout.addView(checkBox)
+        }
+    }
+
+    private fun createCheckBox(question: QuestionUI) {
+        val checkBox = CheckBoxBuilder(requireContext())
+            .setText(question.values ?: "")
+            .setTag(question.id)
+            .setLeftMargin(SPACING_14)
+            .setTopMargin(SPACING_40)
+            .setRightMargin(SPACING_14)
+            .setTextColor(R.color.gray_dark_for_field_hint)
+            .setTextSize(TEXT_SIZE_16_SP)
+            .build()
+        hideInitiallyFieldThatHasHiddenUnlessRule(question.fieldRule, checkBox)
+        binding.fragmentOpenTicketFormLayout.addView(checkBox)
     }
 
     private fun createViewForFieldTypeSelect(
@@ -445,8 +497,10 @@ class OpenTicketFormFragment : Fragment() {
         private const val SPACING_0 = 0
         private const val SPACING_10 = 10
         private const val SPACING_12 = 12
+        private const val SPACING_14 = 14
         private const val SPACING_20 = 20
         private const val SPACING_30 = 30
+        private const val SPACING_40 = 40
         private const val SPACING_60 = 60
 
         fun newInstance(formUrl: String) =

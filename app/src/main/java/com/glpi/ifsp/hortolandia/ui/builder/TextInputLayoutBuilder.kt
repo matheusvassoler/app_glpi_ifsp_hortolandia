@@ -84,31 +84,31 @@ class TextInputLayoutBuilder(private val context: Context) {
 
     private fun setTextInputLayoutDimensions() {
         layoutParams = LinearLayout.LayoutParams(width, height)
-        setLeftMarginToSpinner()
-        setTopMarginToSpinner()
-        setRightMarginToSpinner()
-        setBottomMarginToSpinner()
+        setLeftMarginToTextInputLayout()
+        setTopMarginToTextInputLayout()
+        setRightMarginToTextInputLayout()
+        setBottomMarginToTextInputLayout()
     }
 
-    private fun setLeftMarginToSpinner() {
+    private fun setLeftMarginToTextInputLayout() {
         leftMargin?.let {
             layoutParams.marginStart = it.toDp(context)
         }
     }
 
-    private fun setTopMarginToSpinner() {
+    private fun setTopMarginToTextInputLayout() {
         topMargin?.let {
             layoutParams.topMargin = it.toDp(context)
         }
     }
 
-    private fun setRightMarginToSpinner() {
+    private fun setRightMarginToTextInputLayout() {
         rightMargin?.let {
             layoutParams.marginEnd = it.toDp(context)
         }
     }
 
-    private fun setBottomMarginToSpinner() {
+    private fun setBottomMarginToTextInputLayout() {
         bottomMargin?.let {
             layoutParams.bottomMargin = it.toDp(context)
         }
