@@ -21,6 +21,7 @@ import com.glpi.ifsp.hortolandia.ui.activity.LoginActivity
 import com.glpi.ifsp.hortolandia.ui.activity.RegistrationSuccessfullyActivity
 import com.glpi.ifsp.hortolandia.ui.activity.RequestErrorActivity
 import com.glpi.ifsp.hortolandia.ui.builder.SpinnerBuilder
+import com.glpi.ifsp.hortolandia.ui.builder.TextInputLayoutBuilder
 import com.glpi.ifsp.hortolandia.ui.builder.TextViewBuilder
 import com.glpi.ifsp.hortolandia.ui.event.OpenTicketEvent
 import com.glpi.ifsp.hortolandia.ui.model.QuestionUI
@@ -139,6 +140,9 @@ class OpenTicketFormFragment : Fragment() {
                 }
             }
             when (question.fieldType) {
+                FieldType.TEXT -> {
+                    createViewToFieldTypeText(question)
+                }
                 FieldType.SELECT -> {
                     createViewForFieldTypeSelect(question, conditionsControlledByField)
                 }
@@ -161,6 +165,20 @@ class OpenTicketFormFragment : Fragment() {
             .setRightMargin(SPACING_20)
             .build()
         binding.fragmentOpenTicketFormLayout.addView(textView)
+    }
+
+    private fun createViewToFieldTypeText(question: QuestionUI) {
+        val textInputLayout = TextInputLayoutBuilder(requireContext())
+            .setLeftMargin(SPACING_20)
+            .setTopMargin(SPACING_20)
+            .setRightMargin(SPACING_20)
+            .setHint(question.name)
+            .setTag(question.id)
+            .setFieldType(question.fieldType)
+            .setBackgroundColor(R.color.white)
+            .build()
+        hideInitiallyFieldThatHasHiddenUnlessRule(question.fieldRule, textInputLayout)
+        binding.fragmentOpenTicketFormLayout.addView(textInputLayout)
     }
 
     private fun createViewForFieldTypeSelect(
@@ -352,10 +370,10 @@ class OpenTicketFormFragment : Fragment() {
 
     private fun hideInitiallyFieldThatHasHiddenUnlessRule(
         fieldRule: FieldRule,
-        textInputLayout: TextInputLayout
+        view: View
     ) {
         if (fieldRule == FieldRule.HIDDEN_UNLESS) {
-            textInputLayout.visibility = View.GONE
+            view.visibility = View.GONE
         }
     }
 
