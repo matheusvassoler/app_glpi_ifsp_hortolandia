@@ -150,14 +150,17 @@ class OpenTicketFormFragment : Fragment() {
                 FieldType.EMAIL -> {
                     createViewToFieldTypeText(question)
                 }
+                FieldType.INTEGER -> {
+                    createViewToFieldTypeText(question)
+                }
                 FieldType.CHECKBOXES -> {
                     createViewToFieldTypeCheckbox(question, conditionsControlledByField)
                 }
                 FieldType.SELECT -> {
                     createViewForFieldTypeSelect(question, conditionsControlledByField)
                 }
-                FieldType.INTEGER -> {
-                    createViewToFieldTypeText(question)
+                FieldType.GLPISELECT -> {
+                    createViewToFieldTypeGlpiSelect(question, conditionsControlledByField)
                 }
             }
         }
@@ -269,6 +272,24 @@ class OpenTicketFormFragment : Fragment() {
             question.values?.split("\r\n")?.filter { item ->
                 item != ""
             } as ArrayList<String>
+        return optionsToSelect
+    }
+
+    private fun createViewToFieldTypeGlpiSelect(
+        question: QuestionUI,
+        conditionsControlledByField: List<RuleToShowQuestionUI>
+    ) {
+        val optionsToSelect = getValueToFieldTypeGlpiSelect(question)
+        val onItemClickListener = getOnItemClickListener(conditionsControlledByField, question)
+        val textInputLayout = buildSpinnerView(optionsToSelect, question, onItemClickListener)
+        hideInitiallyFieldThatHasHiddenUnlessRule(question.fieldRule, textInputLayout)
+        binding.fragmentOpenTicketFormLayout.addView(textInputLayout)
+    }
+
+    private fun getValueToFieldTypeGlpiSelect(question: QuestionUI): ArrayList<String> {
+        val optionsToSelect = question.items?.map { item ->
+            item.name
+        } as ArrayList<String>
         return optionsToSelect
     }
 
