@@ -156,6 +156,9 @@ class OpenTicketFormFragment : Fragment() {
                 FieldType.SELECT -> {
                     createViewForFieldTypeSelect(question, conditionsControlledByField)
                 }
+                FieldType.INTEGER -> {
+                    createViewToFieldTypeText(question)
+                }
             }
         }
     }
