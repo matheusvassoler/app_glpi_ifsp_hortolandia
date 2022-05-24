@@ -162,6 +162,9 @@ class OpenTicketFormFragment : Fragment() {
                 FieldType.GLPISELECT -> {
                     createViewToFieldTypeGlpiSelect(question, conditionsControlledByField)
                 }
+                FieldType.DROPDOWN -> {
+                    createViewToFieldTypeDropdown(question, conditionsControlledByField)
+                }
             }
         }
     }
@@ -287,10 +290,50 @@ class OpenTicketFormFragment : Fragment() {
     }
 
     private fun getValueToFieldTypeGlpiSelect(question: QuestionUI): ArrayList<String> {
-        val optionsToSelect = question.items?.map { item ->
-            item.name
-        } as ArrayList<String>
-        return optionsToSelect
+        return when {
+            question.items != null -> {
+                question.items.map { item ->
+                    item.name
+                } as ArrayList<String>
+            }
+            question.locations != null -> {
+                question.locations.map { item ->
+                    item.name
+                } as ArrayList<String>
+            }
+            else -> {
+                arrayListOf()
+            }
+        }
+    }
+
+    private fun createViewToFieldTypeDropdown(
+        question: QuestionUI,
+        conditionsControlledByField: List<RuleToShowQuestionUI>
+    ) {
+        val optionsToSelect = getValueToFieldTypeDropdown(question)
+        val onItemClickListener = getOnItemClickListener(conditionsControlledByField, question)
+        val textInputLayout = buildSpinnerView(optionsToSelect, question, onItemClickListener)
+        hideInitiallyFieldThatHasHiddenUnlessRule(question.fieldRule, textInputLayout)
+        binding.fragmentOpenTicketFormLayout.addView(textInputLayout)
+    }
+
+    private fun getValueToFieldTypeDropdown(question: QuestionUI): ArrayList<String> {
+        return when {
+            question.items != null -> {
+                question.items.map { item ->
+                    item.name
+                } as ArrayList<String>
+            }
+            question.locations != null -> {
+                question.locations.map { item ->
+                    item.name
+                } as ArrayList<String>
+            }
+            else -> {
+                arrayListOf()
+            }
+        }
     }
 
     private fun getOnCheckedChangeListener(
