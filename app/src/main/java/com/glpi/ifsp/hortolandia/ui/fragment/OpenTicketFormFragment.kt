@@ -153,6 +153,9 @@ class OpenTicketFormFragment : Fragment() {
                 FieldType.INTEGER -> {
                     createViewToFieldTypeText(question)
                 }
+                FieldType.TEXTAREA -> {
+                    createViewToFieldTypeText(question)
+                }
                 FieldType.CHECKBOXES -> {
                     createViewToFieldTypeCheckbox(question, conditionsControlledByField)
                 }

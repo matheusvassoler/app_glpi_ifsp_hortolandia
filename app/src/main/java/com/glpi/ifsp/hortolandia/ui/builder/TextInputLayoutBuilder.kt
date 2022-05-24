@@ -149,6 +149,8 @@ class TextInputLayoutBuilder(private val context: Context) {
                 Date()
             )
             FieldType.INTEGER -> textInputEditText.inputType = InputType.TYPE_CLASS_NUMBER
+            FieldType.TEXTAREA -> textInputEditText.inputType =
+                InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_FLAG_MULTI_LINE
             else -> textInputEditText.inputType =
                 InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS
         }
