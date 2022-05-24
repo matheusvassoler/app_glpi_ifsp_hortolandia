@@ -4,6 +4,7 @@ import android.content.Context
 import android.util.TypedValue
 import android.view.ViewGroup
 import android.widget.CheckBox
+import android.widget.CompoundButton
 import android.widget.LinearLayout
 import androidx.core.content.ContextCompat
 import com.glpi.ifsp.hortolandia.infrastructure.extensions.toDp
@@ -20,6 +21,7 @@ class CheckBoxBuilder(private val context: Context) {
     private var topMargin: Int? = null
     private var rightMargin: Int? = null
     private var bottomMargin: Int? = null
+    private var onCheckedChangeListener: CompoundButton.OnCheckedChangeListener? = null
     private lateinit var layoutParams: LinearLayout.LayoutParams
     private lateinit var checkBox: CheckBox
 
@@ -61,6 +63,10 @@ class CheckBoxBuilder(private val context: Context) {
 
     fun setBottomMargin(bottomMargin: Int) = apply {
         this.bottomMargin = bottomMargin
+    }
+
+    fun setOnCheckedChangeListener(listener: CompoundButton.OnCheckedChangeListener?) = apply {
+        this.onCheckedChangeListener = listener
     }
 
     fun build(): CheckBox {
@@ -108,6 +114,7 @@ class CheckBoxBuilder(private val context: Context) {
         setTagToCheckBox()
         setTextColorToCheckBox()
         setTextSizeToCheckBox()
+        setOnCheckedChangeListenerToCheckBox()
     }
 
     private fun setTagToCheckBox() {
@@ -125,6 +132,12 @@ class CheckBoxBuilder(private val context: Context) {
     private fun setTextSizeToCheckBox() {
         textSize?.let {
             checkBox.setTextSize(TypedValue.COMPLEX_UNIT_SP, it)
+        }
+    }
+
+    private fun setOnCheckedChangeListenerToCheckBox() {
+        onCheckedChangeListener?.let {
+            checkBox.setOnCheckedChangeListener(it)
         }
     }
 }

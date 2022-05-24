@@ -151,7 +151,7 @@ class OpenTicketFormFragment : Fragment() {
                     createViewToFieldTypeText(question)
                 }
                 FieldType.CHECKBOXES -> {
-                    createViewToFieldTypeCheckbox(question)
+                    createViewToFieldTypeCheckbox(question, conditionsControlledByField)
                 }
                 FieldType.SELECT -> {
                     createViewForFieldTypeSelect(question, conditionsControlledByField)
@@ -191,20 +191,30 @@ class OpenTicketFormFragment : Fragment() {
         binding.fragmentOpenTicketFormLayout.addView(textInputLayout)
     }
 
-    private fun createViewToFieldTypeCheckbox(question: QuestionUI) {
+    private fun createViewToFieldTypeCheckbox(
+        question: QuestionUI,
+        conditionsControlledByField: List<RuleToShowQuestionUI>
+    ) {
         if (question.values?.contains("\r\n") == true) {
-            createCheckBoxWhenQuestionHasMoreThanOneOption(question.values, question)
+            createCheckBoxWhenQuestionHasMoreThanOneOption(
+                question.values,
+                question,
+                conditionsControlledByField
+            )
         } else {
-            createCheckBox(question)
+            createCheckBox(question, conditionsControlledByField)
         }
     }
 
     private fun createCheckBoxWhenQuestionHasMoreThanOneOption(
         values: String,
-        question: QuestionUI
+        question: QuestionUI,
+        conditionsControlledByField: List<RuleToShowQuestionUI>
     ) {
         val splittedText = values.split("\r\n")
         splittedText.forEach { questionInfo ->
+            val onCheckedChangeListener =
+                getOnCheckedChangeListener(conditionsControlledByField, question)
             val checkBox = CheckBoxBuilder(requireContext())
                 .setText(questionInfo)
                 .setTag(question.id)
@@ -213,13 +223,19 @@ class OpenTicketFormFragment : Fragment() {
                 .setRightMargin(SPACING_14)
                 .setTextColor(R.color.gray_dark_for_field_hint)
                 .setTextSize(TEXT_SIZE_16_SP)
+                .setOnCheckedChangeListener(onCheckedChangeListener)
                 .build()
             hideInitiallyFieldThatHasHiddenUnlessRule(question.fieldRule, checkBox)
             binding.fragmentOpenTicketFormLayout.addView(checkBox)
         }
     }
 
-    private fun createCheckBox(question: QuestionUI) {
+    private fun createCheckBox(
+        question: QuestionUI,
+        conditionsControlledByField: List<RuleToShowQuestionUI>
+    ) {
+        val onCheckedChangeListener =
+            getOnCheckedChangeListener(conditionsControlledByField, question)
         val checkBox = CheckBoxBuilder(requireContext())
             .setText(question.values ?: "")
             .setTag(question.id)
@@ -228,6 +244,7 @@ class OpenTicketFormFragment : Fragment() {
             .setRightMargin(SPACING_14)
             .setTextColor(R.color.gray_dark_for_field_hint)
             .setTextSize(TEXT_SIZE_16_SP)
+            .setOnCheckedChangeListener(onCheckedChangeListener)
             .build()
         hideInitiallyFieldThatHasHiddenUnlessRule(question.fieldRule, checkBox)
         binding.fragmentOpenTicketFormLayout.addView(checkBox)
@@ -250,6 +267,28 @@ class OpenTicketFormFragment : Fragment() {
                 item != ""
             } as ArrayList<String>
         return optionsToSelect
+    }
+
+    private fun getOnCheckedChangeListener(
+        conditionsControlledByField: List<RuleToShowQuestionUI>,
+        question: QuestionUI
+    ): CompoundButton.OnCheckedChangeListener? {
+        var onCheckedChangeListener: CompoundButton.OnCheckedChangeListener? = null
+        if (conditionsControlledByField.isNotEmpty()) {
+            onCheckedChangeListener =
+                CompoundButton.OnCheckedChangeListener { compoundButton, isChecked ->
+                    if (isChecked) {
+                        hideOrShowField(
+                            conditionsControlledByField,
+                            question,
+                            compoundButton.text.toString()
+                        )
+                    } else {
+                        hideOrShowField(conditionsControlledByField, question, "")
+                    }
+            }
+        }
+        return onCheckedChangeListener
     }
 
     private fun getOnItemClickListener(
