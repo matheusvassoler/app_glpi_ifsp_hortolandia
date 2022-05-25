@@ -5,6 +5,8 @@ import android.content.Context
 import android.graphics.Typeface
 import android.net.Uri
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
@@ -72,9 +74,6 @@ class OpenTicketFormFragment : Fragment() {
             ViewGroup.LayoutParams.WRAP_CONTENT
         )
 
-        //layoutParams.topMargin = TWENTY_MARGIN_TOP.toDp(requireContext())
-        //layoutParams.marginStart = TWENTY_MARGIN_START.toDp(requireContext())
-        //layoutParams.marginEnd = TWENTY_MARGIN_END.toDp(requireContext())
     }
 
     override fun onCreateView(
@@ -142,19 +141,19 @@ class OpenTicketFormFragment : Fragment() {
             }
             when (question.fieldType) {
                 FieldType.TEXT -> {
-                    createViewToFieldTypeText(question)
+                    createViewToFieldTypeText(question, conditionsControlledByField)
                 }
                 FieldType.DATE -> {
-                    createViewToFieldTypeText(question)
+                    createViewToFieldTypeText(question, conditionsControlledByField)
                 }
                 FieldType.EMAIL -> {
-                    createViewToFieldTypeText(question)
+                    createViewToFieldTypeText(question, conditionsControlledByField)
                 }
                 FieldType.INTEGER -> {
-                    createViewToFieldTypeText(question)
+                    createViewToFieldTypeText(question, conditionsControlledByField)
                 }
                 FieldType.TEXTAREA -> {
-                    createViewToFieldTypeText(question)
+                    createViewToFieldTypeText(question, conditionsControlledByField)
                 }
                 FieldType.CHECKBOXES -> {
                     createViewToFieldTypeCheckbox(question, conditionsControlledByField)
@@ -189,7 +188,11 @@ class OpenTicketFormFragment : Fragment() {
         binding.fragmentOpenTicketFormLayout.addView(textView)
     }
 
-    private fun createViewToFieldTypeText(question: QuestionUI) {
+    private fun createViewToFieldTypeText(
+        question: QuestionUI,
+        conditionsControlledByField: List<RuleToShowQuestionUI>
+    ) {
+        val textWatcher = getTextWatcher(conditionsControlledByField, question)
         val textInputLayout = TextInputLayoutBuilder(requireContext())
             .setLeftMargin(SPACING_20)
             .setTopMargin(SPACING_20)
@@ -198,9 +201,32 @@ class OpenTicketFormFragment : Fragment() {
             .setTag(question.id)
             .setFieldType(question.fieldType)
             .setBackgroundColor(R.color.white)
+            .setTextChangedListener(textWatcher)
             .build()
         hideInitiallyFieldThatHasHiddenUnlessRule(question.fieldRule, textInputLayout)
         binding.fragmentOpenTicketFormLayout.addView(textInputLayout)
+    }
+
+    private fun getTextWatcher(
+        conditionsControlledByField: List<RuleToShowQuestionUI>,
+        question: QuestionUI
+    ) = object : TextWatcher {
+        override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            // DO nothing
+        }
+
+        override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+            hideOrShowField(
+                conditionsControlledByField,
+                question,
+                s.toString()
+            )
+        }
+
+        override fun afterTextChanged(s: Editable?) {
+            // DO nothing
+        }
+
     }
 
     private fun createViewToFieldTypeCheckbox(

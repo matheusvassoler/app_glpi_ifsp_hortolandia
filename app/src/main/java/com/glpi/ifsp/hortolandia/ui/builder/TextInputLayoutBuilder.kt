@@ -3,6 +3,7 @@ package com.glpi.ifsp.hortolandia.ui.builder
 import android.app.DatePickerDialog
 import android.content.Context
 import android.text.InputType
+import android.text.TextWatcher
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import androidx.core.content.ContextCompat
@@ -26,6 +27,7 @@ class TextInputLayoutBuilder(private val context: Context) {
     private var rightMargin: Int? = null
     private var bottomMargin: Int? = null
     private var fieldType: FieldType? = null
+    private var textChangedListener: TextWatcher? = null
     private lateinit var layoutParams: LinearLayout.LayoutParams
     private lateinit var textInputLayout: TextInputLayout
     private lateinit var textInputEditText: TextInputEditText
@@ -74,10 +76,14 @@ class TextInputLayoutBuilder(private val context: Context) {
         this.fieldType = fieldType
     }
 
+    fun setTextChangedListener(listener: TextWatcher) = apply {
+        this.textChangedListener = listener
+    }
+
     fun build(): TextInputLayout {
         setTextInputLayoutDimensions()
         setTextInputLayout()
-        setInputTypeToTextInputEditText()
+        setTextInputEditText()
         textInputLayout.addView(textInputEditText)
         return textInputLayout
     }
@@ -140,8 +146,19 @@ class TextInputLayoutBuilder(private val context: Context) {
         }
     }
 
-    private fun setInputTypeToTextInputEditText() {
+    private fun setTextInputEditText() {
         textInputEditText = TextInputEditText(textInputLayout.context)
+        setTextChangedListenerToTextInputEditText()
+        setInputTypeToTextInputEditText()
+    }
+
+    private fun setTextChangedListenerToTextInputEditText() {
+        textChangedListener?.let {
+            textInputEditText.addTextChangedListener(it)
+        }
+    }
+
+    private fun setInputTypeToTextInputEditText() {
         when (fieldType) {
             FieldType.DATE -> textInputEditText.transformIntoDatePicker(
                 context,
