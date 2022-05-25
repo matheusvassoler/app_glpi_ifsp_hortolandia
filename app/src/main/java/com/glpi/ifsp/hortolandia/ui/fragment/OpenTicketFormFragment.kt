@@ -22,11 +22,9 @@ import com.glpi.ifsp.hortolandia.ui.activity.FailedRegistrationActivity
 import com.glpi.ifsp.hortolandia.ui.activity.LoginActivity
 import com.glpi.ifsp.hortolandia.ui.activity.RegistrationSuccessfullyActivity
 import com.glpi.ifsp.hortolandia.ui.activity.RequestErrorActivity
-import com.glpi.ifsp.hortolandia.ui.builder.CheckBoxBuilder
-import com.glpi.ifsp.hortolandia.ui.builder.SpinnerBuilder
-import com.glpi.ifsp.hortolandia.ui.builder.TextInputLayoutBuilder
-import com.glpi.ifsp.hortolandia.ui.builder.TextViewBuilder
+import com.glpi.ifsp.hortolandia.ui.builder.*
 import com.glpi.ifsp.hortolandia.ui.event.OpenTicketEvent
+import com.glpi.ifsp.hortolandia.ui.model.FormUI
 import com.glpi.ifsp.hortolandia.ui.model.QuestionUI
 import com.glpi.ifsp.hortolandia.ui.model.RuleToShowQuestionUI
 import com.glpi.ifsp.hortolandia.ui.state.OpenTicketState
@@ -106,6 +104,7 @@ class OpenTicketFormFragment : Fragment() {
                     allFormQuestions = it.formUI.questions
                     allFormConditions = it.formUI.conditionsToHideOrShowQuestions
                     createFields(it)
+                    createButton(it.formUI)
                 }
             }
         })
@@ -129,6 +128,11 @@ class OpenTicketFormFragment : Fragment() {
                 }
             }
         })
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
     private fun createFields(showFormUIState: OpenTicketState.ShowFormUI) {
@@ -169,11 +173,6 @@ class OpenTicketFormFragment : Fragment() {
                 }
             }
         }
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
     }
 
     private fun createFormHeader(formName: String) {
@@ -555,6 +554,20 @@ class OpenTicketFormFragment : Fragment() {
             .build()
     }
 
+    private fun createButton(formUI: FormUI) {
+        val button = ButtonBuilder(requireContext())
+            .setHeight(SPACING_50)
+            .setText(getString(R.string.open_ticket_continue_button))
+            .setBackgroundColor(R.color.green_dark)
+            .setTextColor(R.color.white)
+            .setLeftMargin(SPACING_20)
+            .setTopMargin(SPACING_30)
+            .setRightMargin(SPACING_20)
+            .setBottomMargin(SPACING_20)
+            .build()
+        binding.fragmentOpenTicketFormLayout.addView(button)
+    }
+
     private fun hideInitiallyFieldThatHasHiddenUnlessRule(
         fieldRule: FieldRule,
         view: View
@@ -636,6 +649,7 @@ class OpenTicketFormFragment : Fragment() {
         private const val SPACING_20 = 20
         private const val SPACING_30 = 30
         private const val SPACING_40 = 40
+        private const val SPACING_50 = 50
         private const val SPACING_60 = 60
 
         fun newInstance(formUrl: String) =
