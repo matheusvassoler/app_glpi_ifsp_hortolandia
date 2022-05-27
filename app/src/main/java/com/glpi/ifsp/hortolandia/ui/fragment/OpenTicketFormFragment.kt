@@ -1,7 +1,5 @@
 package com.glpi.ifsp.hortolandia.ui.fragment
 
-import android.app.DatePickerDialog
-import android.content.Context
 import android.graphics.Typeface
 import android.net.Uri
 import android.os.Bundle
@@ -29,12 +27,7 @@ import com.glpi.ifsp.hortolandia.ui.model.QuestionUI
 import com.glpi.ifsp.hortolandia.ui.model.RuleToShowQuestionUI
 import com.glpi.ifsp.hortolandia.ui.state.OpenTicketState
 import com.glpi.ifsp.hortolandia.ui.viewmodel.OpenTicketViewModel
-import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
-import java.text.SimpleDateFormat
-import java.util.Calendar
-import java.util.Date
-import java.util.Locale
 import org.koin.android.viewmodel.ext.android.viewModel
 
 private const val FORM_URL_PARAM = "FORM_URL_PARAM"
@@ -565,6 +558,13 @@ class OpenTicketFormFragment : Fragment() {
             .setRightMargin(SPACING_20)
             .setBottomMargin(SPACING_20)
             .build()
+
+        val space = SpaceBuilder(requireContext())
+            .setHeight(SPACING_0)
+            .setWeight(1.0F)
+            .build()
+
+        binding.fragmentOpenTicketFormLayout.addView(space)
         binding.fragmentOpenTicketFormLayout.addView(button)
     }
 
@@ -582,34 +582,6 @@ class OpenTicketFormFragment : Fragment() {
             width ?: ViewGroup.LayoutParams.MATCH_PARENT,
             height ?: ViewGroup.LayoutParams.WRAP_CONTENT
         )
-    }
-
-    fun TextInputEditText.transformIntoDatePicker(context: Context, format: String, maxDate: Date? = null) {
-        isFocusableInTouchMode = false
-        isClickable = true
-        isFocusable = false
-
-        val myCalendar = Calendar.getInstance()
-        val datePickerOnDataSetListener =
-            DatePickerDialog.OnDateSetListener { _, year, monthOfYear, dayOfMonth ->
-                myCalendar.set(Calendar.YEAR, year)
-                myCalendar.set(Calendar.MONTH, monthOfYear)
-                myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth)
-                val sdf = SimpleDateFormat(format, Locale.UK)
-                setText(sdf.format(myCalendar.time))
-            }
-
-        setOnClickListener {
-            view?.clearFocus()
-            DatePickerDialog(
-                context, datePickerOnDataSetListener, myCalendar
-                    .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
-                myCalendar.get(Calendar.DAY_OF_MONTH)
-            ).run {
-                maxDate?.time?.also { datePicker.maxDate = it }
-                show()
-            }
-        }
     }
 
     private fun Int.toDp(): Int = TypedValue.applyDimension(
