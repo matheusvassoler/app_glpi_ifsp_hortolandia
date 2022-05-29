@@ -549,19 +549,22 @@ class OpenTicketFormFragment : Fragment() {
 
     private fun createButton(formUI: FormUI) {
         val button = ButtonBuilder(requireContext())
-            .setHeight(SPACING_50)
+            .setHeight(SPACING_48)
             .setText(getString(R.string.open_ticket_continue_button))
             .setBackgroundColor(R.color.green_dark)
             .setTextColor(R.color.white)
+            .setTextSize(TEXT_SIZE_16_SP)
+            .setTypeFace(Typeface.DEFAULT_BOLD)
             .setLeftMargin(SPACING_20)
             .setTopMargin(SPACING_30)
             .setRightMargin(SPACING_20)
             .setBottomMargin(SPACING_20)
+            .setRadius(BORDER_RADIUS_8)
             .build()
 
         val space = SpaceBuilder(requireContext())
             .setHeight(SPACING_0)
-            .setWeight(1.0F)
+            .setWeight(WEIGHT_1)
             .build()
 
         binding.fragmentOpenTicketFormLayout.addView(space)
@@ -621,8 +624,12 @@ class OpenTicketFormFragment : Fragment() {
         private const val SPACING_20 = 20
         private const val SPACING_30 = 30
         private const val SPACING_40 = 40
-        private const val SPACING_50 = 50
+        private const val SPACING_48 = 48
         private const val SPACING_60 = 60
+
+        private const val WEIGHT_1 = 1.0f
+
+        private const val BORDER_RADIUS_8 = 8.0f
 
         fun newInstance(formUrl: String) =
             OpenTicketFormFragment().apply {
