@@ -11,6 +11,7 @@ import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat
 import com.glpi.ifsp.hortolandia.R
 import com.glpi.ifsp.hortolandia.infrastructure.extensions.toDp
+import toDp
 
 class ButtonBuilder(private val context: Context) {
 
@@ -87,7 +88,7 @@ class ButtonBuilder(private val context: Context) {
     }
 
     fun setRadius(radius: Float) = apply {
-        this.radius = radius
+        this.radius = radius.toDp(context)
     }
 
     fun build(): CardView {
