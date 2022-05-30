@@ -55,9 +55,11 @@ class OpenTicketTutorialFragment : Fragment() {
     private fun setToolbar() {
         binding.fragmentOpenTicketTutorialToolbar.toolbarTitle.text =
             getString(R.string.open_ticket_toolbar_title)
-        binding.fragmentOpenTicketTutorialToolbar.toolbar.navigationIcon =
+        binding.fragmentOpenTicketTutorialToolbar.toolbarLeftIcon.setImageDrawable(
             ResourcesCompat.getDrawable(resources, R.drawable.back_button_icon, null)
-        binding.fragmentOpenTicketTutorialToolbar.toolbar.setNavigationOnClickListener {
+        )
+
+        binding.fragmentOpenTicketTutorialToolbar.toolbarLeftIcon.setOnClickListener {
             goToHomeActivity()
         }
     }

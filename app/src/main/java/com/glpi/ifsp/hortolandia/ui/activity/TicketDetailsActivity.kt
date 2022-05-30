@@ -25,12 +25,12 @@ class TicketDetailsActivity : AppCompatActivity() {
 
     private fun setToolbar() {
         binding.activityTicketDetailsToolbar.toolbarTitle.text = getString(R.string.ticket_details_toolbar_title)
-        binding.activityTicketDetailsToolbar.toolbar.navigationIcon =
+        binding.activityTicketDetailsToolbar.toolbarLeftIcon.setImageDrawable(
             ResourcesCompat.getDrawable(resources, R.drawable.back_button_icon, null)
-        binding.activityTicketDetailsToolbar.toolbar.setNavigationOnClickListener {
+        )
+        binding.activityTicketDetailsToolbar.toolbarLeftIcon.setOnClickListener {
             finish()
         }
-        binding.activityTicketDetailsToolbar.toolbar.inflateMenu(R.menu.ticket_details_toolbar_menu)
     }
 
     private fun checkIfIntentContainsTicketUI() {

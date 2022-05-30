@@ -5,29 +5,29 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
-        android:layout_width="@dimen/default_dimen_0dp"
-        android:layout_height="wrap_content"
-        app:contentInsetStart="@dimen/default_dimen_0dp"
-        app:contentInsetStartWithNavigation="0dp"
-        app:contentInsetEndWithActions="0dp"
-        style="@style/ToolbarStyle"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/toolbar_left_icon"
+                android:layout_width="@dimen/default_dimen_30dp"
+                android:layout_height="@dimen/default_dimen_30dp"
+                android:layout_marginStart="@dimen/default_dimen_14dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:src="@null" />
 
             <TextView
                 android:id="@+id/toolbar_title"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:textSize="@dimen/default_dimen_25sp"
+                android:paddingTop="@dimen/default_dimen_10dp"
+                android:paddingBottom="@dimen/default_dimen_10dp"
                 android:textStyle="bold"
-                android:layout_marginStart="@dimen/default_dimen_20dp"
+                android:textAlignment="center"
                 android:textColor="@color/black"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -35,7 +35,5 @@
                 tools:text="Menu"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
-
-    </androidx.appcompat.widget.Toolbar>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
