@@ -114,6 +114,8 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun showSnackBar(message: String) {
-        Snackbar.make(binding.root, message, Snackbar.LENGTH_LONG).show()
+        val snackBar = Snackbar.make(binding.root, message, Snackbar.LENGTH_LONG)
+        snackBar.anchorView = binding.activityLoginTitle
+        snackBar.show()
     }
 }
