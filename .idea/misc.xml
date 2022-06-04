@@ -23,12 +23,13 @@
         <entry key="app/src/main/res/layout-xxhdpi/activity_login.xml" value="0.24074074074074073" />
         <entry key="app/src/main/res/layout/activity_error.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_failed_registration.xml" value="0.29583333333333334" />
-        <entry key="app/src/main/res/layout/activity_home.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/activity_home.xml" value="0.335" />
         <entry key="app/src/main/res/layout/activity_login.xml" value="0.24074074074074073" />
         <entry key="app/src/main/res/layout/activity_open_ticket.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_registration_successfully.xml" value="0.2515200539348905" />
         <entry key="app/src/main/res/layout/activity_request_error.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_ticket_details.xml" value="0.24074074074074073" />
+        <entry key="app/src/main/res/layout/activity_web_view.xml" value="0.28229166666666666" />
         <entry key="app/src/main/res/layout/custom_app_bar.xml" value="0.335" />
         <entry key="app/src/main/res/layout/fragment_blank.xml" value="0.28229166666666666" />
         <entry key="app/src/main/res/layout/fragment_open_ticket_camera_permission.xml" value="0.25" />
@@ -38,9 +39,9 @@
         <entry key="app/src/main/res/layout/fragment_open_ticket_terms_and_conditions.xml" value="0.28229166666666666" />
         <entry key="app/src/main/res/layout/fragment_open_ticket_tutorial.xml" value="0.21666666666666667" />
         <entry key="app/src/main/res/layout/fragment_profile.xml" value="0.25" />
-        <entry key="app/src/main/res/layout/fragment_ticket.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/fragment_ticket.xml" value="0.25" />
         <entry key="app/src/main/res/layout/tes.xml" value="0.28229166666666666" />
-        <entry key="app/src/main/res/layout/ticket_item.xml" value="0.24615384615384617" />
+        <entry key="app/src/main/res/layout/ticket_item.xml" value="0.375" />
         <entry key="app/src/main/res/layout/ticket_loading_item_state.xml" value="0.1" />
         <entry key="app/src/main/res/menu/bottom_nav_menu.xml" value="0.28229166666666666" />
         <entry key="app/src/main/res/menu/ticket_details_toolbar_menu.xml" value="0.28229166666666666" />

@@ -83,7 +83,7 @@ class GetFormUseCase(
                 QuestionUI(
                     id = question.id,
                     name = question.name,
-                    description = removeHtmlTag(question),
+                    description = question.description,
                     fieldType = FieldType.valueOf(question.fieldType.uppercase()),
                     values = question.values,
                     fieldRule = getFieldRule(question.showRule),
@@ -251,14 +251,6 @@ class GetFormUseCase(
             getLocationUseCase()
         } else {
             null
-        }
-    }
-
-    private fun removeHtmlTag(question: Question): String {
-        return if (!question.name.lowercase().contains("termos e condições")) {
-            question.description.removeUnicodeHtmlTag()
-        } else {
-            question.description
         }
     }
 

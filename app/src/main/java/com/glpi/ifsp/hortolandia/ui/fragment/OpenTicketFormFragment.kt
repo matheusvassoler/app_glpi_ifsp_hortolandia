@@ -4,6 +4,7 @@ import android.graphics.Typeface
 import android.net.Uri
 import android.os.Bundle
 import android.text.Editable
+import android.text.Html
 import android.text.TextWatcher
 import android.util.TypedValue
 import android.view.LayoutInflater
@@ -20,6 +21,7 @@ import com.glpi.ifsp.hortolandia.ui.activity.FailedRegistrationActivity
 import com.glpi.ifsp.hortolandia.ui.activity.LoginActivity
 import com.glpi.ifsp.hortolandia.ui.activity.RegistrationSuccessfullyActivity
 import com.glpi.ifsp.hortolandia.ui.activity.RequestErrorActivity
+import com.glpi.ifsp.hortolandia.ui.activity.WebViewActivity
 import com.glpi.ifsp.hortolandia.ui.builder.*
 import com.glpi.ifsp.hortolandia.ui.event.OpenTicketEvent
 import com.glpi.ifsp.hortolandia.ui.model.FormUI
@@ -264,17 +266,42 @@ class OpenTicketFormFragment : Fragment() {
         question: QuestionUI,
         conditionsControlledByField: List<RuleToShowQuestionUI>
     ) {
+        var icon: Int? = null
+        var onClickListener: View.OnClickListener? = null
+        var topMargin: Int = SPACING_40
+        var textSize: Float = TEXT_SIZE_16_SP
+        val descriptionWithoutHtml = removeUnicodeHtmlFromText(question.description)
+        if (question.description != "" && descriptionWithoutHtml.length > LIMIT_SIZE_TEXT_IN_CHECKBOX) {
+            icon = R.drawable.ic_info
+            val htmlText = Html.fromHtml(question.description, Html.FROM_HTML_MODE_LEGACY).toString()
+            onClickListener = View.OnClickListener {
+                startActivity(WebViewActivity.newInstance(requireContext(), htmlText))
+            }
+        } else if (question.description != "") {
+            topMargin = SPACING_10
+            textSize = TEXT_SIZE_14_SP
+            val textView = TextViewBuilder(requireContext(), descriptionWithoutHtml, MATCH_PARENT, WRAP_CONTENT)
+                .setTextSize(TEXT_SIZE_16_SP)
+                .setTopMargin(SPACING_40)
+                .setLeftMargin(SPACING_20)
+                .setRightMargin(SPACING_20)
+                .build()
+            binding.fragmentOpenTicketFormLayout.addView(textView)
+        }
+
         val onCheckedChangeListener =
             getOnCheckedChangeListener(conditionsControlledByField, question)
         val checkBox = CheckBoxBuilder(requireContext())
             .setText(question.values ?: "")
             .setTag(question.id)
             .setLeftMargin(SPACING_14)
-            .setTopMargin(SPACING_40)
+            .setTopMargin(topMargin)
             .setRightMargin(SPACING_14)
             .setTextColor(R.color.gray_dark_for_field_hint)
-            .setTextSize(TEXT_SIZE_16_SP)
+            .setTextSize(textSize)
             .setOnCheckedChangeListener(onCheckedChangeListener)
+            .setRightIcon(icon)
+            .setOnRightIconClickListener(onClickListener)
             .build()
         hideInitiallyFieldThatHasHiddenUnlessRule(question.fieldRule, checkBox)
         binding.fragmentOpenTicketFormLayout.addView(checkBox)
@@ -597,21 +624,16 @@ class OpenTicketFormFragment : Fragment() {
         this.layoutParams = layoutParams
     }
 
+    private fun removeUnicodeHtmlFromText(text: String): String {
+        val htmlText = Html.fromHtml(text, Html.FROM_HTML_MODE_LEGACY).toString()
+        return htmlText
+            .replace(Regex("<[^>]*>"), " ")
+            .replace(Regex("\\s+"), " ")
+            .trim()
+    }
+
     companion object {
-        private const val TWENTY_MARGIN_TOP = 20
-        private const val TWENTY_MARGIN_START = 20
-        private const val TWENTY_MARGIN_END = 20
-        private const val TWENTY_MARGIN_BOTTOM = 20
-        private const val THIRTY_MARGIN_TOP = 30
-        private const val FOURTEEN_MARGIN_START = 14
-        private const val FOURTEEN_MARGIN_END = 14
-        private const val FORTY_MARGIN_TOP = 40
-        private const val FIFTY_HEIGHT = 50
-        private const val SIXTY_HEIGHT = 60
-        private const val TWELVE_PADDING_START = 12
-        private const val THIRTY_PADDING_TOP = 30
-        private const val ZERO_PADDING_RIGHT = 0
-        private const val TEN_PADDING_BOTTOM = 10
+        private const val TEXT_SIZE_14_SP = 14.0f
         private const val TEXT_SIZE_16_SP = 16.0f
         private const val TEXT_SIZE_18_SP = 18.0f
 
@@ -630,6 +652,8 @@ class OpenTicketFormFragment : Fragment() {
         private const val WEIGHT_1 = 1.0f
 
         private const val BORDER_RADIUS_8 = 8.0f
+
+        private const val LIMIT_SIZE_TEXT_IN_CHECKBOX = 110
 
         fun newInstance(formUrl: String) =
             OpenTicketFormFragment().apply {

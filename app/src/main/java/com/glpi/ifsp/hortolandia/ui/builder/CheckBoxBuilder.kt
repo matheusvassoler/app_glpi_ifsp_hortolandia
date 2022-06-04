@@ -2,14 +2,17 @@ package com.glpi.ifsp.hortolandia.ui.builder
 
 import android.content.Context
 import android.util.TypedValue
+import android.view.Gravity
+import android.view.View
 import android.view.ViewGroup
 import android.widget.CheckBox
 import android.widget.CompoundButton
+import android.widget.ImageView
 import android.widget.LinearLayout
 import androidx.core.content.ContextCompat
 import com.glpi.ifsp.hortolandia.infrastructure.extensions.toDp
 
-class CheckBoxBuilder(private val context: Context) {
+open class CheckBoxBuilder(private val context: Context) {
 
     private var text: String = ""
     private var tag: Int? = null
@@ -21,7 +24,10 @@ class CheckBoxBuilder(private val context: Context) {
     private var topMargin: Int? = null
     private var rightMargin: Int? = null
     private var bottomMargin: Int? = null
+    private var rightIcon: Int? = null
+    private var rightIconClickListener: View.OnClickListener? = null
     private var onCheckedChangeListener: CompoundButton.OnCheckedChangeListener? = null
+    private var linearLayout: LinearLayout? = null
     private lateinit var layoutParams: LinearLayout.LayoutParams
     private lateinit var checkBox: CheckBox
 
@@ -69,10 +75,19 @@ class CheckBoxBuilder(private val context: Context) {
         this.onCheckedChangeListener = listener
     }
 
-    fun build(): CheckBox {
+    fun setOnRightIconClickListener(listener: View.OnClickListener?) = apply {
+        this.rightIconClickListener = listener
+    }
+
+    fun setRightIcon(icon: Int?) = apply {
+        this.rightIcon = icon
+    }
+
+    fun build(): View {
         setCheckBoxDimensions()
         setCheckBox()
-        return checkBox
+
+        return linearLayout ?: checkBox
     }
 
     private fun setCheckBoxDimensions() {
@@ -115,6 +130,33 @@ class CheckBoxBuilder(private val context: Context) {
         setTextColorToCheckBox()
         setTextSizeToCheckBox()
         setOnCheckedChangeListenerToCheckBox()
+
+        rightIcon?.let { icon ->
+            linearLayout = LinearLayout(context)
+            layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT)
+            linearLayout?.orientation = LinearLayout.HORIZONTAL
+            setLeftMarginToCheckBox()
+            setTopMarginToCheckBox()
+            setRightMarginToCheckBox()
+            setBottomMarginToCheckBox()
+            linearLayout?.layoutParams = layoutParams
+
+            var lp = LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 0.9F)
+            checkBox.layoutParams = lp
+            linearLayout?.addView(checkBox)
+
+            val imageView = ImageView(context)
+            lp = LinearLayout.LayoutParams(0, 30.toDp(context), 0.1F)
+            lp.gravity = Gravity.CENTER_HORIZONTAL or Gravity.CENTER_VERTICAL
+            imageView.setImageDrawable(ContextCompat.getDrawable(context, icon))
+            imageView.layoutParams = lp
+
+            rightIconClickListener?.let { listener ->
+                imageView.setOnClickListener(listener)
+            }
+
+            linearLayout?.addView(imageView)
+        }
     }
 
     private fun setTagToCheckBox() {
