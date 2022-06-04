@@ -10,7 +10,10 @@ import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.*
+import android.widget.AdapterView
+import android.widget.CompoundButton
+import android.widget.LinearLayout
+import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import com.glpi.ifsp.hortolandia.R
@@ -22,7 +25,12 @@ import com.glpi.ifsp.hortolandia.ui.activity.LoginActivity
 import com.glpi.ifsp.hortolandia.ui.activity.RegistrationSuccessfullyActivity
 import com.glpi.ifsp.hortolandia.ui.activity.RequestErrorActivity
 import com.glpi.ifsp.hortolandia.ui.activity.WebViewActivity
-import com.glpi.ifsp.hortolandia.ui.builder.*
+import com.glpi.ifsp.hortolandia.ui.builder.ButtonBuilder
+import com.glpi.ifsp.hortolandia.ui.builder.CheckBoxBuilder
+import com.glpi.ifsp.hortolandia.ui.builder.SpaceBuilder
+import com.glpi.ifsp.hortolandia.ui.builder.SpinnerBuilder
+import com.glpi.ifsp.hortolandia.ui.builder.TextInputLayoutBuilder
+import com.glpi.ifsp.hortolandia.ui.builder.TextViewBuilder
 import com.glpi.ifsp.hortolandia.ui.event.OpenTicketEvent
 import com.glpi.ifsp.hortolandia.ui.model.FormUI
 import com.glpi.ifsp.hortolandia.ui.model.QuestionUI
@@ -66,7 +74,6 @@ class OpenTicketFormFragment : Fragment() {
             ViewGroup.LayoutParams.MATCH_PARENT,
             ViewGroup.LayoutParams.WRAP_CONTENT
         )
-
     }
 
     override fun onCreateView(
@@ -220,7 +227,6 @@ class OpenTicketFormFragment : Fragment() {
         override fun afterTextChanged(s: Editable?) {
             // DO nothing
         }
-
     }
 
     private fun createViewToFieldTypeCheckbox(
@@ -498,7 +504,7 @@ class OpenTicketFormFragment : Fragment() {
                     if (question.fieldRule == FieldRule.HIDDEN_UNLESS) {
                         val controlledQuestion = getQuestionById(allFormQuestions, condition.questionIdThatDisappearsOrAppearsBasedOnACondition)
 
-                        for(j in 0 until binding.fragmentOpenTicketFormLayout.childCount) {
+                        for (j in 0 until binding.fragmentOpenTicketFormLayout.childCount) {
                             val view = binding.fragmentOpenTicketFormLayout.getChildAt(j)
                             if (view.tag == controlledQuestion?.id) {
                                 view.visibility = View.GONE
@@ -522,7 +528,7 @@ class OpenTicketFormFragment : Fragment() {
         for (question in questionsThatCanTriggerConditions) {
             for (condition in allFormConditions) {
                 if (condition.questionIdThatControlsTheCondition == question?.id) {
-                    for(j in 0 until binding.fragmentOpenTicketFormLayout.childCount) {
+                    for (j in 0 until binding.fragmentOpenTicketFormLayout.childCount) {
                         val view = binding.fragmentOpenTicketFormLayout.getChildAt(j)
 
                         if (view.tag == question.id) {
@@ -532,7 +538,7 @@ class OpenTicketFormFragment : Fragment() {
                                     questionsControlledByOtherQuestion.add(controlledQuestion)
                                     println("Questão ${controlledQuestion?.name} foi exibida")
 
-                                    for(m in 0 until binding.fragmentOpenTicketFormLayout.childCount) {
+                                    for (m in 0 until binding.fragmentOpenTicketFormLayout.childCount) {
                                         val v = binding.fragmentOpenTicketFormLayout.getChildAt(m)
                                         if (v.tag != null) {
                                             if (v.tag == controlledQuestion?.id) {

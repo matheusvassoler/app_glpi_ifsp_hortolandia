@@ -13,6 +13,7 @@ import com.glpi.ifsp.hortolandia.R
 import com.glpi.ifsp.hortolandia.infrastructure.extensions.toDp
 import com.google.android.material.textfield.TextInputLayout
 
+@Suppress("TooManyFunctions")
 class SpinnerBuilder(
     private val context: Context,
     private val values: ArrayList<String>,

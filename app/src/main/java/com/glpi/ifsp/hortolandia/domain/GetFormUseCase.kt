@@ -15,7 +15,6 @@ import com.glpi.ifsp.hortolandia.infrastructure.exceptions.InternalErrorExceptio
 import com.glpi.ifsp.hortolandia.infrastructure.exceptions.NullResponseBodyException
 import com.glpi.ifsp.hortolandia.infrastructure.exceptions.ResponseRequestException
 import com.glpi.ifsp.hortolandia.infrastructure.exceptions.UnauthorizedLoginException
-import com.glpi.ifsp.hortolandia.infrastructure.utils.removeUnicodeHtmlTag
 import com.glpi.ifsp.hortolandia.ui.model.FormUI
 import com.glpi.ifsp.hortolandia.ui.model.LocationUI
 import com.glpi.ifsp.hortolandia.ui.model.QuestionUI

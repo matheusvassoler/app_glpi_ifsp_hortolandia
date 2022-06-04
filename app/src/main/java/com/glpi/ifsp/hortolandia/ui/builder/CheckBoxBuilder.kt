@@ -12,6 +12,7 @@ import android.widget.LinearLayout
 import androidx.core.content.ContextCompat
 import com.glpi.ifsp.hortolandia.infrastructure.extensions.toDp
 
+@Suppress("LongMethod", "TooManyFunctions")
 open class CheckBoxBuilder(private val context: Context) {
 
     private var text: String = ""
@@ -141,12 +142,12 @@ open class CheckBoxBuilder(private val context: Context) {
             setBottomMarginToCheckBox()
             linearLayout?.layoutParams = layoutParams
 
-            var lp = LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 0.9F)
+            var lp = LinearLayout.LayoutParams(SPACE_0, LinearLayout.LayoutParams.WRAP_CONTENT, WEIGHT_0_9)
             checkBox.layoutParams = lp
             linearLayout?.addView(checkBox)
 
             val imageView = ImageView(context)
-            lp = LinearLayout.LayoutParams(0, 30.toDp(context), 0.1F)
+            lp = LinearLayout.LayoutParams(SPACE_0, SPACE_30.toDp(context), WEIGHT_0_1)
             lp.gravity = Gravity.CENTER_HORIZONTAL or Gravity.CENTER_VERTICAL
             imageView.setImageDrawable(ContextCompat.getDrawable(context, icon))
             imageView.layoutParams = lp
@@ -181,5 +182,13 @@ open class CheckBoxBuilder(private val context: Context) {
         onCheckedChangeListener?.let {
             checkBox.setOnCheckedChangeListener(it)
         }
+    }
+
+    companion object {
+        private const val SPACE_0 = 0
+        private const val SPACE_30 = 30
+
+        private const val WEIGHT_0_1 = 0.1f
+        private const val WEIGHT_0_9 = 0.9f
     }
 }

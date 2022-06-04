@@ -12,8 +12,11 @@ import com.glpi.ifsp.hortolandia.infrastructure.extensions.toDp
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import java.text.SimpleDateFormat
-import java.util.*
+import java.util.Calendar
+import java.util.Date
+import java.util.Locale
 
+@Suppress("TooManyFunctions")
 class TextInputLayoutBuilder(private val context: Context) {
 
     private var backgroundColor: Int? = null
@@ -52,7 +55,7 @@ class TextInputLayoutBuilder(private val context: Context) {
         this.width = width
     }
 
-    fun setHeight(height: Int) =  apply {
+    fun setHeight(height: Int) = apply {
         this.height = height
     }
 

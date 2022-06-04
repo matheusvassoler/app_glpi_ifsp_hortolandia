@@ -13,6 +13,7 @@ import com.glpi.ifsp.hortolandia.R
 import com.glpi.ifsp.hortolandia.infrastructure.extensions.toDp
 import toDp
 
+@Suppress("TooManyFunctions")
 class ButtonBuilder(private val context: Context) {
 
     private var text: String = ""
@@ -151,8 +152,8 @@ class ButtonBuilder(private val context: Context) {
         val typedArray = context.obtainStyledAttributes(attrs)
         val selectableItemBackground = typedArray.getResourceId(0, 0)
         typedArray.recycle()
-        button.foreground = ContextCompat.getDrawable(context, selectableItemBackground);
-        button.isClickable = true;
+        button.foreground = ContextCompat.getDrawable(context, selectableItemBackground)
+        button.isClickable = true
     }
 
     private fun setTextView() {
