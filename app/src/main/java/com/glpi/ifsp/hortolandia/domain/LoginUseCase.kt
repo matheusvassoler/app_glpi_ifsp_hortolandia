@@ -66,9 +66,9 @@ class LoginUseCase(
             sessionToken = loginData.sessionToken,
             userUI = UserUI(
                 id = user.id.toInt(),
-                username = user.username,
-                firstName = user.firstName,
-                lastName = user.lastName
+                username = user.username ?: "",
+                firstName = user.firstName ?: "",
+                lastName = user.lastName ?: ""
             )
         )
     }

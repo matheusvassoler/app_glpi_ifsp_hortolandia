@@ -20,6 +20,7 @@ import com.glpi.ifsp.hortolandia.R
 import com.glpi.ifsp.hortolandia.data.enums.FieldRule
 import com.glpi.ifsp.hortolandia.data.enums.FieldType
 import com.glpi.ifsp.hortolandia.databinding.FragmentOpenTicketFormBinding
+import com.glpi.ifsp.hortolandia.infrastructure.utils.removeUnicodeHtmlFromText
 import com.glpi.ifsp.hortolandia.ui.activity.FailedRegistrationActivity
 import com.glpi.ifsp.hortolandia.ui.activity.LoginActivity
 import com.glpi.ifsp.hortolandia.ui.activity.RegistrationSuccessfullyActivity
@@ -628,14 +629,6 @@ class OpenTicketFormFragment : Fragment() {
         val layoutParams = this.layoutParams
         callback(layoutParams as LinearLayout.LayoutParams)
         this.layoutParams = layoutParams
-    }
-
-    private fun removeUnicodeHtmlFromText(text: String): String {
-        val htmlText = Html.fromHtml(text, Html.FROM_HTML_MODE_LEGACY).toString()
-        return htmlText
-            .replace(Regex("<[^>]*>"), " ")
-            .replace(Regex("\\s+"), " ")
-            .trim()
     }
 
     companion object {

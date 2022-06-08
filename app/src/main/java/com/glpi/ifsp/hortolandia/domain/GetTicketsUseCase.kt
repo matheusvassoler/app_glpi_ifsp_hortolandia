@@ -6,6 +6,7 @@ import com.glpi.ifsp.hortolandia.data.model.Ticket
 import com.glpi.ifsp.hortolandia.data.repository.ticket.TicketRepository
 import com.glpi.ifsp.hortolandia.gateway.LabelGateway
 import com.glpi.ifsp.hortolandia.infrastructure.exceptions.InternalErrorException
+import com.glpi.ifsp.hortolandia.infrastructure.utils.removeUnicodeHtmlFromText
 import com.glpi.ifsp.hortolandia.ui.model.TicketUI
 import java.text.SimpleDateFormat
 import java.util.Locale
@@ -29,7 +30,6 @@ class GetTicketsUseCase(
     }
 
     private fun convertTicketToTicketUI(ticket: Ticket): TicketUI {
-        val content = removeHtmlCodeFromTicketDescription(ticket.content)
         val (updateDate, updateHour) = formatAmericanDateToBrazil(ticket.updateDate)
         val (openingDate, openingHour) = formatAmericanDateToBrazil(ticket.openingDate)
         val status = mapIntStatusToString(ticket.status)
@@ -37,7 +37,7 @@ class GetTicketsUseCase(
             TicketUI(
                 id = id.toString(),
                 title = title,
-                description = content,
+                description = removeUnicodeHtmlFromText(ticket.content),
                 openingDate = openingDate,
                 openingHour = openingHour,
                 updateDate = updateDate,
@@ -47,9 +47,6 @@ class GetTicketsUseCase(
             )
         }
     }
-
-    private fun removeHtmlCodeFromTicketDescription(content: String) =
-        content.replace(HTML_START_PARAGRAPH_TAG, "").replace(HTML_END_PARAGRAPH_TAG, "")
 
     private fun formatAmericanDateToBrazil(date: String): Pair<String, String> {
         val brLocale = Locale(PT_LANGUAGE, BR_COUNTRY)

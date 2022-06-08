@@ -29,6 +29,14 @@ fun String.convertUnicodeHtmlToText(): String {
     return htmlDecode(unicodeToHtmlTag)
 }
 
+fun removeUnicodeHtmlFromText(text: String): String {
+    val htmlText = Html.fromHtml(text, Html.FROM_HTML_MODE_LEGACY).toString()
+    return htmlText
+        .replace(Regex("<[^>]*>"), " ")
+        .replace(Regex("\\s+"), " ")
+        .trim()
+}
+
 private fun htmlDecode(text: String): String {
     return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
         Html.fromHtml(text, Html.FROM_HTML_MODE_LEGACY).toString()
