@@ -1,28 +1,144 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.fragment.ProfileFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <TextView
+            android:id="@+id/fragment_profile_name_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/default_dimen_20dp"
+            android:layout_marginTop="@dimen/default_dimen_20dp"
+            android:layout_marginEnd="@dimen/default_dimen_20dp"
+            android:text="@string/profile_first_name_label"
+            android:textColor="@color/black"
+            android:textSize="@dimen/default_dimen_16sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/fragment_profile_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/default_dimen_20dp"
+            android:layout_marginTop="@dimen/default_dimen_4dp"
+            android:layout_marginEnd="@dimen/default_dimen_20dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/fragment_profile_name_label"
+            tools:text="Matheus" />
+
+        <TextView
+            android:id="@+id/fragment_profile_last_name_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/default_dimen_20dp"
+            android:layout_marginTop="@dimen/default_dimen_20dp"
+            android:layout_marginEnd="@dimen/default_dimen_20dp"
+            android:text="@string/profile_last_name_label"
+            android:textColor="@color/black"
+            android:textSize="@dimen/default_dimen_16sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/fragment_profile_name" />
+
+        <TextView
+            android:id="@+id/fragment_profile_last_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/default_dimen_20dp"
+            android:layout_marginTop="@dimen/default_dimen_4dp"
+            android:layout_marginEnd="@dimen/default_dimen_20dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/fragment_profile_last_name_label"
+            tools:text="Silva" />
+
+        <TextView
+            android:id="@+id/fragment_profile_id_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/default_dimen_20dp"
+            android:layout_marginTop="@dimen/default_dimen_20dp"
+            android:layout_marginEnd="@dimen/default_dimen_20dp"
+            android:text="@string/profile_id_label"
+            android:textColor="@color/black"
+            android:textSize="@dimen/default_dimen_16sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/fragment_profile_last_name" />
+
+        <TextView
+            android:id="@+id/fragment_profile_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/default_dimen_20dp"
+            android:layout_marginTop="@dimen/default_dimen_4dp"
+            android:layout_marginEnd="@dimen/default_dimen_20dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/fragment_profile_id_label"
+            tools:text="4543" />
+
+        <TextView
+            android:id="@+id/fragment_profile_username_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/default_dimen_20dp"
+            android:layout_marginTop="@dimen/default_dimen_20dp"
+            android:layout_marginEnd="@dimen/default_dimen_20dp"
+            android:text="@string/profile_username_label"
+            android:textColor="@color/black"
+            android:textSize="@dimen/default_dimen_16sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/fragment_profile_id" />
+
+        <TextView
+            android:id="@+id/fragment_profile_username"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/default_dimen_20dp"
+            android:layout_marginTop="@dimen/default_dimen_4dp"
+            android:layout_marginEnd="@dimen/default_dimen_20dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/fragment_profile_username_label"
+            tools:text="4543" />
+
         <androidx.cardview.widget.CardView
             android:id="@+id/fragment_profile_logout_button"
             android:layout_width="@dimen/default_dimen_0dp"
-            android:layout_height="@dimen/default_dimen_40dp"
+            android:layout_height="@dimen/default_dimen_50dp"
             android:layout_marginStart="@dimen/default_dimen_20dp"
             android:layout_marginEnd="@dimen/default_dimen_20dp"
             android:layout_marginBottom="@dimen/default_dimen_20dp"
-            app:cardElevation="0dp"
-            app:cardCornerRadius="@dimen/default_dimen_8dp"
             android:backgroundTint="@color/green_dark"
-            app:layout_constraintStart_toStartOf="parent"
+            app:cardCornerRadius="@dimen/default_dimen_8dp"
+            app:cardElevation="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent">
+            app:layout_constraintStart_toStartOf="parent">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/fragment_profile_logout_card_view_layout"
@@ -34,13 +150,13 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/profile_exit_button_text"
+                    android:textColor="@color/white"
                     android:textSize="@dimen/default_dimen_16sp"
                     android:textStyle="bold"
-                    android:textColor="@color/white"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"/>
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <ProgressBar
                     android:id="@+id/fragment_logout_progress_bar_button"
@@ -48,10 +164,10 @@
                     android:layout_height="@dimen/default_dimen_30dp"
                     android:indeterminateTint="@color/white"
                     android:visibility="gone"
-                    app:layout_constraintTop_toTopOf="@id/fragment_profile_logout_card_view_layout"
-                    app:layout_constraintEnd_toEndOf="@id/fragment_profile_logout_card_view_layout"
                     app:layout_constraintBottom_toBottomOf="@id/fragment_profile_logout_card_view_layout"
-                    app:layout_constraintStart_toStartOf="@id/fragment_profile_logout_card_view_layout" />
+                    app:layout_constraintEnd_toEndOf="@id/fragment_profile_logout_card_view_layout"
+                    app:layout_constraintStart_toStartOf="@id/fragment_profile_logout_card_view_layout"
+                    app:layout_constraintTop_toTopOf="@id/fragment_profile_logout_card_view_layout" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

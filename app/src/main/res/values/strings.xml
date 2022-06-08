@@ -17,6 +17,10 @@
 
     <!-- Profile Screen -->
     <string name="profile_toolbar_title">Perfil</string>
+    <string name="profile_first_name_label">Nome</string>
+    <string name="profile_last_name_label">Sobrenome</string>
+    <string name="profile_id_label">ID</string>
+    <string name="profile_username_label">Usuário</string>
     <string name="profile_exit_button_text">Sair</string>
     <string name="profile_logout_error">Ocorreu um erro ao realizar o logout. Tente novamente</string>
 

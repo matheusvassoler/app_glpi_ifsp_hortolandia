@@ -9,4 +9,12 @@ interface SessionRepository {
     fun clearUserData()
 
     fun getSessionToken(): String?
+
+    fun getFirstName(): String?
+
+    fun getLastName(): String?
+
+    fun getId(): Int
+
+    fun getUsername(): String?
 }

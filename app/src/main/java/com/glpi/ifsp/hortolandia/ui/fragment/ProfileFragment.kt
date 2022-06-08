@@ -10,7 +10,7 @@ import com.glpi.ifsp.hortolandia.R
 import com.glpi.ifsp.hortolandia.databinding.FragmentProfileBinding
 import com.glpi.ifsp.hortolandia.ui.activity.LoginActivity
 import com.glpi.ifsp.hortolandia.ui.event.LogoutEvent
-import com.glpi.ifsp.hortolandia.ui.state.LogoutState
+import com.glpi.ifsp.hortolandia.ui.state.ProfileState
 import com.glpi.ifsp.hortolandia.ui.viewmodel.ProfileViewModel
 import com.google.android.material.snackbar.Snackbar
 import org.koin.android.viewmodel.ext.android.viewModel
@@ -36,6 +36,7 @@ class ProfileFragment : Fragment() {
 
         exitButtonListener()
         setObservers()
+        profileViewModel.getPersonalData()
     }
 
     private fun setObservers() {
@@ -56,11 +57,17 @@ class ProfileFragment : Fragment() {
     private fun setStateObserver() {
         profileViewModel.state.observe(viewLifecycleOwner, Observer {
             when (it) {
-                is LogoutState.ShowLoading -> {
+                is ProfileState.ShowLoading -> {
                     configureLoginButton(false, View.VISIBLE, View.GONE)
                 }
-                is LogoutState.HideLoading -> {
+                is ProfileState.HideLoading -> {
                     configureLoginButton(true, View.GONE, View.VISIBLE)
+                }
+                is ProfileState.ShowPersonalData -> {
+                    binding.fragmentProfileName.text = it.firstName
+                    binding.fragmentProfileLastName.text = it.lastName
+                    binding.fragmentProfileId.text = it.id.toString()
+                    binding.fragmentProfileUsername.text = it.username
                 }
             }
         })

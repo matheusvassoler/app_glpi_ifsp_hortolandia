@@ -23,6 +23,22 @@ class SessionLocalRepository(
         return appSharedPreferences.getStringValue("session_token")
     }
 
+    override fun getFirstName(): String? {
+        return appSharedPreferences.getStringValue("first_name")
+    }
+
+    override fun getLastName(): String? {
+        return appSharedPreferences.getStringValue("last_name")
+    }
+
+    override fun getId(): Int {
+        return appSharedPreferences.getIntValue("id")
+    }
+
+    override fun getUsername(): String? {
+        return appSharedPreferences.getStringValue("username")
+    }
+
     private fun storeLastName(lastName: String) {
         appSharedPreferences.save("last_name", lastName)
     }
