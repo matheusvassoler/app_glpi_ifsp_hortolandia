@@ -4,9 +4,20 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="../../../../../../layout/custom_preview.xml" value="0.29739583333333336" />
+        <entry key="app/src/main/res/drawable-v24/blue_circle_shape.xml" value="0.165625" />
+        <entry key="app/src/main/res/drawable-v24/custom_progress_bar2.xml" value="0.2638888888888889" />
+        <entry key="app/src/main/res/drawable-v24/custom_progress_bar3.xml" value="0.2638888888888889" />
+        <entry key="app/src/main/res/drawable-v24/custom_progress_bar4.xml" value="0.2638888888888889" />
+        <entry key="app/src/main/res/drawable-v24/custom_progress_bar5.xml" value="0.2638888888888889" />
+        <entry key="app/src/main/res/drawable-v24/green_circle_shape.xml" value="0.165625" />
+        <entry key="app/src/main/res/drawable-v24/orange_circle_shape.xml" value="0.165625" />
+        <entry key="app/src/main/res/drawable-v24/yellow_circle_shape.xml" value="0.165625" />
         <entry key="app/src/main/res/drawable/camera_icon.xml" value="0.2537037037037037" />
+        <entry key="app/src/main/res/drawable/custom_progress_bar.xml" value="0.165625" />
         <entry key="app/src/main/res/drawable/error_icon.xml" value="0.29384615384615387" />
         <entry key="app/src/main/res/drawable/fragment_open_ticket_qr_code_scan.xml" value="0.12962962962962962" />
+        <entry key="app/src/main/res/drawable/gray_circle_shape.xml" value="0.165625" />
+        <entry key="app/src/main/res/drawable/gray_rectangle_shape.xml" value="0.165625" />
         <entry key="app/src/main/res/drawable/green_border.xml" value="0.184375" />
         <entry key="app/src/main/res/drawable/home_icon.xml" value="0.13333333333333333" />
         <entry key="app/src/main/res/drawable/home_icon_2.xml" value="0.2537037037037037" />
@@ -15,6 +26,7 @@
         <entry key="app/src/main/res/drawable/qr_code_icon.xml" value="0.13333333333333333" />
         <entry key="app/src/main/res/drawable/success_icon.xml" value="0.3101851851851852" />
         <entry key="app/src/main/res/drawable/ticket_icon.xml" value="0.13333333333333333" />
+        <entry key="app/src/main/res/drawable/ticket_item_background.xml" value="0.17962962962962964" />
         <entry key="app/src/main/res/layout-hdpi/activity_login.xml" value="0.6775" />
         <entry key="app/src/main/res/layout-hdpi/dropdown_spinner_text_view.xml" value="0.28229166666666666" />
         <entry key="app/src/main/res/layout-hdpi/my_dropdown_spinner_text_view.xml" value="0.28229166666666666" />
@@ -28,7 +40,7 @@
         <entry key="app/src/main/res/layout/activity_open_ticket.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_registration_successfully.xml" value="0.2515200539348905" />
         <entry key="app/src/main/res/layout/activity_request_error.xml" value="0.25" />
-        <entry key="app/src/main/res/layout/activity_ticket_details.xml" value="0.24074074074074073" />
+        <entry key="app/src/main/res/layout/activity_ticket_details.xml" value="0.375" />
         <entry key="app/src/main/res/layout/activity_web_view.xml" value="0.28229166666666666" />
         <entry key="app/src/main/res/layout/custom_app_bar.xml" value="0.335" />
         <entry key="app/src/main/res/layout/fragment_blank.xml" value="0.28229166666666666" />
@@ -41,7 +53,7 @@
         <entry key="app/src/main/res/layout/fragment_profile.xml" value="0.375" />
         <entry key="app/src/main/res/layout/fragment_ticket.xml" value="0.25" />
         <entry key="app/src/main/res/layout/tes.xml" value="0.28229166666666666" />
-        <entry key="app/src/main/res/layout/ticket_item.xml" value="0.375" />
+        <entry key="app/src/main/res/layout/ticket_item.xml" value="0.4697855750487329" />
         <entry key="app/src/main/res/layout/ticket_loading_item_state.xml" value="0.1" />
         <entry key="app/src/main/res/menu/bottom_nav_menu.xml" value="0.28229166666666666" />
         <entry key="app/src/main/res/menu/ticket_details_toolbar_menu.xml" value="0.28229166666666666" />

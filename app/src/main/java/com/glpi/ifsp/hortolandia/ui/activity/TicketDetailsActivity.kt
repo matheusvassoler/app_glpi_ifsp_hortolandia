@@ -3,6 +3,7 @@ package com.glpi.ifsp.hortolandia.ui.activity
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import com.glpi.ifsp.hortolandia.R
 import com.glpi.ifsp.hortolandia.databinding.ActivityTicketDetailsBinding
@@ -55,5 +56,29 @@ class TicketDetailsActivity : AppCompatActivity() {
             getString(R.string.ticket_details_date_value, ticketUI.updateDate, ticketUI.updateHour)
         binding.activityTicketDetailsStatusValue.text = ticketUI.status
         binding.activityTicketDetailsProgressBarStatus.progress = ticketUI.percentageStatusProgress
+        setProgressBarAccordingTicketStatus(ticketUI)
+    }
+
+    private fun setProgressBarAccordingTicketStatus(ticketUI: TicketUI) {
+        when (ticketUI.percentageStatusProgress) {
+            ZERO_PERCENT -> setProgressBarStatus(R.drawable.custom_progress_bar)
+            TWENTY_FIVE_PERCENT -> setProgressBarStatus(R.drawable.custom_progress_bar2)
+            FIFTY_PERCENT -> setProgressBarStatus(R.drawable.custom_progress_bar3)
+            SEVENTY_FIVE_PERCENT -> setProgressBarStatus(R.drawable.custom_progress_bar4)
+            ONE_HUNDRED_PERCENT -> setProgressBarStatus(R.drawable.custom_progress_bar5)
+        }
+    }
+
+    private fun setProgressBarStatus(drawableId: Int) {
+        binding.activityTicketDetailsProgressBarStatus.progressDrawable =
+            ContextCompat.getDrawable(this, drawableId)
+    }
+
+    companion object {
+        private const val ZERO_PERCENT = 0
+        private const val TWENTY_FIVE_PERCENT = 25
+        private const val FIFTY_PERCENT = 50
+        private const val SEVENTY_FIVE_PERCENT = 75
+        private const val ONE_HUNDRED_PERCENT = 100
     }
 }

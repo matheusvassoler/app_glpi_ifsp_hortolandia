@@ -30,7 +30,7 @@
     <string name="ticket_empty_result_description">Não foram encontrados chamados para serem exibidos</string>
     <string name="ticket_error_result_title">Ocorreu um erro</string>
     <string name="ticket_error_result_button_text">Tentar novamente</string>
-    <string name="ticket_update_date_label">Atualizado em</string>
+    <string name="ticket_update_date_label">Atualizado em: %s</string>
     <string name="ticket_update_status_label">Status</string>
 
     <!-- Ticket Details Screen -->

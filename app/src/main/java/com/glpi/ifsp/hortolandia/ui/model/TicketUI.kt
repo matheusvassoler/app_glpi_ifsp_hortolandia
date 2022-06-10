@@ -13,5 +13,6 @@ data class TicketUI(
     val updateDate: String,
     val updateHour: String,
     val status: String,
-    val percentageStatusProgress: Int
+    val percentageStatusProgress: Int,
+    val intStatus: Int
 ) : Parcelable

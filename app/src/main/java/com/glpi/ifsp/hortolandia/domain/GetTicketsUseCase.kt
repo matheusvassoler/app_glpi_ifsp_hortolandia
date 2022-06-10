@@ -43,7 +43,8 @@ class GetTicketsUseCase(
                 updateDate = updateDate,
                 updateHour = updateHour,
                 status = status,
-                percentageStatusProgress = getPercentageStatusProgress(this.status)
+                percentageStatusProgress = getPercentageStatusProgress(this.status),
+                intStatus = this.status
             )
         }
     }
@@ -64,11 +65,11 @@ class GetTicketsUseCase(
 
     private fun mapIntStatusToString(status: Int): String {
         return when (status) {
-            STATUS_NEW -> labelGateway.getLabelForStatusNew()
-            STATUS_PROCESSING -> labelGateway.getLabelForStatusProcessing()
-            STATUS_PENDING -> labelGateway.getLabelForStatusPending()
-            STATUS_SOLVED -> labelGateway.getLabelForStatusSolved()
-            STATUS_CLOSED -> labelGateway.getLabelForStatusClosed()
+            STATUS_NEW -> labelGateway.getLabelForStatusNew().uppercase()
+            STATUS_PROCESSING -> labelGateway.getLabelForStatusProcessing().uppercase()
+            STATUS_PENDING -> labelGateway.getLabelForStatusPending().uppercase()
+            STATUS_SOLVED -> labelGateway.getLabelForStatusSolved().uppercase()
+            STATUS_CLOSED -> labelGateway.getLabelForStatusClosed().uppercase()
             else -> ""
         }
     }

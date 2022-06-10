@@ -10,5 +10,8 @@
     <color name="gray_dark_for_field_hint">#666666</color>
     <color name="gray_ultra_light">#EFEFF0</color>
     <color name="gray_light">#dbdbdb</color>
+    <color name="gray_5C5C5C">#5C5C5C</color>
+    <color name="gray_BABABA">#BABABA</color>
+    <color name="gray_F6F7F6">#F6F7F6</color>
     <color name="blue_link">#008ECF</color>
 </resources>

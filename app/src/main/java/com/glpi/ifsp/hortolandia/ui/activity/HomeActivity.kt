@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.glpi.ifsp.hortolandia.R
 import com.glpi.ifsp.hortolandia.databinding.ActivityHomeBinding
@@ -61,7 +62,8 @@ class HomeActivity : AppCompatActivity() {
     }
 
     private fun initHomeFragment() {
-        setToolbarTitle(getString(R.string.ticket_toolbar_title))
+        binding.activityHomeToolbar.toolbarTitle.text = getString(R.string.ticket_toolbar_title)
+        binding.activityHomeToolbar.toolbarLayout.setBackgroundColor(ContextCompat.getColor(this, R.color.gray_F6F7F6))
         replaceFragment(TicketFragment(), HOME_FRAGMENT_TAG)
     }
 
@@ -73,7 +75,8 @@ class HomeActivity : AppCompatActivity() {
     }
 
     private fun initProfileFragment() {
-        setToolbarTitle(getString(R.string.profile_toolbar_title))
+        binding.activityHomeToolbar.toolbarTitle.text = getString(R.string.profile_toolbar_title)
+        binding.activityHomeToolbar.toolbarLayout.setBackgroundColor(ContextCompat.getColor(this, R.color.white))
         replaceFragment(ProfileFragment(), PROFILE_FRAGMENT_TAG)
     }
 
@@ -81,9 +84,5 @@ class HomeActivity : AppCompatActivity() {
         supportFragmentManager.beginTransaction().apply {
             replace(R.id.fragment_container_view, fragment, fragmentTag)
         }.commit()
-    }
-
-    private fun setToolbarTitle(title: String) {
-        binding.activityHomeToolbar.toolbarTitle.text = title
     }
 }

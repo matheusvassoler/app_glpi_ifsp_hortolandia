@@ -45,7 +45,7 @@ class TicketFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        ticketAdapter = TicketAdapter(::onTicketClick)
+        ticketAdapter = TicketAdapter(::onTicketClick, requireContext())
 
         setEventObserver()
         ticketViewModel.onStart()
