@@ -34,11 +34,11 @@
         <entry key="app/src/main/res/layout-xhdpi/activity_login.xml" value="0.3611111111111111" />
         <entry key="app/src/main/res/layout-xxhdpi/activity_login.xml" value="0.24074074074074073" />
         <entry key="app/src/main/res/layout/activity_error.xml" value="0.25" />
-        <entry key="app/src/main/res/layout/activity_failed_registration.xml" value="0.29583333333333334" />
+        <entry key="app/src/main/res/layout/activity_failed_registration.xml" value="0.22314814814814815" />
         <entry key="app/src/main/res/layout/activity_home.xml" value="0.335" />
         <entry key="app/src/main/res/layout/activity_login.xml" value="0.24074074074074073" />
         <entry key="app/src/main/res/layout/activity_open_ticket.xml" value="0.1" />
-        <entry key="app/src/main/res/layout/activity_registration_successfully.xml" value="0.2515200539348905" />
+        <entry key="app/src/main/res/layout/activity_registration_successfully.xml" value="0.22314814814814815" />
         <entry key="app/src/main/res/layout/activity_request_error.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_ticket_details.xml" value="0.375" />
         <entry key="app/src/main/res/layout/activity_web_view.xml" value="0.28229166666666666" />

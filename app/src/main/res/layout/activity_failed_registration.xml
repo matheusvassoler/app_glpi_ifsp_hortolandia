@@ -16,8 +16,8 @@
 
     <ImageView
         android:id="@+id/activity_failed_registration_error_icon"
-        android:layout_width="@dimen/default_dimen_80dp"
-        android:layout_height="@dimen/default_dimen_80dp"
+        android:layout_width="@dimen/default_dimen_126dp"
+        android:layout_height="@dimen/default_dimen_126dp"
         android:layout_marginTop="@dimen/default_dimen_150dp"
         android:src="@drawable/error_icon"
         app:layout_constraintTop_toTopOf="parent"
@@ -91,7 +91,6 @@
         android:layout_marginStart="@dimen/default_dimen_20dp"
         android:layout_marginEnd="@dimen/default_dimen_20dp"
         android:layout_marginBottom="@dimen/default_dimen_20dp"
-        android:text="@string/back_to_home_button"
         android:textAllCaps="false"
         app:cardCornerRadius="@dimen/default_dimen_8dp"
         app:cardElevation="0dp"
