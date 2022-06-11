@@ -55,11 +55,10 @@
 
             <TextView
                 android:id="@+id/ticket_item_update_status_label"
-                android:layout_width="@dimen/default_dimen_0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/default_dimen_10dp"
                 android:text="@string/ticket_update_status_label"
-                android:textAlignment="center"
                 android:textSize="@dimen/default_dimen_12sp"
                 android:textColor="@color/gray_BABABA"
                 android:layout_marginBottom="@dimen/default_dimen_10dp"

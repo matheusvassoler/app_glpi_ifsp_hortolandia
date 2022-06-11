@@ -53,7 +53,7 @@
         <entry key="app/src/main/res/layout/fragment_profile.xml" value="0.375" />
         <entry key="app/src/main/res/layout/fragment_ticket.xml" value="0.25" />
         <entry key="app/src/main/res/layout/tes.xml" value="0.28229166666666666" />
-        <entry key="app/src/main/res/layout/ticket_item.xml" value="0.375" />
+        <entry key="app/src/main/res/layout/ticket_item.xml" value="0.28229166666666666" />
         <entry key="app/src/main/res/layout/ticket_loading_item_state.xml" value="0.1" />
         <entry key="app/src/main/res/menu/bottom_nav_menu.xml" value="0.28229166666666666" />
         <entry key="app/src/main/res/menu/ticket_details_toolbar_menu.xml" value="0.28229166666666666" />
