@@ -22,6 +22,7 @@
         app:layout_constraintBottom_toBottomOf="parent"/>
 
     <ScrollView
+        android:id="@+id/fragment_open_ticket_form_layout_scroll_view"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:fillViewport="true"

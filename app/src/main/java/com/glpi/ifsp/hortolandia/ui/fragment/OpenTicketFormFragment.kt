@@ -97,12 +97,14 @@ class OpenTicketFormFragment : Fragment() {
         openTicketViewModel.state.observe(viewLifecycleOwner, Observer {
             when (it) {
                 is OpenTicketState.ShowLoading -> {
+                    binding.fragmentOpenTicketFormLayoutScrollView.visibility = View.GONE
                     binding.fragmentOpenTicketFormProgressBar.visibility = View.VISIBLE
                 }
                 is OpenTicketState.ShowResponseRequestError -> {
                     startActivity(RequestErrorActivity.newInstance(requireContext()))
                 }
                 is OpenTicketState.ShowFormUI -> {
+                    binding.fragmentOpenTicketFormLayoutScrollView.visibility = View.VISIBLE
                     binding.fragmentOpenTicketFormProgressBar.visibility = View.INVISIBLE
                     createFormHeader(it.formUI.name)
                     allFormQuestions = it.formUI.questions
