@@ -11,6 +11,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
+import android.widget.CheckBox
 import android.widget.CompoundButton
 import android.widget.LinearLayout
 import android.widget.TextView
@@ -601,8 +602,42 @@ class OpenTicketFormFragment : Fragment() {
             .setWeight(WEIGHT_1)
             .build()
 
+        button.setOnClickListener {
+            createTicket(formUI)
+        }
+
         binding.fragmentOpenTicketFormLayout.addView(space)
         binding.fragmentOpenTicketFormLayout.addView(button)
+    }
+
+    private fun createTicket(formUI: FormUI) {
+        val answersToSave: HashMap<String, String> = hashMapOf()
+        for (i in 0 until binding.fragmentOpenTicketFormLayout.childCount) {
+            val field = binding.fragmentOpenTicketFormLayout.getChildAt(i)
+            buildTicketWithAnswers(formUI, field, answersToSave)
+        }
+        openTicketViewModel.createTicket(formUI.name, answersToSave)
+    }
+
+    private fun buildTicketWithAnswers(
+        formUI: FormUI,
+        field: View?,
+        answersToSave: HashMap<String, String>
+    ) {
+        formUI.questions.forEach { question ->
+            if (field?.tag == question.id && field.visibility == View.VISIBLE) {
+                when (field) {
+                    is TextInputLayout -> {
+                        answersToSave[question.name] = field.editText?.text.toString()
+                    }
+                    is CheckBox -> {
+                        if (field.isChecked) {
+                            answersToSave[question.name] = field.text.toString()
+                        }
+                    }
+                }
+            }
+        }
     }
 
     private fun hideInitiallyFieldThatHasHiddenUnlessRule(
