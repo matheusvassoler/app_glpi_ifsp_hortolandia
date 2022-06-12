@@ -1,6 +1,9 @@
 package com.glpi.ifsp.hortolandia.ui.activity
 
+import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import androidx.appcompat.app.AppCompatActivity
 import com.glpi.ifsp.hortolandia.R
 import com.glpi.ifsp.hortolandia.ui.event.SplashScreenEvent
@@ -19,13 +22,27 @@ class SplashScreenActivity : AppCompatActivity() {
 
         splashScreenViewModel.event.observe(this, {
             when (it) {
-                SplashScreenEvent.OpenLogin -> {
-                    startActivity(LoginActivity.newInstance(this))
-                }
-                SplashScreenEvent.OpenHome -> {
-                    startActivity(HomeActivity.newInstance(this))
-                }
+                SplashScreenEvent.OpenLogin -> goToLogin()
+                SplashScreenEvent.OpenHome -> goToHome()
             }
         })
+    }
+
+    private fun goToLogin() {
+        openScreen(LoginActivity.newInstance(this))
+    }
+
+    private fun goToHome() {
+        openScreen(HomeActivity.newInstance(this))
+    }
+
+    private fun openScreen(intent: Intent) {
+        Handler(Looper.getMainLooper()).postDelayed({
+            startActivity(intent)
+        }, THREE_SECONDS_SPLASH_SCREEN_DELAY)
+    }
+
+    companion object {
+        private const val THREE_SECONDS_SPLASH_SCREEN_DELAY = 2000L
     }
 }

@@ -30,4 +30,6 @@
     <dimen name="default_dimen_100dp">100dp</dimen>
     <dimen name="default_dimen_126dp">126dp</dimen>
     <dimen name="default_dimen_150dp">150dp</dimen>
+    <dimen name="default_dimen_200dp">200dp</dimen>
+    <dimen name="default_dimen_300dp">300dp</dimen>
 </resources>
