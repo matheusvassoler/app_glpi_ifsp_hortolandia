@@ -3,6 +3,7 @@ package com.glpi.ifsp.hortolandia.infrastructure.di
 import com.glpi.ifsp.hortolandia.ui.viewmodel.LoginViewModel
 import com.glpi.ifsp.hortolandia.ui.viewmodel.OpenTicketViewModel
 import com.glpi.ifsp.hortolandia.ui.viewmodel.ProfileViewModel
+import com.glpi.ifsp.hortolandia.ui.viewmodel.SplashScreenViewModel
 import com.glpi.ifsp.hortolandia.ui.viewmodel.TicketViewModel
 import org.koin.android.viewmodel.dsl.viewModel
 import org.koin.dsl.module
@@ -12,4 +13,5 @@ val viewModelModule = module {
     viewModel { ProfileViewModel(get(), get()) }
     viewModel { TicketViewModel(get(), get()) }
     viewModel { OpenTicketViewModel(get(), get()) }
+    viewModel { SplashScreenViewModel(get()) }
 }

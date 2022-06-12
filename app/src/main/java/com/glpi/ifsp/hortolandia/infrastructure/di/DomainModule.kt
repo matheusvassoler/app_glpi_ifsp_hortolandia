@@ -5,6 +5,7 @@ import com.glpi.ifsp.hortolandia.domain.GetFormUseCase
 import com.glpi.ifsp.hortolandia.domain.GetItemUseCase
 import com.glpi.ifsp.hortolandia.domain.GetLocationUseCase
 import com.glpi.ifsp.hortolandia.domain.GetTicketsUseCase
+import com.glpi.ifsp.hortolandia.domain.IsValidLoginUseCase
 import com.glpi.ifsp.hortolandia.domain.LoginUseCase
 import com.glpi.ifsp.hortolandia.domain.LogoutUseCase
 import com.glpi.ifsp.hortolandia.domain.SessionUseCase
@@ -19,4 +20,5 @@ val domainModule = module {
     single { GetLocationUseCase(get(), get()) }
     single { GetFormUseCase(get(), get(), get(), get()) }
     single { CreateTicketUseCase(get(), get()) }
+    single { IsValidLoginUseCase(get(), get()) }
 }

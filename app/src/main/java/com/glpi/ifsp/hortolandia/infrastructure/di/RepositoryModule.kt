@@ -10,6 +10,8 @@ import com.glpi.ifsp.hortolandia.data.repository.login.LoginRemoteRepository
 import com.glpi.ifsp.hortolandia.data.repository.login.LoginRepository
 import com.glpi.ifsp.hortolandia.data.repository.logout.LogoutRemoteRepository
 import com.glpi.ifsp.hortolandia.data.repository.logout.LogoutRepository
+import com.glpi.ifsp.hortolandia.data.repository.profile.ProfileRemoteRepository
+import com.glpi.ifsp.hortolandia.data.repository.profile.ProfileRepository
 import com.glpi.ifsp.hortolandia.data.repository.session.SessionLocalRepository
 import com.glpi.ifsp.hortolandia.data.repository.session.SessionRepository
 import com.glpi.ifsp.hortolandia.data.repository.ticket.TicketRemoteRepository
@@ -24,4 +26,5 @@ val repositoryModule = module {
     single<FormRepository> { FormRemoteRepository(get()) }
     single<ItemRepository> { ItemRemoteRepository(get()) }
     single<LocationRepository> { LocationRemoteRepository(get()) }
+    single<ProfileRepository> { ProfileRemoteRepository(get()) }
 }

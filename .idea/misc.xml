@@ -40,6 +40,7 @@
         <entry key="app/src/main/res/layout/activity_open_ticket.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_registration_successfully.xml" value="0.22314814814814815" />
         <entry key="app/src/main/res/layout/activity_request_error.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/activity_splash_screen.xml" value="0.28229166666666666" />
         <entry key="app/src/main/res/layout/activity_ticket_details.xml" value="0.375" />
         <entry key="app/src/main/res/layout/activity_web_view.xml" value="0.28229166666666666" />
         <entry key="app/src/main/res/layout/custom_app_bar.xml" value="0.335" />
