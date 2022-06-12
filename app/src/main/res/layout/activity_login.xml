@@ -50,7 +50,7 @@
             android:id="@+id/activity_login_subtitle"
             android:layout_width="@dimen/default_dimen_0dp"
             android:layout_height="wrap_content"
-            android:textSize="@dimen/default_dimen_20sp"
+            android:textSize="@dimen/default_dimen_18sp"
             android:text="@string/login_subtitle"
             android:textColor="@color/black"
             android:layout_marginTop="@dimen/default_dimen_13dp"

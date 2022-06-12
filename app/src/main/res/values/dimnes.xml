@@ -3,6 +3,7 @@
     <dimen name="default_dimen_12sp">12sp</dimen>
     <dimen name="default_dimen_15sp">15sp</dimen>
     <dimen name="default_dimen_16sp">16sp</dimen>
+    <dimen name="default_dimen_18sp">18sp</dimen>
     <dimen name="default_dimen_20sp">20sp</dimen>
     <dimen name="default_dimen_22sp">22sp</dimen>
     <dimen name="default_dimen_25sp">25sp</dimen>
