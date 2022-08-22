@@ -72,4 +72,10 @@ interface Api {
         @Header("Session-Token") sessionToken: String,
         @Body ticketInput: TicketInput
     ): Response<Void>
+
+    @GET("getActiveProfile")
+    @Headers("App-Token: $APP_TOKEN")
+    suspend fun getActiveProfile(
+        @Header("Session-Token") sessionToken: String
+    ): Response<Void>
 }
